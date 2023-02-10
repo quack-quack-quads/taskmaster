@@ -14,7 +14,6 @@ const addJob = async (req, res) =>{
         }
     ).catch(
         (error)=>{
-            const errorCode = error.code;
             const errorMessage = error.message;
             res.send(errorMessage);
         }
