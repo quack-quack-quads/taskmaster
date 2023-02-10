@@ -17,6 +17,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/chat", chatRouter);
 
 
+
 app.get("/", (req,res) => {
     res.send("Welcome to TaskMaster !!!");
 })
