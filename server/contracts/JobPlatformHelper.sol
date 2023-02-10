@@ -30,7 +30,6 @@ contract JobPlatformHelper is JobInterface {
         if (persons[to].addr == address(0) || to == address(0)) {
             revert InvalidTx();
         }
-
         Job memory job = Job(
             msg.sender,
             to,
@@ -46,12 +45,16 @@ contract JobPlatformHelper is JobInterface {
         emit AddJob();
     }
 
-    // TODO - only allow valid buyer to call this function
+    // TODO - only allow valid client to call this function
     function addRating(address to, uint8 _rating) public {
         if (persons[to].addr == address(0)) {
             revert InvalidTx();
         }
-        persons[to].rating = (_rating + persons[to].rating) / 2;
+        if(persons[to].rating == 0){
+            persons[to].rating = _rating;
+        }else{
+            persons[to].rating = (_rating + persons[to].rating) / 2;
+        }
         emit AddRating();
     }
 
