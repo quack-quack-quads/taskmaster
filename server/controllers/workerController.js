@@ -1,8 +1,33 @@
-const express = require('express');
-const router = express.Router();
-const { handleLogin } = require("../controllers/authController")
+const { createUserWithEmailAndPassword, signInWithEmailAndPassword } = require("firebase/auth");
+const { ref, set, get, push, child} = require("firebase/database");
+const { db, auth } = require("../firebase-config")
 
-router.route('/')
-    .post(handleLogin)
+const createworker = async (req, res) => {
+    createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        res.send(errorMessage);
+    });
+}
 
-module.exports = router;
+const getworker = async (req, res)=>{
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+    });
+}
+
+module.exports = {
+    createworker,
+    getworker,
+}
