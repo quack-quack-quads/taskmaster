@@ -5,7 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 // ! import routers
-const { authRouter, chatRouter } = require("./routes/index.js");
+const { authRouter, chatRouter, jobRouter } = require("./routes/index.js");
 
 // ! middleware
 app.use(cors());
@@ -15,11 +15,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // ! routes
 app.use("/api/auth", authRouter);
 app.use("/api/chat", chatRouter);
+app.use("/api/jobs", jobRouter);
 
 
 
 app.get("/", (req,res) => {
-    res.send("Welcome to TaskMaster !!!");
+    res.send("Welcome to TaskMaster API!!!");
 })
 
 const PORT = process.env.PORT || 5000;
