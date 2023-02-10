@@ -7,7 +7,13 @@ const createClient = (uid, data)=>{
     const dbRef = ref(db);
     data["password"] = null;
     const newClientKey = push(child(dbRef, 'clients')).key;
-    set(ref(db, `clients/${uid}`), data);
+    set(ref(db, `clients/${uid}`), data).catch(
+        (error)=>{
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            res.send(errorMessage);
+        }
+    );
 }
 
 const signUp = async (req, res) => {
