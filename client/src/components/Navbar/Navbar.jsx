@@ -6,19 +6,44 @@ import { BsGoogle, BsTwitter, BsGithub, BsDiscord, BsArrowLeftShort, BsArrowRigh
 
 //components
 import ActionButton from "../Buttons/ActionButton"
-import { Modal} from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 
 //tools
 import React, { useState, useEffect } from 'react';
 import LoginModal from "./LoginModal"
+import ClientSignUp from "./ClientSignUp"
 
-const Navbar = () => {
-    const [show, setShow] = useState(false)
-    const [mode, setMode] = useState(<LoginModal/>)
-
-    const dismiss = ()=>{
+const Navbar = ({ flow }) => {
+    const dismiss = () => {
         setShow(false);
     }
+
+    const [show, setShow] = useState(false)
+
+    var signComp = <></>
+    if (flow == "client") {
+        signComp = <ClientSignUp
+            dismiss={dismiss}
+        />;
+    }
+
+    const loginComp = <LoginModal
+        dismiss={dismiss}
+        redirect={() => {
+            setMode(signComp);
+        }}
+        flow={flow}
+    />
+
+    useEffect(() => {
+        if (!show) {
+            setMode(loginComp);
+        }
+    }, [show]);
+
+    const [mode, setMode] = useState(loginComp)
+
+
 
     return <div className="Navbar container-fluid">
         <div className="row">
@@ -37,7 +62,7 @@ const Navbar = () => {
             className="loginModal"
         >
             <Modal.Body>
-                <LoginModal dismiss = {dismiss}/>
+                {mode}
             </Modal.Body>
         </Modal>
     </div>

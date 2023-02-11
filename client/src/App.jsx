@@ -9,14 +9,12 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import {Business, Client, Home} from "./pages/index"
 
 //components
-import Navbar from "./components/Navbar/Navbar";
-import ChatWindow from "./components/ChatWindow/ChatWindow";
-import ActionButton from "./components/Buttons/ActionButton";
+
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />
@@ -25,7 +23,6 @@ function App() {
           <Route path="/*" element={<Home />} />
         </Routes>
       </Router>
-      <ChatWindow/>
     </div>
   );
 }

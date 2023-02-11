@@ -2,19 +2,11 @@ import './Navbar.scss'
 import LoginImg from '../../assets/hands.gif'
 import { BsGoogle, BsTwitter, BsGithub, BsDiscord, BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs'
 import ActionButton from "../Buttons/ActionButton"
-import { useState } from 'react'
 
-import {loginapi} from '../../utilities/Auth'
+const SignUpModal = ({dismiss}) => {
 
-const LoginModal = ({dismiss, redirect, flow}) => {
+    const signup = ()=>{
 
-    const [waiting, setWaiting] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
-    const login = async ()=>{
-        var data = await loginapi(email, password, flow);
-        
     }
 
     return <>
@@ -23,34 +15,28 @@ const LoginModal = ({dismiss, redirect, flow}) => {
             size={30}
             onClick={dismiss}
         />
-        <div className="instead"
-            onClick={redirect}
-        >
-            Sign up instead
-        </div>
         <div className="graphics d-flex justify-content-center">
-            <img src={LoginImg} alt="" className="loginimage" />
+            <img src={LoginImg} alt="" className="loginimage" 
+                style={{"height" : "140px", "width" : "auto", "marginTop" : "0", "paddingTop" : "0"}}
+            />
         </div>
         <div className="email">
             <div className="emailhead">
-                Log in with your email
+                Sign up with your email
             </div>
             <input type="email" className="form-control shadow-none"
                 placeholder="example@example.com"
-                onChange = {(event)=>{
-                    setEmail(event.target.value);
-                }}
             />
             <input type="password" className="form-control shadow-none"
                 placeholder="Password"
-                onChange = {(event)=>{
-                    setPassword(event.target.value);
-                }}
+            />
+            <input type="password" className="form-control shadow-none"
+                placeholder="Confirm password"
             />
             <div className="d-flex justify-content-center">
                 <ActionButton
                     text={<BsArrowRightShort size={25}
-                        onClick = {login}
+                        onClick = {signup}
                     />}
                 />
             </div>
@@ -58,4 +44,4 @@ const LoginModal = ({dismiss, redirect, flow}) => {
     </>
 }
 
-export default LoginModal;
+export default SignUpModal;
