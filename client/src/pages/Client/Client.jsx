@@ -11,7 +11,7 @@ const Client = () => {
   return (
     <ClientProvider>
       <Navbar flow="client" />
-      {show ? <Home setShow={setShow} show={show} /> : <JobListing /> }
+        <Home/>
       {/* <JobListing/> */}
       <ChatWindow flow="client" />
     </ClientProvider>

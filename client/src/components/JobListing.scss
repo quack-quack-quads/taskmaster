@@ -1,5 +1,6 @@
 .row1 {
-    border: 2px solid black;
+    // border: 2px solid black;
+    // margin-left: 6%;
 }
 
 .col1 {
@@ -13,16 +14,17 @@
     background-image: url("../assets/background.png");
     background-size:cover;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: fit-content;
     overflow-y: hidden;
     // background: fixed;
+    // border: 2px solid yellow;
 }
 
 .job-form {
-    height: 80%;
-    width: 80%;
-    border: 2px solid black;
-    background: rgba(255, 252, 252, 0.645);
+    height: 100%;
+    width: 100%;
+    // border: 2px solid black;
+    background: rgba(255, 252, 252, 0.255);
 
     backdrop-filter: blur(7.5px);
 
@@ -123,6 +125,11 @@
   }
   .next {
     margin-left: 5%;
+  }
+  .invalid-text {
+    color: red;
+    margin-left: 2%;
+    font-family: "Poppins";
   }
 //   .grad1 {
 //     background: rgb(181,218,226);
