@@ -66,20 +66,39 @@ const ChatCard = (props) => {
     },[])
     
     const handleSendMessge = (message) => {
+        const re = /^[0-9\b]+$/;
+        if (!re.test(toSend)){
+            alert("Please enter a valid amount")
+            return
+        }
         if(socket === null || socket === undefined) return
         
         console.log(props.chat.uid)
-        const toSend = {
+        const payloadData = {
             message,
             from: props.uid,
-            to: props.chat.uid
+            to: props.chat.uid,
+            amount: toSend
         }
-        socket.emit("send-message", toSend, props.chat.uid)
-        console.log(toSend)
-        setMessages((messages) => [...messages, toSend])
+        socket.emit("send-message", payloadData, props.chat.uid)
+        console.log(payloadData)
+        setMessages((messages) => [...messages, payloadData])
         setToSend("")
         scrollToBottom()
         
+    }
+
+    const handleAccept = async(message) => {
+        console.log("accepting",message)
+        const url = import.meta.env.VITE_BASE_URL
+        const response = await axios.post(`${url}/api/jobs/acceptWorkerJob`, {
+            userId: props.uid,
+            jobId: props.chat.uid,
+            workerId: message.from,
+            startingBid: message.amount
+        })
+        console.log(response) 
+        console.log(props.uid, props.chat.uid, message.from)
     }
 
     const chatMessage = (flow, message, index) => {
@@ -90,7 +109,9 @@ const ChatCard = (props) => {
                     <div className="col-6">
                         {
                             flow == "client" ?
-                                <button className="btn btn-light">
+                                <button className="btn btn-light" onClick={() => {
+                                    handleAccept(message)
+                                }}>
                                     Accept
                                 </button> :
                                 <></>
@@ -100,9 +121,12 @@ const ChatCard = (props) => {
                     <div className="col-6 d-flex justify-content-end"
                     style={{"fontSize" : "12px"}}
                     >
-                        <div className="from">
-                            {message.from}
-                        </div>
+                        {
+                            flow == "client" ? "" : 
+                            <div className="from">
+                                {message.from}
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

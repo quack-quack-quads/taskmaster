@@ -1,30 +1,24 @@
-import './ClientDashboard.scss'
+import './BusinessDashboard.scss'
 import Hero from "../../../components/Hero/Hero";
 import CategoryCards from '../../../components/CategoryCards/CategoryCards'
 import Features from '../../../components/Features/Features'
-import JobListing from '../../../components/JobListing'
 
-import { ClientContext } from '../../../context/clientContext'
+import { BusinessContext } from '../../../context/BusinessContext'
 import { useContext, useState, useEffect } from 'react';
 
 import Clock from '../../../assets/clock.gif';
 import Auction from '../../../assets/auction.gif';
-import axios from 'axios';
 
-import Modal from 'react-bootstrap/Modal';
-
-import { FaWindowClose } from 'react-icons/fa';
-
-const PendingTaskCard = (title, description, startingBid) => {
+const PendingTaskCard = (title, desc, bid) => {
     return <div className="PendingTaskCard container-fluid">
         <div className="row titlerow text-center">
             {title}
         </div>
         <div className="row descrow text-center">
-            {description}
+            {desc}
         </div>
         <div className="row bidrow text-center">
-            Current Bid : {startingBid}
+            Current bid : {bid}
         </div>
         <div className="row actions d-flex justify-content-center">
             <button className="btn btn-danger btn-sm">
@@ -33,20 +27,20 @@ const PendingTaskCard = (title, description, startingBid) => {
             <button className="btn btn-success btn-sm">
                 Mark as done
             </button>
-        </div> 
-    </div> 
+        </div>
+    </div>
 }
 
-const ListingCard = (title, description, startingBid) => {
+const ListingCard = (title, desc, bid) => {
     return <div className="PendingTaskCard container-fluid">
         <div className="row titlerow text-center">
             {title}
         </div>
         <div className="row descrow text-center">
-            {description}
+            {desc}
         </div>
         <div className="row bidrow text-center">
-            Current Bid : {startingBid}
+            Current bid : {bid}
         </div>
         <div className="row actions d-flex justify-content-center">
             <button className="btn btn-danger btn-sm">
@@ -57,82 +51,50 @@ const ListingCard = (title, description, startingBid) => {
 }
 
 
-const ClientDashboard = () => {
-    const { uid, name, email, phone } = useContext(ClientContext);
-    const [showListing, setShowListing] = useState(false);
-
-    const [loggedIn, setLoggedIn] = useState(false);
+const BusinessDashboard = () => {
+    const { uid, name, email, phone } = useContext(BusinessContext);
+    const [busLog, setBusLog] = useState(false);
 
     useEffect(() => {
+        console.log(uid);
         if (uid == null || uid == undefined) {
-            setLoggedIn(false);
-        } else setLoggedIn(true);
+            setBusLog(false);
+        } else setBusLog(true);
     }, [uid]);
 
-    const [jobs, setJobs] = useState([])
+    const [pending, setPending] = useState(
+        [
+            {
+                "title": "Plumbing in Bhaskara",
+                "desc": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi, nulla minima. Maxime explicabo repellat nam corrupti quis consequatur provident architecto enim alias nihil voluptates blanditiis saepe, nesciunt ipsa natus corporis adipisci quam dolore exercitationem temporibus expedita. Cum consectetur incidunt ut.",
+                "bid": "676",
+                "id": "8dijfdkjfkd"
+            }
+        ]
+    )
 
     const pendingList = []
     const listings = []
-    for (var i = 0; i < jobs.length; i++) { 
-        if(jobs[i].status === "bidOn"){
-            listings.push(
-                ListingCard(jobs[i].title, jobs[i].description, jobs[i].startingBid)
-            ) 
-        }else if(jobs[i].status === "pending"){
-            pendingList.push(
-                PendingTaskCard(jobs[i].title, jobs[i].description, jobs[i].startingBid)
-            )
-        }
+    for (var i = 0; i < pending.length; i++) {
+        pendingList.push(
+            PendingTaskCard(pending[i].title, pending[i].desc, pending[i].bid)
+        )
+        listings.push(
+            ListingCard(pending[i].title, pending[i].desc, pending[i].bid)
+        )
     }
-    <JobListing show={showListing} setShow={setShowListing} />
-
-    const getJobs = async () => {
-        const url = import.meta.env.VITE_BASE_URL
-        const response = await axios.post(`${url}/api/jobs/get`, {
-            uid: uid
-        }) 
-        console.log(response.data)
-        setJobs(response.data)
-    }
-
-    useEffect(() => {
-        getJobs()
-    },[])
-
+    
     return <div className="Dash">
         <div className="dummy"> </div>
-        <Modal
-            show={showListing}
-            onHide={()=>{
-                setShowListing(false);
-            }}
-            backdrop="static"
-            className="mod"
-            centered
-            size="lg"
-        >
-            <Modal.Title className='modtitle'>
-            <div className="close"
-                    onClick={()=>{
-                        setShowListing(false);
-                    }}
-                >
-                    <FaWindowClose/>
-                </div>
-            </Modal.Title>
-            <Modal.Body >
-                <JobListing setShow={setShowListing} />
-            </Modal.Body>
-        </Modal>
         {
-            !loggedIn ?
+            !(uid == null || uid==undefined) ?
                 <>
                     <Hero />
                     <CategoryCards />
                     <Features />
                 </>
                 :
-                <div className="ClientDashboard">
+                <div className="BusinessDashboard">
                     <div className="row pt-5">
                         <div className="col-12 col-md-6">
                             <div className="Welcome">
@@ -142,7 +104,7 @@ const ClientDashboard = () => {
                         <div className="col-12 col-md-6 d-flex align-items-center">
                             <div className='m-5'>
                                 <p style={{ "color": "white" }}>
-                                    Looking to find workers to get your job done?
+                                    Looking for jobs?
                                 </p>
                                 <button className="btn btn-light btn-lg"
                                     onClick={
@@ -197,4 +159,4 @@ const ClientDashboard = () => {
     </div>
 }
 
-export default ClientDashboard;
+export default BusinessDashboard;
