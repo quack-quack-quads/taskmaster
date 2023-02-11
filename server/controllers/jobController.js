@@ -26,9 +26,18 @@ const getJobs = async (req, res)=>{
     const dbRef = ref(db);
     await get(child(dbRef, `jobs/${req.body["uid"]}`)).then((snapshot) => {
         if (snapshot.exists()) {
-            res.send(snapshot.val())
+            const jobs = []
+            // convert the object to an array
+            for (const key in snapshot.val()) {
+                if (snapshot.val().hasOwnProperty(key)) {
+                    let job = snapshot.val()[key];
+                    job["uid"] = key;
+                    jobs.push(job);
+                }
+            }
+            res.send(jobs);
         } else {
-            res.send("No data available");
+            res.send([]);
         }
     }).catch((error) => {
         res.send(error);
@@ -106,9 +115,32 @@ const getJobsByDistance = async(req,res) => {
 
 }
 
+const getAllJobs = async (req, res) => {
+    const dbRef = ref(db);
+    await get(child(dbRef,"jobs")).then(snapshot => {
+        const jobs = snapshot.val();
+        const jobsArray = [];
+        for (const key in jobs) {
+            if(jobs.hasOwnProperty(key)){
+                const job = jobs[key];
+                for(const id in job){
+                    let data = job[id];
+                    data["uid"] = id;
+                    jobsArray.push(data);
+                }
+            }
+        }
+        res.send(jobsArray);
+    }).catch(err => {
+        let errorMessage = err.message;
+        res.send([]);
+    })
+}
+
 module.exports = {
     addJob,
     getJobs,
     getJobsByCategory,
-    getJobsByDistance
+    getJobsByDistance,
+    getAllJobs
 }

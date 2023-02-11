@@ -5,39 +5,39 @@ import ActionButton from "../Buttons/ActionButton"
 import { Modal} from 'react-bootstrap'
 import JobCard from "./JobCard/JobCard"
 import ChatCard from "../ChatCard/ChatCard"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { BusinessContext } from "../../context/businessContext"
+import { ClientContext } from "../../context/clientContext"
+import axios from "axios"
 
 const ChatWindow = ({flow}) => {
     const [show, setShow] = useState(false)
     const [displayChat, setDisplayChat] = useState(false)
     const [chat, setChat] = useState(null)
-    const [jobs, setJobs] = useState([
-        {
-                name:"job to do-1",
-                from: "uid",
-                bid : "4895",
-                address: "addresses[addressHighlight]",
-                status: "bidOn",
-                startingBid: "120",
-                description: "descriptionsgasghajdskglhfkljggfaklhgklhfak;lsjgjk;ldjkl;gjf. ,klgjklsjkl ",
-                category: "category",
-                to: "",
-                settled: "",
-                uid:"-NO-ZRmmTyYKvu_7nLgn",
-        },{
-                name:"job to do-2",
-                from: "uid",
-                bid : "4895",
-                address: "addresses[addressHighlight]",
-                status: "bidOn",
-                startingBid: "120",
-                description: "descriptionsgasghajdskglhfkljggfaklhgklhfak;lsjgjk;ldjkl;gjf. ,klgjklsjkl ",
-                category: "category",
-                to: "",
-                settled: "",
-                uid:"-NO-_8l58lpdH9o5UplO"     
+    const [jobs, setJobs] = useState([])
+
+    const {uid} = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
+    useEffect(() => {
+        const url = import.meta.env.VITE_BASE_URL
+        if(flow === "client"){
+            const getJobs = async() => {
+                const response = await axios.post(`${url}/api/jobs/get`, {
+                    uid: uid
+                }) 
+                console.log(response.data)
+                setJobs(response.data) 
+            }
+            getJobs()
+        }else if(flow === "business"){
+            const getJobs = async() => {
+                const response = await axios.get(`${url}/api/jobs/getAll`) 
+                console.log(response.data)
+                setJobs(response.data) 
+            }
+            getJobs()
         }
-    ])
+    },[uid])
+
     const handleOpenChat = (id) => {
         setChat(jobs[id])   
         setDisplayChat(true)
