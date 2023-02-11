@@ -1,0 +1,26 @@
+.arrowbutton {
+    cursor: pointer;
+}
+.chat__header{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 4px;
+}
+// now style the messages - one left and one right
+.other_msg{
+    background-color: #f1f0f0;
+    border-radius: 10px 10px 10px 0;
+    padding: 10px;
+    margin: 10px 0; 
+    width: 60%;
+    float: left;
+}
+.self_msg{
+    background-color: #dcf8c6;
+    border-radius: 10px 10px 0 10px;
+    padding: 10px;
+    margin: 10px 0;
+    width: 60%;
+    float: right;
+}
