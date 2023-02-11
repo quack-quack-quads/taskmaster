@@ -7,19 +7,23 @@ import maid from "../assets/maid.png"
 import security from "../assets/security.png"
 import more from "../assets/more.png"
 import home from "../assets/home.png"
-import { useState, useEffect, useLayoutEffect, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef, useContext } from 'react'
 import { BsGoogle, BsTwitter, BsGithub, BsDiscord, BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs'
 import { Modal, Button } from 'react-bootstrap'
 import { gsap } from "gsap"
 import LoginImg from '../assets/address.gif'
 import ActionButton from "./Buttons/ActionButton"
 import { ToastContainer, toast } from 'react-toastify';
+import { ClientContext } from "../context/clientContext"
+import { postJob, getJob } from "../utilities/Jobs"
+import { useNavigate } from "react-router-dom";
 
 export default function JobListing() {
 
     //Fetched Data
     const [addresses, setAddresses] = useState([]);
 
+    const { uid, name, setUid } = useContext(ClientContext);
 
 
     const [name1, setName] = useState("Plumber");
@@ -119,41 +123,41 @@ export default function JobListing() {
             setCat(5)
         }
     }
+    const navigate = useNavigate();
     const handleDone = () => {
         var obj = {
-            uid: "",
+            uid: uid,
             job: {
-                from: "",
+                from: uid,
                 address: addresses[addressHighlight],
                 status: "bidOn",
                 startingBid: bid,
                 description: description,
                 category: category,
                 to: "",
-                settled: ""
+                settled: "",
+
             }
 
         }
+        postJob(obj);
         console.log(obj)
+        
+        navigate("/client");
     }
-    console.log("Address Highlight : ", addressHighlight);
     const handleAddrressClick = (type, count) => {
 
         if (type === "Other") {
             setShow(!show);
         }
         else {
-            console.log(type)
             setAddressHighlight(count);
             setAddress(addresses[count]);
-            console.log(addresses[count]);
         }
     }
     const handleModalDetectClick = (arg) => {
-        console.log("clicked detect")
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition((pos) => {
-                console.log(pos.coords.latitude, pos.coords.longitude);
                 setLatitude(pos.coords.latitude);
                 setLongitude(pos.coords.longitude);
                 setAddress("");
@@ -182,9 +186,7 @@ export default function JobListing() {
         setLoadedAddress(true)
     }
     const handleModalChange = async (event) => {
-        console.log(event);
         setpincode(event.target.value);
-        console.log(event.target.value);
     }
     const handleModalAddressChange = (event) => {
         setAddress(event.target.value);
@@ -202,18 +204,17 @@ export default function JobListing() {
         }
         var add = addresses
         add.push(obj)
-        console.log(add)
         setAddresses(add)
         setShow(false)
     }
     const [initialRender, setInitialRender] = useState(true)
+    const [initLoad, setInitLoad] = useState(true);
     let tl = gsap.timeline();
 
     useLayoutEffect(() => {
         if (change !== -1) {
 
 
-            console.log("herte");
 
             if (prev) {
                 tl.fromTo(".form-container", {
@@ -255,8 +256,6 @@ export default function JobListing() {
 
 
 
-                console.log("here");
-
                 if (prev) {
                     tl.to(".form-container", {
                         duration: 0.5,
@@ -265,7 +264,6 @@ export default function JobListing() {
                         ease: "power1.out",
                         onComplete: () => {
                             setCurr(curr1);
-                            console.log(curr1);
                             setChange(curr);
 
                         }
@@ -286,7 +284,6 @@ export default function JobListing() {
                         ease: "power1.out",
                         onComplete: () => {
                             setCurr(curr1);
-                            console.log(curr1);
                             setChange(curr);
 
                         }
