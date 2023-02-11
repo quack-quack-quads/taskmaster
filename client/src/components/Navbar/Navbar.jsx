@@ -51,13 +51,16 @@ const Navbar = () => {
                     <input type="email" className="form-control shadow-none"
                         placeholder="example@example.com"
                     />
+                    <input type="password" className="form-control shadow-none"
+                        placeholder="Password"
+                    />
                     <div className="d-flex justify-content-center">
                         <ActionButton
                             text={<BsArrowRightShort size={25} />}
                         />
                     </div>
                 </div>
-                <div className="orrow d-flex justify-content-center mt-3 mb-3">
+                {/* <div className="orrow d-flex justify-content-center mt-3 mb-3">
                     <b>OR USE</b>
                 </div>
                 <div className="socialsrow d-flex justify-content-center">
@@ -73,7 +76,7 @@ const Navbar = () => {
                     <div className="socialicon">
                         <BsDiscord size={30} />
                     </div>
-                </div>
+                </div> */}
             </Modal.Body>
         </Modal>
     </div>
