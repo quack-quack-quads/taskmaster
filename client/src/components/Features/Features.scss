@@ -1,6 +1,7 @@
 @import '../../theme.scss';
 
 .features {
+    margin-top: 15vh;
     padding: 50px;
     color: $textColor;
     .line {
@@ -15,7 +16,7 @@
   );
     }
     .features-heading {
-        font-size: 4vw;
+        font-size: xx-large;
         margin-bottom: 1.5vw;
     }
     @media (max-width:767px) and (min-width:0px) {
