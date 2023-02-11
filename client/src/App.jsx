@@ -11,13 +11,13 @@ import { Business, Client, Home } from "./pages/index";
 
 //components
 
-
 function App() {
   return (
     <div className="App">
       
       <Router>
         <Routes>
+          <Route path="/joblisting" element={<JobListing/>}/>
           <Route exact path="/" element={<Home />} />
           <Route path="/client" element={<Client />} />
           <Route path="/business" element={<Business />} />

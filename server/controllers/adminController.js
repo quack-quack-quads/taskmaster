@@ -1,5 +1,5 @@
 const { createUserWithEmailAndPassword, signInWithEmailAndPassword } = require("firebase/auth");
-const { ref, set, get, push, child} = require("firebase/database");
+const { ref, set, get, push, child, update} = require("firebase/database");
 const { db, auth } = require("../firebase-config")
 
 const checkIFAdmin = async(uid) => {
@@ -149,6 +149,29 @@ const approveWorker = async(req,res) => {
         }
     })
     
+}
+
+const updateAdmin = async(req,res) => {
+    const uid = req.body.uid;
+    const data = req.body;
+    delete data["uid"];
+    await checkIFAdmin(uid)
+    .then(async(admin)=>{
+        if(admin !== null){
+            const dbRef = ref(db);
+            await update(ref(db, `admins/${uid}`), data)
+            .then(()=>{
+                res.send("Admin updated");
+            })
+            .catch((error)=>{
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                res.send(errorMessage);
+            })
+        }else{
+            res.send("You are not an admin");
+        }
+    })
 }
 
 module.exports = {

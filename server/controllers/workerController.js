@@ -1,5 +1,5 @@
 const { createUserWithEmailAndPassword, signInWithEmailAndPassword } = require("firebase/auth");
-const { ref, set, get, push, child} = require("firebase/database");
+const { ref, set, get, push, child, update} = require("firebase/database");
 const { db, auth } = require("../firebase-config")
 
 const createWorker = async(uid, data)=>{
@@ -62,8 +62,25 @@ const getWorker = async (req, res)=>{
     });
 }
 
+const updateWorker = async(req,res) => {
+    const dbRef = ref(db);
+    let data = req.body;
+    const uid = data["uid"];
+    delete data["uid"];
+    const newWorkerKey = push(child(dbRef, 'workers')).key;
+    await update(ref(db, `workers/${uid}`), data).catch(
+        (error)=>{
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            res.send(errorMessage);
+        }
+    );
+    res.send("Updated");
+}
+
 module.exports = {
     signUp,
     signIn,
-    getWorker
+    getWorker,
+    updateWorker
 }

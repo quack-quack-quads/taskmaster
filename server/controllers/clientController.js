@@ -1,5 +1,5 @@
 const { createUserWithEmailAndPassword, signInWithEmailAndPassword } = require("firebase/auth");
-const { ref, set, get, push, child} = require("firebase/database");
+const { ref, set, get, push, child, update} = require("firebase/database");
 const { db, auth } = require("../firebase-config")
 
 
@@ -56,8 +56,26 @@ const getClient = async (req, res)=>{
     });
 }
 
+const updateClient = async (req,res) => {
+    const dbRef = ref(db);
+    let data = req.body;
+    const uid = data["uid"];
+    delete data["uid"];
+    const newClientKey = push(child(dbRef, 'clients')).key;
+    await update(ref(db, `clients/${uid}`), data).catch(
+        (error)=>{
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            res.send(errorMessage);
+        }
+    );
+    res.send("Updated");
+}
+
+
 module.exports = {
     signUp,
     signIn,
-    getClient
+    getClient,
+    updateClient
 }
