@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createAdmin, getAdmin, signIn, getAllAdmins, approveWorker } = require("../controllers/adminController")
+const { createAdmin, getAdmin, signIn, getAllAdmins, approveWorker, getWorkers } = require("../controllers/adminController")
 
 const { ref, set, get, push, child} = require("firebase/database");
 const { db, auth } = require("../firebase-config")
@@ -15,5 +15,7 @@ router.route("/getAdmins")
     .post(getAllAdmins)
 router.route("/approveWorker")
     .post(approveWorker)
+router.route("/getWorkers")
+    .get(getWorkers)
 
 module.exports = router;

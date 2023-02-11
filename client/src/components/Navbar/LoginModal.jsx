@@ -15,11 +15,29 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
     const [emailAdd, setEmailAdd] = useState("");
     const [password, setPassword] = useState("");
 
-    const {uid,setDetails } = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
+    const { setDetails } = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
+
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
 
     const login = async () => {
+        if (validateEmail(emailAdd) === null || password.length < 8) {
+            alert("Please enter the details");
+            return;
+        }
         setWaiting(true);
         var data = await loginapi(emailAdd, password, flow);
+        console.log(data["uid"]);
+        if (data["uid"] === undefined) {
+            alert("Login Failed!");
+            dismiss();
+            return
+        }
         setDetails(data["uid"], data["name"], data['email'], data['phone'], data['starredWorkers'], data['jobList'], data['savedAddresses']);
         setWaiting(false);
         // console.log("here",uid);
@@ -57,6 +75,8 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
                     setEmailAdd(event.target.value);
                 }}
             />
+            {console.log(validateEmail(emailAdd))}
+            <p className="invalid-text">{!validateEmail(emailAdd) ? `Enter a valid email address` : ""}</p>
 
             <input type="password" className="form-control shadow-none"
                 placeholder="Password"
@@ -64,15 +84,16 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
                     setPassword(event.target.value);
                 }}
             />
+            <p className="invalid-text">{password.length < 8 ? `Password cannot be less than 8 characters` : ""}</p>
 
             <div className="d-flex justify-content-center">
                 <ActionButton
                     text={
                         waiting ?
-                        <Spinner/>:
-                        <BsArrowRightShort size={25}
-                            onClick={login}
-                        />
+                            <Spinner /> :
+                            <BsArrowRightShort size={25}
+                                onClick={login}
+                            />
                     }
                 />
             </div>

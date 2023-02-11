@@ -18,7 +18,7 @@ import { ClientContext } from "../context/clientContext"
 import { postJob, getJob } from "../utilities/Jobs"
 import { useNavigate } from "react-router-dom";
 
-export default function JobListing() {
+export default function JobListing(props) {
 
     //Fetched Data
     const [addresses, setAddresses] = useState([]);
@@ -48,6 +48,8 @@ export default function JobListing() {
     const [category, setCategory] = useState("");
     const [addressName, setAddressName] = useState("");
     const [loaded, setLoadedAddress] = useState(false);
+    const [highlighter, setHighlighter] = useState(-1);
+    const [title, setTitle] = useState("");
 
     // Modal data
     const [show, setShow] = useState(false);
@@ -78,6 +80,12 @@ export default function JobListing() {
             }
         }
         else if (curr === 1) {
+            if (title.length === 0) {
+                alert("Title cannot be empty")
+                return;
+            }
+        }
+        else if (curr === 2) {
             if (description.length < 50) {
                 alert("Please Enter at least 50 characters")
                 // toast.error("Please Select a Cateogory!", {
@@ -86,7 +94,7 @@ export default function JobListing() {
                 return;
             }
         }
-        else if (curr === 3) {
+        else if (curr === 4) {
             if (addressHighlight === -1) {
                 alert("Please Slect Your address")
                 return;
@@ -129,6 +137,7 @@ export default function JobListing() {
             uid: uid,
             job: {
                 from: uid,
+                title: title,
                 address: addresses[addressHighlight],
                 status: "bidOn",
                 startingBid: bid,
@@ -142,8 +151,8 @@ export default function JobListing() {
         }
         postJob(obj);
         console.log(obj)
-        
-        navigate("/client");
+
+        props.setShow(false);
     }
     const handleAddrressClick = (type, count) => {
 
@@ -152,6 +161,7 @@ export default function JobListing() {
         }
         else {
             setAddressHighlight(count);
+            setHighlighter(count);
             setAddress(addresses[count]);
         }
     }
@@ -206,6 +216,10 @@ export default function JobListing() {
         add.push(obj)
         setAddresses(add)
         setShow(false)
+    }
+    const handleTitleChange = (event) => {
+        setTitle(event.target.value);
+
     }
     const [initialRender, setInitialRender] = useState(true)
     const [initLoad, setInitLoad] = useState(true);
@@ -318,9 +332,14 @@ export default function JobListing() {
         return (
             addresses.map((items) => {
                 count = count + 1;
+
                 return (
+
                     <div className={`col-${window.innerWidth <= 350 ? '12' : '6'}  col-sm-4 col1 d-flex justify-content-center `} onClick={() => { handleAddrressClick(items, count) }}>
-                        <Card name={items.name} image={home} para={para} width={'7rem'} height={'10rem'} mtTitle={'2'} class={`transparent`} highlight={addressHighlight === count ? "highlight" : ""} />
+                        {console.log(addressHighlight === highlighter)
+                        
+                        }
+                        <Card name={items.name} image={home} para={para} width={'7rem'} height={'10rem'} mtTitle={'2'} class={`transparent`} highlight={addressHighlight === highlighter ? "highlight" : ""} />
                     </div>
                 )
 
@@ -331,7 +350,7 @@ export default function JobListing() {
     const renderForm = () => {
         switch (curr) {
 
-            case 3:
+            case 4:
                 return (
                     <div className="form1">
                         <div className="row">
@@ -349,7 +368,7 @@ export default function JobListing() {
                             </div>
 
                         </div>
-                        <div className="row mt-7 gx-0">
+                        <div className="row mt-7 gx-0 mb-5 ">
                             <div className="col d-flex justify-content-center">
                                 <button className="btn btn-info btn-lg next-button" onClick={handlePrev}>
                                     Prev
@@ -365,7 +384,7 @@ export default function JobListing() {
                 )
                 break;
 
-            case 2:
+            case 3:
                 return (
                     <div className="form2" >
                         <div className="row">
@@ -379,8 +398,42 @@ export default function JobListing() {
                                 <input className="form-control name-inp" placeholder="Starting Bid" onChange={handleBidChange} value={bid}>
                                 </input>
                             </div>
+                            {console.log(bid)}
+                            <p className="invalid-text">{/\D/.test(bid) ? `Enter only numbers.` : ""}</p>
                         </div>
-                        <div className="row mt-7">
+                        <div className="row mt-7 mb-5">
+                            <div className="col d-flex justify-content-center">
+                                <button className="btn btn-info btn-lg next-button" onClick={handlePrev} >
+                                    Prev
+                                </button>
+                                <button className="btn btn-info btn-lg next-button next" onClick={handleNext}>
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                )
+            
+            case 1:
+                return (
+                    <div className="form3" >
+                        <div className="row">
+                            <div className="col d-flex justify-content-center mt-7">
+                                <h1 className="txt">Enter Job Title</h1>
+                            </div>
+
+                        </div>
+                        <div className="row mt-5">
+                            <div className="col d-flex justify-content-center mt-5">
+                                <input className="form-control name-inp" placeholder="Description" onChange={handleTitleChange}>
+                                </input>
+
+                            </div>
+                            {console.log(description.length)}
+                            <p className="invalid-text">{title.length == 0  ? `Job Title cannot be empty.` : ""}</p>
+                        </div>
+                        <div className="row mt-7 mb-5">
                             <div className="col d-flex justify-content-center">
                                 <button className="btn btn-info btn-lg next-button" onClick={handlePrev} >
                                     Prev
@@ -394,8 +447,7 @@ export default function JobListing() {
                     </div>
                 )
 
-
-            case 1:
+            case 2:
                 return (
                     <div className="form3" >
                         <div className="row">
@@ -408,9 +460,12 @@ export default function JobListing() {
                             <div className="col d-flex justify-content-center mt-5">
                                 <input className="form-control name-inp" placeholder="Description" onChange={handleDescriptionChange}>
                                 </input>
+
                             </div>
+                            {console.log(description.length)}
+                            <p className="invalid-text">{description.length < 50 ? `${50 - description.length} more caraacter required.` : ""}</p>
                         </div>
-                        <div className="row mt-7">
+                        <div className="row mt-7 mb-5">
                             <div className="col d-flex justify-content-center">
                                 <button className="btn btn-info btn-lg next-button" onClick={handlePrev} >
                                     Prev
@@ -434,23 +489,24 @@ export default function JobListing() {
 
 
                         </div>
-                        <div className="row mt-4 ">
-                            <div className={`col-${window.innerWidth <= 350 ? '12' : '6'}  col-sm-4 col1 d-flex justify-content-center  `} onClick={() => { handleCategorySelection('Plumbing') }}>
+                        <div className="row mt-4 gx-0 ml-sm-5 row1 d-flex justify-content-center">
+                            <div className={`col-${window.innerWidth <= 350 ? '12' : '6'}   col-sm-4 col-md-4  col1 d-flex justify-content-center  `} onClick={() => { handleCategorySelection('Plumbing') }}>
                                 <Card name={name1} image={plumbing} para={para} width={'7rem'} height={'10rem'} mtTitle={'2'} highlight={cat === 0 ? "highlight" : null} />
                             </div>
-                            <div className={`col-${window.innerWidth <= 350 ? '12' : '6'} mt-${window.innerWidth <= 350 ? '3' : '0'} col-sm-4 col1 d-flex justify-content-center  `} onClick={() => { handleCategorySelection('Electrician') }}>
+                            <div className={`col-${window.innerWidth <= 350 ? '12' : '6'}  mt-${window.innerWidth <= 350 ? '3' : '0'} col-sm-4 col-md-4 col1 d-flex justify-content-center  `} onClick={() => { handleCategorySelection('Electrician') }}>
                                 <Card name={name2} image={electrician} para={para} width={'7rem'} height={'10rem'} mtTitle={'2'} highlight={cat === 1 ? "highlight" : null} />
                             </div>
-                            <div className={`col-${window.innerWidth <= 350 ? '12' : '6'} col-sm-4 col1 mt-3 mt-sm-0 d-flex justify-content-center `} onClick={() => { handleCategorySelection('Janitor') }}>
-                                <Card name={name3} image={janitor} para={para} width={'6rem'} height={'10rem'} mtTitle={'2'} highlight={cat === 2 ? "highlight" : null} />
+                            <div className={`col-${window.innerWidth <= 350 ? '12' : '6'} col-sm-4  col-md-4 col1 mt-3 mt-sm-0 d-flex justify-content-center `} onClick={() => { handleCategorySelection('Janitor') }}>
+                                <Card name={name3} image={janitor} para={para} width={'6rem'} height={'10rem'} mtTitle={'2'} mr={'5'} highlight={cat === 2 ? "highlight" : null} />
                             </div>
-                            <div className={`col-${window.innerWidth <= 350 ? '12' : '6'} col-sm-4 col1 mt-3  mt-sm-3 d-flex justify-content-center`} onClick={() => { handleCategorySelection('Maid') }}>
+
+                            <div className={`col-${window.innerWidth <= 350 ? '12' : '6'} col-sm-4  col1 mt-3 col-md-4 mt-sm-3 d-flex justify-content-center`} onClick={() => { handleCategorySelection('Maid') }}>
                                 <Card name={name4} image={maid} para={para} width={'7rem'} height={'10rem'} mtTitle={'4'} mtImage={'3'} highlight={cat === 3 ? "highlight" : null} />
                             </div>
-                            <div className={`col-${window.innerWidth <= 350 ? '12' : '6'} col-sm-4 col1 mt-3  mt-sm-3 d-flex justify-content-center `} onClick={() => { handleCategorySelection('Security') }}>
+                            <div className={`col-${window.innerWidth <= 350 ? '12' : '6'} col-sm-4 col1 mt-3 ml-sm-5 mt-sm-3  col-md-4 d-flex justify-content-center `} onClick={() => { handleCategorySelection('Security') }}>
                                 <Card name={name5} image={security} para={para} width={'7rem'} height={'10rem'} highlight={cat === 4 ? "highlight" : null} />
                             </div>
-                            <div className={`col-${window.innerWidth <= 350 ? '12' : '6'} col-sm-4 col1 mt-3 mt-sm-3 d-flex justify-content-center `} onClick={() => { handleCategorySelection('More') }}>
+                            <div className={`col-${window.innerWidth <= 350 ? '12' : '6'} col-sm-4 col1 mt-3 mt-sm-3  col-md-4 d-flex justify-content-center `} onClick={() => { handleCategorySelection('More') }}>
                                 <Card name={"Custom"} image={more} para={para} width={'6rem'} mtTitle={'3'} height={'10rem'} highlight={cat === 5 ? "highlight" : null} />
                             </div>
 
@@ -470,14 +526,14 @@ export default function JobListing() {
                     </div>
                 )
 
-            case 4:
+            case 5:
                 return (
                     <div className="form6" >
                         <div className="row d-flex justify-content-center roww mt-6">
                             <div className="col d-flex justify-content-center mt-7">
                                 <h1 className="txt">You're All Set!</h1>
                             </div>
-                            <div className="row mt-7">
+                            <div className="row mt-7 mb-5">
                                 <div className="col d-flex justify-content-center">
                                     <button className="btn btn-info btn-lg next-button" onClick={handleDone}>
                                         Done
@@ -582,15 +638,10 @@ export default function JobListing() {
             </Modal>
 
             <ToastContainer />
-            <div className="container job-form mt-6">
+            <div className="container-fluid job-form ">
 
                 <div className="row">
-                    <div className="col-xs-12 col-md-6">
-                        <div className="container">
-
-                        </div>
-                    </div>
-                    <div className="col-xs-12 col-md-6 form-col">
+                    <div className="col-xs-12 col-md-12 form-col">
                         <div className="container form-container">
                             {renderForm()}
                         </div>

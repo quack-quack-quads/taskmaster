@@ -1,12 +1,16 @@
 @import '../../theme.scss';
 
 .cat-card {
-    // @include glass-look;
-    padding: 10px;
-    max-height: 100px;
-    margin: 20px;
-    width:100%;
+
     .cat-text {
+        margin-top: 10px;
         text-align: center;
+        margin-bottom: 10px;
+    }
+    .cat-icon {
+        margin-top: 5px;
+        max-height: 10vh;
+        max-width: 10vh;
+        height: auto;
     }
 }
