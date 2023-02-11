@@ -7,6 +7,12 @@ const createWorker = async(uid, data)=>{
     data["password"] = null;
     data["verified"] = false; // ! admin will verify the worker
     const newClientKey = push(child(dbRef, 'workers')).key;
+    // ! add this worker to the pending_approvals list of workers
+    await set(ref(db, `pending_approvals/${uid}`), data).catch(err => {
+        const errorCode = err.code;
+        const errorMessage = err.message;
+        res.send(errorMessage);
+    })
     await set(ref(db, `workers/${uid}`), data).catch(
         (error)=>{
             const errorCode = error.code;
