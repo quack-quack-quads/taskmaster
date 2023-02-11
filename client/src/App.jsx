@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 //styles
 import "./App.scss";
+import { BsChatDotsFill } from "react-icons/bs"
 
 //tools
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
@@ -9,12 +10,12 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Business, Client, Home } from "./pages/index";
 
 //components
-import Navbar from "./components/Navbar/Navbar";
+
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />

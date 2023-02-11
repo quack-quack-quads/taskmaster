@@ -8,7 +8,7 @@ const addJob = async (req, res) =>{
     const data = req.body['job'];
 
     const newJobKey = push(child(dbRef, `jobs/${uid}`)).key;
-    set(ref(db, `jobs/${uid}/${newJobKey}`), data).then(
+    await set(ref(db, `jobs/${uid}/${newJobKey}`), data).then(
         ()=>{
             res.send(newJobKey);
         }
@@ -22,7 +22,7 @@ const addJob = async (req, res) =>{
 
 const getJobs = async (req, res)=>{
     const dbRef = ref(db);
-    get(child(dbRef, `jobs/${req.body["uid"]}`)).then((snapshot) => {
+    await get(child(dbRef, `jobs/${req.body["uid"]}`)).then((snapshot) => {
         if (snapshot.exists()) {
             res.send(snapshot.val())
         } else {

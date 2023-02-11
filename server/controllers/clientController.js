@@ -7,7 +7,7 @@ const createClient = async(uid, data)=>{
     const dbRef = ref(db);
     data["password"] = null;
     const newClientKey = push(child(dbRef, 'clients')).key;
-    set(ref(db, `clients/${uid}`), data).catch(
+    await set(ref(db, `clients/${uid}`), data).catch(
         (error)=>{
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -17,7 +17,7 @@ const createClient = async(uid, data)=>{
 }
 
 const signUp = async (req, res) => {
-    createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
+    await createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
     .then(async(userCredential) => {
         const user = userCredential.user;
         await createClient(user.uid, req.body);
@@ -31,7 +31,7 @@ const signUp = async (req, res) => {
 }
 
 const signIn = async (req, res)=>{
-    signInWithEmailAndPassword(auth, req.body.email, req.body.password)
+    await signInWithEmailAndPassword(auth, req.body.email, req.body.password)
     .then((userCredential) => {
         const user = userCredential.user;
         res.send(user);
@@ -45,7 +45,7 @@ const signIn = async (req, res)=>{
 
 const getClient = async (req, res)=>{
     const dbRef = ref(db);
-    get(child(dbRef, `clients/${req.body["uid"]}`)).then((snapshot) => {
+    await get(child(dbRef, `clients/${req.body["uid"]}`)).then((snapshot) => {
         if (snapshot.exists()) {
             res.send(snapshot.val())
         } else {
