@@ -1,0 +1,7 @@
+@import './theme.scss';
+.App{
+    background: rgb(211,251,171);
+    background: linear-gradient(263deg, $backgroundGreenLight 49%, $backgroundGreenDark 100%); 
+    margin : 0;
+
+}
