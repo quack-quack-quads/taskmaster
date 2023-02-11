@@ -18,13 +18,12 @@ import { ClientContext } from "../context/clientContext"
 import { postJob, getJob } from "../utilities/Jobs"
 import { useNavigate } from "react-router-dom";
 
-export default function JobListing(props) {
+export default function JobListing({show, setShow}) {
 
     //Fetched Data
     const [addresses, setAddresses] = useState([]);
 
     const { uid, name, setUid } = useContext(ClientContext);
-
 
     const [name1, setName] = useState("Plumber");
     const [name2, setName2] = useState("Electrician")
@@ -51,8 +50,6 @@ export default function JobListing(props) {
     const [highlighter, setHighlighter] = useState(-1);
     const [title, setTitle] = useState("");
 
-    // Modal data
-    const [show, setShow] = useState(false);
 
     // category selection states
     const [cat, setCat] = useState(null);

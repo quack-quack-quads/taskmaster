@@ -10,6 +10,10 @@ import { useContext, useState, useEffect } from 'react';
 import Clock from '../../../assets/clock.gif';
 import Auction from '../../../assets/auction.gif';
 
+import Modal from 'react-bootstrap/Modal';
+
+import { FaWindowClose } from 'react-icons/fa';
+
 const PendingTaskCard = (title, desc, bid) => {
     return <div className="PendingTaskCard container-fluid">
         <div className="row titlerow text-center">
@@ -85,9 +89,33 @@ const ClientDashboard = () => {
             ListingCard(pending[i].title, pending[i].desc, pending[i].bid)
         )
     }
+    <JobListing show={showListing} setShow={setShowListing} />
 
     return <div className="Dash">
-        <div className="dummy">Hi</div>
+        <div className="dummy"> </div>
+        <Modal
+            show={showListing}
+            onHide={()=>{
+                setShowListing(false);
+            }}
+            backdrop="static"
+            className="mod"
+            centered
+            size="lg"
+        >
+            <Modal.Title className='modtitle'>
+            <div className="close"
+                    onClick={()=>{
+                        setShowListing(false);
+                    }}
+                >
+                    <FaWindowClose/>
+                </div>
+            </Modal.Title>
+            <Modal.Body >
+                <JobListing setShow={setShowListing} />
+            </Modal.Body>
+        </Modal>
         {
             !loggedIn ?
                 <>
@@ -108,7 +136,13 @@ const ClientDashboard = () => {
                                 <p style={{ "color": "white" }}>
                                     Looking to find workers to get your job done?
                                 </p>
-                                <button className="btn btn-light btn-lg">
+                                <button className="btn btn-light btn-lg"
+                                    onClick={
+                                        () => {
+                                            setShowListing(true)
+                                        }
+                                    }
+                                >
                                     List Job Now
                                 </button>
                             </div>

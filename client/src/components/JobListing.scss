@@ -32,7 +32,7 @@
     backdrop-filter: blur(7.5px) !important;
 
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.18) !important;
-    background: linear-gradient(135deg, $c3 0%, $c5 70%) !important;
+    background: linear-gradient(135deg, $c1 0%, $c3 70%) !important;
 
     // border-radius: 10px;
     // border: 1 px solid rgba(4,4,4,0.18) !important;
@@ -40,6 +40,13 @@
     height: fit-content;
     overflow: scroll;
     overflow-x: hidden;
+    .form-control{
+        color: white;
+        border : 2px solid white;
+        border-radius: 20px;
+        margin-bottom: 15px;
+        caret-color: $c3;
+    }
 
 }
 
@@ -81,7 +88,14 @@
 
 .next-button {
     width: 8rem;
+    background-color: black!important;
+    color : white !important;
 }
+.card-title{
+    font-size: medium;
+    color : black!important;
+}
+
 
 .row{
     overflow: hidden; 
