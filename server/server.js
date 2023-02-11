@@ -5,7 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 // ! import routers
-const { authRouter, chatRouter, jobRouter } = require("./routes/index.js");
+const { workerRouter, chatRouter, jobRouter, clientRouter, adminRouter } = require("./routes/index.js");
 
 // ! middleware
 app.use(cors());
@@ -13,7 +13,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // ! routes
-app.use("/api/auth", authRouter);
+app.use("/api/auth/client", clientRouter);
+app.use("/api/auth/business", workerRouter)
+app.use("/api/auth/admin", adminRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/jobs", jobRouter);
 

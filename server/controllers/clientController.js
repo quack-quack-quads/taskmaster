@@ -3,7 +3,7 @@ const { ref, set, get, push, child} = require("firebase/database");
 const { db, auth } = require("../firebase-config")
 
 
-const createClient = (uid, data)=>{
+const createClient = async(uid, data)=>{
     const dbRef = ref(db);
     data["password"] = null;
     const newClientKey = push(child(dbRef, 'clients')).key;
@@ -18,9 +18,9 @@ const createClient = (uid, data)=>{
 
 const signUp = async (req, res) => {
     createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
-    .then((userCredential) => {
+    .then(async(userCredential) => {
         const user = userCredential.user;
-        createClient(user.uid, req.body);
+        await createClient(user.uid, req.body);
         res.send(user);
     })
     .catch((error) => {

@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { createworker, getworker } = require("../controllers/workerController")
+const { signUp, signIn, getWorker } = require("../controllers/workerController")
 
-router.route('/createWorker')
-    .post(createworker)
+router.route('/signup')
+    .post(signUp)
+router.route('/signin')
+    .post(signIn)
 router.route('/getWorker')
-    .post(getworker)
+    .post(getWorker)
 
 module.exports = router;
