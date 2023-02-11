@@ -7,15 +7,16 @@ import { BsChatDotsFill } from "react-icons/bs"
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 //screens
-import { Business, Client} from "./pages/index";
+import { Business, Client } from "./pages/index";
 
 //components
-import JobListing from "./components/JobListing";
+// import JobListing from "./components/JobListing";
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
+          {/* <Route path="/client/joblisting" element={<JobListing />} /> */}
           <Route path="/client" element={<Client />} />
           <Route path="/business" element={<Business />} />
           <Route path="/*" element={<Client />} />
