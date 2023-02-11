@@ -1,3 +1,5 @@
+@import '../theme.scss';
+
 .row1 {
     border: 2px solid black;
 }
@@ -11,6 +13,7 @@
 
 .body {
     background-image: url("../assets/background.png");
+    background-color: black;
     background-size:cover;
     background-repeat: no-repeat;
     height: 100vh;
@@ -21,12 +24,13 @@
 .job-form {
     height: 80%;
     width: 80%;
-    border: 2px solid black;
-    background: rgba(255, 252, 252, 0.645);
+    // border: 2px solid black;
+    // background: rgba(255, 252, 252, 0.645);
 
-    backdrop-filter: blur(7.5px);
+    // backdrop-filter: blur(7.5px);
 
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.18);
+    // box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.18);
+    background: linear-gradient(135deg, $c3 0%, $c5 70%) !important;
 
     border-radius: 10px;
     border: 1 px solid rgba(4,4,4,0.18);
@@ -39,8 +43,9 @@
 
 .txt {
     font-family: 'Poppins';
-    color: rgb(15, 117, 107);
-    text-align: center;
+    color: white !important;
+    text-align: start;
+    font-size: larger;
 }
 
 .name-inp {

@@ -3,7 +3,6 @@ import axios from "axios"
 const baseURL = import.meta.env.VITE_BASE_URL;
 
 const loginapi = async (email, password, flow) => {
-    console.log(baseURL);
     var payload = {
         "email": email,
         "password": password,
@@ -19,6 +18,19 @@ const loginapi = async (email, password, flow) => {
     return res;
 }
 
+const signupapi = async (payload, flow) => {
+    const res = await axios.post(
+        `${baseURL}/api/${flow}/signup`,
+        payload
+    ).then((response) => {
+        return response.data;
+    }).catch((error) => {
+        return error;
+    })
+    return res;
+}
+
 export {
-    loginapi
+    loginapi,
+    signupapi
 }
