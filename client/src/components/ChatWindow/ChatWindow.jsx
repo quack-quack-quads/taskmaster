@@ -15,6 +15,9 @@ const ChatWindow = ({flow}) => {
             animation = {false}
             >   
                 <JobCard></JobCard>
+                <JobCard></JobCard>
+                <JobCard></JobCard>
+                <JobCard></JobCard>
                 <button className="btn btn-warning floatingbtn"
                     onClick={()=>{setShow(false)}}
                     >
