@@ -1,3 +1,4 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 //styles
 import "./App.scss";
 import { BsChatDotsFill } from "react-icons/bs"
@@ -6,7 +7,7 @@ import { BsChatDotsFill } from "react-icons/bs"
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 //screens
-import {Business, Client, Home} from "./pages/index"
+import { Business, Client, Home } from "./pages/index";
 
 //components
 

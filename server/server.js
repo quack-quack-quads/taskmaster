@@ -13,9 +13,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // ! routes
-app.use("/api/auth/client", clientRouter);
-app.use("/api/auth/business", workerRouter)
-app.use("/api/auth/admin", adminRouter);
+app.use("/api/client", clientRouter);
+app.use("/api/business", workerRouter)
+app.use("/api/admin", adminRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/jobs", jobRouter);
 
