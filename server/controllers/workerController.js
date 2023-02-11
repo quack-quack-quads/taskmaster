@@ -17,10 +17,10 @@ const createWorker = async(uid, data)=>{
 }
 
 const signUp = async (req, res) => {
-    createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
+    await createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
     .then(async(userCredential) => {
         const user = userCredential.user;
-        createWorker(user.uid, req.body);
+        await createWorker(user.uid, req.body);
         res.send(user);
     })
     .catch((error) => {
@@ -31,7 +31,7 @@ const signUp = async (req, res) => {
 }
 
 const signIn = async (req, res)=>{
-    signInWithEmailAndPassword(auth, req.body.email, req.body.password)
+    await signInWithEmailAndPassword(auth, req.body.email, req.body.password)
     .then((userCredential) => {
         const user = userCredential.user;
         res.send(user);
@@ -45,7 +45,7 @@ const signIn = async (req, res)=>{
 
 const getWorker = async (req, res)=>{
     const dbRef = ref(db);
-    get(child(dbRef, `workers/${req.body["uid"]}`)).then((snapshot) => {
+    await get(child(dbRef, `workers/${req.body["uid"]}`)).then((snapshot) => {
         if (snapshot.exists()) {
             res.send(snapshot.val())
         } else {

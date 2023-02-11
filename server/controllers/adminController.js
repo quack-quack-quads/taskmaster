@@ -4,7 +4,7 @@ const { db, auth } = require("../firebase-config")
 
 const checkIFAdmin = async(uid) => {
     const dbRef = ref(db);
-    const admin = get(child(dbRef, `admins/${uid}`)).then((snapshot) => {
+    const admin = await get(child(dbRef, `admins/${uid}`)).then((snapshot) => {
         if (snapshot.exists()) {
             return snapshot.val();
         } else {
@@ -21,7 +21,7 @@ const createAdmin = async(req,res)=>{
     const data = req.body;
     console.log("data", data);
     // ! admin will share his UUID here to verify himself as the admin
-    const admin = get(child(dbRef, `admins/${req.body["uid"]}`)).then((snapshot) => {
+    const admin = await get(child(dbRef, `admins/${req.body["uid"]}`)).then((snapshot) => {
         if (snapshot.exists()) {
             return true;
         } else {
@@ -61,7 +61,7 @@ const createAdmin = async(req,res)=>{
 }
 
 const signIn = async (req, res)=>{
-    signInWithEmailAndPassword(auth, req.body.email, req.body.password)
+    await signInWithEmailAndPassword(auth, req.body.email, req.body.password)
     .then((userCredential) => {
         const user = userCredential.user;
         res.send(user);
@@ -90,10 +90,10 @@ const getAdmin = async (req, res)=>{
 
 const getAllAdmins = async (req,res) => {
     await checkIFAdmin(req.body.uid)
-    .then((admin)=>{
+    .then(async(admin)=>{
         if(admin !== null){
             const dbRef = ref(db);
-            get(child(dbRef, `admins`)).then((snapshot) => {
+            await get(child(dbRef, `admins`)).then((snapshot) => {
                 if (snapshot.exists()) {
                     res.send(snapshot.val());
                 } else {
