@@ -1,13 +1,13 @@
 import { BusinessProvider } from "../../context/businessContext"
 import Navbar from "../../components/Navbar/Navbar";
 import ChatWindow from "../../components/ChatWindow/ChatWindow";
-import Home from './Home/Home'
+import BusinessHome from './BusinessHome/BusinessHome'
 
 const Business = () => {
   return (
     <BusinessProvider>
       <Navbar flow = "business"/>
-      <Home />
+      <BusinessHome />
       <ChatWindow flow = "business"/>
     </BusinessProvider>
   )

@@ -1,0 +1,49 @@
+@import '../../../theme.scss';
+
+.ClientDashboard{
+    height: fit-content;
+    .Welcome{
+        width: 90%;
+        height: 40vh;
+        margin: auto;
+        background: linear-gradient(135deg, $c1 0%, $c3 70%);
+        border-radius: 20px;
+        font-size: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        color : rgb(251, 251, 251);
+    }
+    .listheading{
+        font-size: 25px;
+        color : rgb(242, 242, 242);
+    }
+    .PendingTaskCard{
+        width: 86%;
+        margin: auto;
+        margin-top: 30px;
+        background-color: white;
+        border-radius: 20px;
+        padding : 20px 30px;
+        .btn{
+            margin : 20px;
+            width: 150px;
+        }
+        .titlerow{
+            font-size: x-large;
+            display: flex;
+            justify-content: center;
+        }
+        .bidrow{
+            font-weight: bold;
+            font-size: large;
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+    .pendingrow{
+        background: linear-gradient(135deg, $c1 0%, $c3 70%);
+        margin-top : 5vh;
+    }
+}

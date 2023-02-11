@@ -1,8 +1,8 @@
 import {useState, useEffect, createContext} from "react";
 
-export const ClientContext = createContext();
+const ClientContext = createContext();
 
-export const ClientProvider = ({
+const ClientProvider = ({
     children
 }) => {
     const [uid, setUid] = useState(null);
@@ -38,4 +38,8 @@ export const ClientProvider = ({
             {children}
         </ClientContext.Provider>
     )
+}
+export {
+    ClientContext,
+    ClientProvider
 }

@@ -1,19 +1,19 @@
 import { ClientProvider } from "../../context/clientContext"
 import Navbar from "../../components/Navbar/Navbar";
 import ChatWindow from "../../components/ChatWindow/ChatWindow";
-import Home from './Home/Home'
-import JobListing from "../../components/JobListing";
-import { useState } from "react";
+import ClientHome from './ClientHome/ClientHome'
+
+import { useState, useEffect } from "react";
+
 
 const Client = () => {
-  const [show, setShow] = useState(true);
-  console.log(show);
   return (
     <ClientProvider>
+      <div className="wrapper">
       <Navbar flow="client" />
-        <Home/>
-      {/* <JobListing/> */}
+      <ClientHome flow="client"/>
       <ChatWindow flow="client" />
+      </div>
     </ClientProvider>
   )
 }

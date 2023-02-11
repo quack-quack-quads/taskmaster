@@ -2,62 +2,32 @@ import "./ChatCard.scss"
 import { BsArrowLeftShort } from "react-icons/bs"
 import { useState, useEffect } from "react"
 import { io } from "socket.io-client"
+import axios from "axios"
+
 const ChatCard = (props) => {
-    console.log(props)
     const [socket, setSocket] = useState()
-    const [messages, setMessages] = useState([
-        {
-            message: "hello",
-            from: "uid"
-        }, {
-            message: "hello",
-            from: "uid"
-        }, {
-            message: "hello",
-            from: "own"
-        }, {
-            message: "hello",
-            from: "uid"
-        }, {
-            message: "hello",
-            from: "uid"
-        }, {
-            message: "hello",
-            from: "uid"
-        }, {
-            message: "hello",
-            from: "uid"
-        }, {
-            message: "hello",
-            from: "uid"
-        }, {
-            message: "hello",
-            from: "own"
-        }, {
-            message: "hello",
-            from: "uid"
-        }, {
-            message: "hello",
-            from: "uid"
-        }, {
-            message: "hello",
-            from: "uid"
-        }, {
-            message: "hello",
-            from: "own"
-        }, {
-            message: "hello",
-            from: "uid"
-        }
-    ])
+    const [messages, setMessages] = useState([])
     const handleGoBack = () => {
         props.handleCloseChat()
     }
+    const [toSend, setToSend] = useState("")
 
     useEffect(() => {
         const url = import.meta.env.VITE_BASE_URL   
+        console.log(props.chat.uid) 
+        const getMessages = async() => {
+            const response = await axios.post(`${url}/api/chat/get`, {
+                jobId: props.chat.uid
+            })
+            setMessages(response.data)
+        }
+        getMessages()
+
         const s = io(url)
         setSocket(s)
+
+        // ! join the room
+        s.emit("join-room", props.chat.uid)
 
         // ! this is a cleanup function
         // ! this is called when the component is unmounted
@@ -69,22 +39,52 @@ const ChatCard = (props) => {
 
     // ! listen for messages from the server
     useEffect(() => {
-        if(socket){
-            socket.on("chat-message", (message) => {
-                setMessages([...messages, message])
-            })
+        if(socket === null || socket === undefined) return
+        console.log("socket is set to receive message")
+        const handler = (message) => {
+            console.log("got a message")
+            setMessages((messages) => [...messages, message])
         }
-    })
+        // ! set up the event listener for changes and handler is our callback function
+        socket.on("receive-message", handler)
+
+        // ! remove event listener when component is unmounted
+        return () => {
+            socket.off("receive-message", handler)
+        }
+    
+    },[socket])
+    
+    const scrollToBottom = () => {
+        const chatcard = document.querySelector(".chatcard")
+        chatcard.scrollTop = chatcard.scrollHeight
+    }
 
     useEffect(() => {
         // scroll to bottom of the messages
-        const chatcard = document.querySelector(".container")
-        chatcard.scrollTop = chatcard.scrollHeight
-    })
+        scrollToBottom()
+    },[])
+    
+    const handleSendMessge = (message) => {
+        if(socket === null || socket === undefined) return
+        
+        console.log(props.chat.uid)
+        const toSend = {
+            message,
+            from: props.uid,
+            to: props.chat.uid
+        }
+        socket.emit("send-message", toSend, props.chat.uid)
+        console.log(toSend)
+        setMessages((messages) => [...messages, toSend])
+        setToSend("")
+        scrollToBottom()
+        
+    }
 
-    const chatMessage = (flow, message) => {
+    const chatMessage = (flow, message, index) => {
         return (
-            <div className={`chat__message ${message.from === "own" ? "self_msg" : "other_msg"}`}>
+            <div key={index} className={`chat__message ${message.from === props.uid ? "self_msg" : "other_msg"}`}>
                 <p className="chat__message--text">{message.message}</p>
                 <div className="row">
                     <div className="col-6">
@@ -123,7 +123,7 @@ const ChatCard = (props) => {
             <div className="chatcol">
                 {
                     messages.map((message, index) => {
-                        return chatMessage(props.flow, message)
+                        return chatMessage(props.flow, message, index)
                     })
                 }
             </div>
@@ -131,12 +131,17 @@ const ChatCard = (props) => {
                 props.flow == "client" ?
                     <></> :
                     <div className="messagebar">
-                        <input type="email" className="form-control shadow-none"
-                            placeholder="Enter message"
-                            onChange={(event) => {
-                                setEmailAdd(event.target.value);
-                            }}
-                        />
+                        <form onSubmit={(event) => {
+                            event.preventDefault()
+                            handleSendMessge(toSend)
+                        }} >
+                            <input type="text" className="form-control shadow-none"
+                                placeholder="Enter message"
+                                onChange={(event) => {
+                                    setToSend(event.target.value)
+                                }}
+                            />
+                        </form>
                     </div>
             }
         </div>
