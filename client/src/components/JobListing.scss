@@ -1,0 +1,73 @@
+.row1 {
+    // border: 2px solid black;
+}
+
+.col1 {
+    // border: 5px solid yellow;
+    // padding: 0;
+    width: fit-content;
+}
+
+.body {
+    background-image: url("../assets/background.png");
+    background-size:cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    overflow-y: hidden;
+    // background: fixed;
+}
+
+.job-form {
+    height: 80%;
+    width: 80%;
+    border: 2px solid black;
+    background: rgba(255, 252, 252, 0.645);
+
+    backdrop-filter: blur(7.5px);
+
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.18);
+
+    border-radius: 10px;
+    border: 1 px solid rgba(4,4,4,0.18);
+    z-index: -1;
+    // overflow: scroll;
+
+}
+
+.txt {
+    font-family: 'Poppins';
+    color: rgb(15, 117, 107);
+}
+
+.name-inp {
+    background: none;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove;
+}
+
+.name-inp:focus {
+    background: none;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove;
+    outline: none;
+}
+
+.mt-6 {
+    margin-top: 5rem;
+}
+
+.mt-7 {
+    margin-top: 6rem;
+}
+
+.mt-8 {
+    margin-top: 7rem;
+}
+
+.next-button {
+    width: 8rem;
+}

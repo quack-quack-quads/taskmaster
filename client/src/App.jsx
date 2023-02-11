@@ -11,6 +11,8 @@ import Home from "./pages/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
 
 
+import Card from './components/Card'
+import JobListing from './components/JobListing'
 function App() {
   return (
     <div className="App">

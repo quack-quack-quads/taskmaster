@@ -8,3 +8,8 @@ router.route('/getclient').post(getClient)
 
 module.exports = router;
 
+router.route('/signup')
+    .post(signUp)
+router.route('/signin')
+    .post(signIn)
+module.exports = router;
