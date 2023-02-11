@@ -1,0 +1,57 @@
+@import '../../theme.scss';
+
+.Navbar{
+    position: fixed;
+    .row{
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px 20px;
+    }
+}
+.loginModal{
+    .modal-content,
+    .modal-body{
+        border : none;
+        border-radius: 25px;
+        background: linear-gradient(135deg, $c3 0%, $c5 70%) !important;
+        height: fit-content; 
+        padding-bottom: 2vh;
+    }
+    .arrow{
+        position : absolute;
+        margin-bottom : 0;
+    }
+    .loginimage{
+        width : auto;
+        height: 30vh;
+        margin-top : 10px;
+    }
+    .email{
+        margin : 5px 15px;
+        background: white;
+        padding : 15px 25px;
+        border-radius: 20px;
+        .emailhead{
+            margin-bottom : 20px;
+            text-align: center;
+            font-weight: 600;
+            // font-family: 'Poppins';
+        }
+        .form-control{
+            border : 2px solid $c3;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            caret-color: $c3;
+        }
+    }
+    .socialicon{
+        background-color: white;
+        padding : 10px;
+        border-radius: 100px;
+        margin : 0px 10px;
+    }
+    .socialicon:hover{
+        background-color: black;
+        color : white;
+    }
+}

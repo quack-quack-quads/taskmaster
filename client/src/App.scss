@@ -1,5 +1,7 @@
 @import './theme.scss';
-.App {
+.App{
+    background: black;
+    margin : 0;
     background-color: $primaryColor;
     color: white;
     min-width: 100vw;

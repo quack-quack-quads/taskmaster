@@ -2,8 +2,10 @@ const { network } = require("hardhat")
 const { developmentChains, VERIFICATION_BLOCK_CONFIRMATIONS } = require("../helper-hardhat-config")
 const { verify } = require("../utils/verify")
 const {storeImages} = require("../utils/uploadToPinata")
+const fs = require("fs")
 
 const IMAGES_LOCATION = "./images"
+const URI_LOCATION = "./images/uris.json"
 
 module.exports = async({getNamedAccounts, deployments}) => {
     const {deploy, log} = deployments;
@@ -33,6 +35,8 @@ module.exports = async({getNamedAccounts, deployments}) => {
         waitConfirmations: waitBlockConfirmations,
     })
 
+    saveImageUris(tokenUris)
+
     // verify contracts on etherscan if not on development chain
     if(!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY){
         await verify(jobPlatform.address, args)
@@ -50,5 +54,10 @@ const handleImageUris = async() => {
     return imageUris;
 
 } 
+
+const saveImageUris = (imageUris) => {
+    const data = JSON.stringify(imageUris);
+    fs.writeFileSync(URI_LOCATION, data);
+}
 
 module.exports.tags = ["all", "platform", "main"]

@@ -1,0 +1,47 @@
+.business-card {
+    background-image: url("../assets/job_card_template.png");
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    // border: 5px solid green;
+}
+
+.cont-body {
+    position: relative;
+    bottom: 8%;
+}
+
+.cont {
+    margin: 0;
+    width: 100% !important;
+    // transform: scale(0.6,0.6);
+    background-size: cover;
+    aspect-ratio: 2;
+    // border: 2px solid yellow;
+}
+
+.row-head1 {
+    // border: 2px solid yellow;
+    align-items: center;
+}
+
+.row-head {
+    // border: 2px solid black;
+    align-items: center;
+}
+
+.headname {
+    font-family: 'Poppins';
+    color: rgb(8, 155, 140);
+}
+
+.txt {
+    font-family: 'Poppins';
+    color: rgb(15, 117, 107);
+}

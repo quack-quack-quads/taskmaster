@@ -1,3 +1,4 @@
+firebase-config.js
 .env
 node_modules
 coverage*
@@ -6,3 +7,4 @@ deployments
 cache
 yarn.lock
 package-lock.json
+firebase-config.js
