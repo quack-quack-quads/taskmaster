@@ -9,6 +9,7 @@ import Home from "./pages/Home/Home";
 
 //components
 import Navbar from "./components/Navbar/Navbar";
+import JobListing from "./components/JobListing";
 
 function App() {
   return (

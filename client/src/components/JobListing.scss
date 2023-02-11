@@ -1,12 +1,12 @@
 .row1 {
-    // border: 2px solid black;
+    border: 2px solid black;
 }
 
 .col1 {
     // border: 5px solid yellow;
     // padding: 0;
-    width: fit-content;
-    height: 100%;
+    // width: fit-content;
+    // height: 100%;
 }
 
 .body {
@@ -31,13 +31,16 @@
     border-radius: 10px;
     border: 1 px solid rgba(4,4,4,0.18);
     z-index: -1;
-    // overflow: scroll;
+    // height: fit-content;
+    overflow: scroll;
+    overflow-x: hidden;
 
 }
 
 .txt {
     font-family: 'Poppins';
     color: rgb(15, 117, 107);
+    text-align: center;
 }
 
 .name-inp {
@@ -72,3 +75,56 @@
 .next-button {
     width: 8rem;
 }
+
+.row{
+    overflow: hidden; 
+}
+
+[class*="col-"]{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+.form-container {
+    // border: 2px solid black;
+    height: fit-content;
+    // overflow-x: hidden;
+}
+
+.form-col {
+    // border: 2px solid grey;
+    height: fit-content;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar-track
+  {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      border-radius: 10px;
+      background-color: transparent;
+      
+  }
+
+  ::-webkit-scrollbar
+  {
+      width: 8px;
+      background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb
+  {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+      background-color: turquoise;
+  }
+
+  .roww {
+    align-items: center;
+  }
+  .next {
+    margin-left: 5%;
+  }
+//   .grad1 {
+//     background: rgb(181,218,226);
+// background: linear-gradient(90deg, rgba(181,218,226,1) 21%, rgba(128,232,254,1) 43%, rgba(0,212,255,1) 52%, rgba(0,212,255,1) 58%);
+//   }
