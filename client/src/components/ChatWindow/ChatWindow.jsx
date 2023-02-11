@@ -25,14 +25,23 @@ const ChatWindow = ({flow}) => {
                     uid: uid
                 }) 
                 console.log(response.data)
-                setJobs(response.data) 
+                // only the jobs who have to field === ""
+                const filtered = response.data.filter((job) => {
+                    return job.to === ""
+                })
+                // console.log(filtered)
+                setJobs(filtered) 
             }
             getJobs()
         }else if(flow === "business"){
             const getJobs = async() => {
                 const response = await axios.get(`${url}/api/jobs/getAll`) 
                 console.log(response.data)
-                setJobs(response.data) 
+                // only the jobs who have to field === ""
+                const filtered = response.data.filter((job) => {
+                    return job.to === ""
+                })
+                setJobs(filtered) 
             }
             getJobs()
         }

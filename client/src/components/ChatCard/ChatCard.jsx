@@ -82,6 +82,22 @@ const ChatCard = (props) => {
         
     }
 
+    const handleAccept = async(message) => {
+/*
+    const userId = req.body["userId"];
+    const jobId = req.body["jobId"];
+    const workerId = req.body["workerId"];
+*/
+        const url = import.meta.env.VITE_BASE_URL
+        const response = await axios.post(`${url}/api/jobs/acceptWorkerJob`, {
+            userId: props.uid,
+            jobId: props.chat.uid,
+            workerId: message.from
+        })
+        console.log(response) 
+        console.log(props.uid, props.chat.uid, message.from)
+    }
+
     const chatMessage = (flow, message, index) => {
         return (
             <div key={index} className={`chat__message ${message.from === props.uid ? "self_msg" : "other_msg"}`}>
@@ -90,7 +106,9 @@ const ChatCard = (props) => {
                     <div className="col-6">
                         {
                             flow == "client" ?
-                                <button className="btn btn-light">
+                                <button className="btn btn-light" onClick={() => {
+                                    handleAccept(message)
+                                }}>
                                     Accept
                                 </button> :
                                 <></>
@@ -100,9 +118,12 @@ const ChatCard = (props) => {
                     <div className="col-6 d-flex justify-content-end"
                     style={{"fontSize" : "12px"}}
                     >
-                        <div className="from">
-                            {message.from}
-                        </div>
+                        {
+                            flow == "client" ? "" : 
+                            <div className="from">
+                                {message.from}
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

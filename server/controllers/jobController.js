@@ -137,10 +137,33 @@ const getAllJobs = async (req, res) => {
     })
 }
 
+const acceptWorkerJob = async(req,res) => {
+    const dbRef = ref(db);
+    const userId = req.body["userId"];
+    const jobId = req.body["jobId"];
+    const workerId = req.body["workerId"];
+
+    await get(child(dbRef,`jobs/${userId}/${jobId}`)).then(snapshot => {
+        if(snapshot.exists()){
+            const job = snapshot.val();
+            job["to"] = workerId;
+            set(ref(db,`jobs/${userId}/${jobId}`),job).then(()=>{
+                res.send("success");
+            }).catch(err => {
+                let errorMessage = err.message;
+                res.send(errorMessage);
+            })
+        }else{
+            res.send("job does not exist");
+        }
+    })
+}
+
 module.exports = {
     addJob,
     getJobs,
     getJobsByCategory,
     getJobsByDistance,
-    getAllJobs
+    getAllJobs,
+    acceptWorkerJob
 }
