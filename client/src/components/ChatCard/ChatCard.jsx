@@ -71,24 +71,20 @@ const ChatCard = (props) => {
         console.log(props.chat.uid)
         const toSend = {
             message,
-            from: "own",
+            from: props.uid,
             to: props.chat.uid
         }
         socket.emit("send-message", toSend, props.chat.uid)
-        // update messages 
-        const toAttach = {
-            message,
-            from: "own"
-        }
-        console.log(toAttach)
-        setMessages((messages) => [...messages, toAttach])
+        console.log(toSend)
+        setMessages((messages) => [...messages, toSend])
         setToSend("")
+        scrollToBottom()
         
     }
 
     const chatMessage = (flow, message, index) => {
         return (
-            <div key={index} className={`chat__message ${message.from === "own" ? "self_msg" : "other_msg"}`}>
+            <div key={index} className={`chat__message ${message.from === props.uid ? "self_msg" : "other_msg"}`}>
                 <p className="chat__message--text">{message.message}</p>
                 <div className="row">
                     <div className="col-6">

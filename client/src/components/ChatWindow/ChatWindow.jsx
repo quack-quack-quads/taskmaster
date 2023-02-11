@@ -11,7 +11,6 @@ import { ClientContext } from "../../context/clientContext"
 import axios from "axios"
 
 const ChatWindow = ({flow}) => {
-    console.log(uid);
     const [show, setShow] = useState(false)
     const [displayChat, setDisplayChat] = useState(false)
     const [chat, setChat] = useState(null)
@@ -37,6 +36,7 @@ const ChatWindow = ({flow}) => {
             }
             getJobs()
         }
+        console.log(uid)  
     },[uid])
 
     const handleOpenChat = (id) => {
@@ -63,7 +63,7 @@ const ChatWindow = ({flow}) => {
                     }
                 </>
                 :
-                <ChatCard chat={chat} handleCloseChat={handleCloseChat} flow={flow}/>
+                <ChatCard chat={chat} handleCloseChat={handleCloseChat} flow={flow} uid={uid}/>
             }
                 <button className="btn btn-warning floatingbtn"
                     onClick={()=>{setShow(false)}}
