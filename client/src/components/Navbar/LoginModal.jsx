@@ -32,7 +32,7 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
         }
         setWaiting(true);
         var data = await loginapi(emailAdd, password, flow);
-        console.log(data["uid"]);
+        console.log(data);
         if (data["uid"] === undefined) {
             alert("Login Failed!");
             dismiss();
@@ -43,10 +43,6 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
         // console.log("here",uid);
         dismiss();
     }
-
-    useEffect(()=>{
-        console.log("here",uid);
-    },[uid])
 
     return <>
         <BsArrowLeftShort

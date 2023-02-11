@@ -1,0 +1,17 @@
+@import '../../../theme.scss';
+
+.ClientDashboard{
+    .Welcome{
+        width: 90%;
+        height: 40vh;
+        margin: auto;
+        background: linear-gradient(135deg, $c3 0%, $c5 70%);
+        border-radius: 20px;
+        font-size: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        color : rgb(41, 41, 41);
+    }
+}
