@@ -5,7 +5,7 @@ const ClientContext = createContext();
 const ClientProvider = ({
     children
 }) => {
-    const [uid, setUid] = useState("dfkdjf");
+    const [uid, setUid] = useState(null);
     const [name, setname] = useState(null);
     const [email, setEmail] = useState(null);
     const [phone, setPhone] = useState(null);

@@ -40,12 +40,12 @@ const Hero = (props) => {
         Work<span className="title-accent">-Connect</span>
       </h1>
       <h3 className="subtitle">Connecting workers to clients.</h3>
-      <SearchBar />
+      {/* <SearchBar />
       <div className="row">
         <div className="col d-flex justify-content-center mt-3">
           <ActionButton text={"List a Job"} handler={handleClick} />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

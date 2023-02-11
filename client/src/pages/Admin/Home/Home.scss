@@ -1,0 +1,102 @@
+$bck-clr : #0b0b0b;
+$TEXT_COLOR: white;
+$HEADER_COLOR: rgba(37, 35, 35, 0.682);
+$HEADER_SECONDARY: yellow;
+@mixin glass-look {
+    background: rgba(117, 114, 114, 0.18);
+    backdrop-filter: blur(7.5px);
+    box-shadow: 0 8px 32px 0 rgba(4, 4, 4, 0.18);
+    border-radius: 20px;
+}
+.admin-body {
+    height: 100vh;
+    width: 100vw;
+    padding: 4%;
+
+    p {
+        font-family: 'Poppins';
+        color: white;
+    }
+    .card-title {
+        color: White;
+        font-weight: bolder;
+    }
+    .card-body {
+        font-weight: light;
+    }
+    .btn {
+    border: 2px solid white;
+    width: 100%;
+}
+
+}
+
+.txt1 {
+    font-size: xx-large;
+}
+
+// .admin-card {
+//     height: 35vh;
+//     width: 45vw;
+// }
+
+// .admin-card2 {
+//     height: 35vh;
+//     width: 30vw;
+//     border: 2px solid #00b4d8;
+// }
+
+.col {
+    // border: 2px solid yellow;
+}
+
+// .card1 {
+//     height: 100%;
+//     width: 100%;
+// }
+
+.card1-test {
+    text-align: right;
+    
+}
+
+.admin-card:hover {
+    cursor: pointer;
+}
+.pt-card {
+    @include glass-look;
+        background: #48cae4;
+// background: linear-gradient(90deg, rgba(181,218,226,1) 21%, rgba(128,232,254,1) 43%, rgba(0,212,255,1) 52%, rgba(0,212,255,1) 58%);
+    margin-top: 1%;
+    padding: 1%;
+        h4{
+            font-family: "Poppins";
+            color: $TEXT_COLOR;
+            font-size: 1rem;
+            padding: 1%;
+        }
+        .btn {
+            border: 2px solid white;
+            width: 80%;
+            display: block;
+            
+        }
+        .aprove:hover {
+            background-color: green;
+        }
+        .reject:hover {
+            background-color: red;
+        }
+        
+        
+}
+
+.open-worker {
+    // border: 2px solid black;
+}
+.open-worker:hover {
+    cursor: pointer;
+    // background-color: #14262a;
+}
+
+
