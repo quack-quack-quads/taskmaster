@@ -7,7 +7,7 @@ import { BsChatDotsFill } from "react-icons/bs"
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 //screens
-import { Business, Client } from "./pages/index";
+import { Business, Client, Admin } from "./pages/index";
 import { ToastContainer } from "react-toastify";
 //components
 // import JobListing from "./components/JobListing";
@@ -20,10 +20,11 @@ function App() {
           {/* <Route path="/client/joblisting" element={<JobListing />} /> */}
           <Route path="/client" element={<Client />} />
           <Route path="/business" element={<Business />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/*" element={<Client />} />
         </Routes>
       </Router>
-      
+
     </div>
   );
 }
