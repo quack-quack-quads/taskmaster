@@ -17,9 +17,20 @@
         height: fit-content; 
         padding-bottom: 2vh;
     }
+    .arrowbutton{
+        cursor: pointer;
+    }
     .arrow{
         position : absolute;
         margin-bottom : 0;
+    }
+    .instead{
+        position : absolute;
+        right : 20px;
+        top : 20px;
+        color : black;
+        font-weight: 600;
+        cursor: pointer;
     }
     .loginimage{
         width : auto;

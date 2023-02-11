@@ -1,0 +1,34 @@
+@import '../../theme.scss';
+
+.hero {
+    padding-top: 25vh;
+    padding-bottom: 25vh;
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+    .title {
+        text-align: center;
+        font-size: 4.3rem;
+        color: $secondaryColor;
+        margin-bottom: 2.5vh;
+        .title-accent {
+            color: $primaryColor;
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color:$secondaryColor;
+        }
+    }
+    .subtitle {
+        text-align: center;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .hero {
+        max-width: 300px;
+        .title {
+            font-size: 2rem;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+        }
+    }
+}

@@ -1,82 +1,81 @@
 //styles
 import "./Navbar.scss"
-import { RiLoginCircleLine } from 'react-icons/ri'
+import { RiLoginCircleLine, RiLogoutCircleLine } from 'react-icons/ri'
 import LoginImg from '../../assets/hands.gif'
 import { BsGoogle, BsTwitter, BsGithub, BsDiscord, BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs'
 
 //components
 import ActionButton from "../Buttons/ActionButton"
-import { Modal, Button } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 
-//screens
+import { ClientContext } from "../../context/clientContext"
+
 //tools
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import LoginModal from "./LoginModal"
+import ClientSignUp from "./ClientSignUp"
 
-const Navbar = () => {
-    const [show, setShow] = useState(false)
-    
+const Navbar = ({ flow }) => {
+    const dismiss = () => {
+        setShow(false);
+    }
+
+    const [show, setShow] = useState(false);
+    const {uid, name, setUid} = useContext(ClientContext);
+
+    var signComp = <></>
+    if (flow == "client") {
+        signComp = <ClientSignUp
+            dismiss={dismiss}
+        />;
+    }
+
+    const loginComp = <LoginModal
+        dismiss={dismiss}
+        redirect={() => {
+            setMode(signComp);
+        }}
+        flow={flow}
+    />
+
+    useEffect(() => {
+        if (!show) {
+            setMode(loginComp);
+        }
+    }, [show]);
+
+    const [mode, setMode] = useState(loginComp)
+
+
+
     return <div className="Navbar container-fluid">
         <div className="row">
+           { uid == null ?
             <ActionButton
                 className="loginbtn"
                 text={
-                    <span>LOG IN &nbsp;<RiLoginCircleLine size={25} /></span>}
+                    <span>LOG IN &nbsp;<RiLogoutCircleLine size={25} /></span>}
                 handler={() => {
                     setShow(true);
                 }}
                 width="100px"
+            /> :
+            <ActionButton
+                text = {<span>LOG OUT&nbsp;<RiLoginCircleLine size={25}/></span>}
+                handler = {
+                    ()=>{
+                        setUid(null);
+                    }
+                }
             />
+        }
         </div>
 
         <Modal show={show}
             className="loginModal"
         >
             <Modal.Body>
-                <BsArrowLeftShort
-                    className="ml-3 arrowbutton"
-                    size={30}
-                    onClick={
-                        () => {
-                            setShow(false)
-                        }
-                    }
-                />
-                <div className="graphics d-flex justify-content-center">
-                    <img src={LoginImg} alt="" className="loginimage" />
-                </div>
-                <div className="email">
-                    <div className="emailhead">
-                        Log in with your email
-                    </div>
-                    <input type="email" className="form-control shadow-none"
-                        placeholder="example@example.com"
-                    />
-                    <input type="password" className="form-control shadow-none"
-                        placeholder="Password"
-                    />
-                    <div className="d-flex justify-content-center">
-                        <ActionButton
-                            text={<BsArrowRightShort size={25} />}
-                        />
-                    </div>
-                </div>
-                {/* <div className="orrow d-flex justify-content-center mt-3 mb-3">
-                    <b>OR USE</b>
-                </div>
-                <div className="socialsrow d-flex justify-content-center">
-                    <div className="socialicon">
-                        <BsGoogle size={30} />
-                    </div>
-                    <div className="socialicon">
-                        <BsTwitter size={30} />
-                    </div>
-                    <div className="socialicon">
-                        <BsGithub size={30} />
-                    </div>
-                    <div className="socialicon">
-                        <BsDiscord size={30} />
-                    </div>
-                </div> */}
+                {mode}
             </Modal.Body>
         </Modal>
     </div>
