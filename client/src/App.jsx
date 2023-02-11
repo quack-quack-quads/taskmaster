@@ -5,7 +5,7 @@ import "./App.scss";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 //screens
-import Home from "./pages/Home/Home";
+import {Business, Client, Home} from "./pages/index"
 
 //components
 import Navbar from "./components/Navbar/Navbar";
@@ -16,7 +16,10 @@ function App() {
       <Navbar />
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route exact path="/" element={<Home />} />
+          <Route path="/client" element={<Client />} />
+          <Route path="/business" element={<Business />} />
+          <Route path="/*" element={<Home />} />
         </Routes>
       </Router>
     </div>
