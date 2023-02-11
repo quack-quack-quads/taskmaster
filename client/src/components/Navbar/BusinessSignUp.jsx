@@ -9,6 +9,9 @@ import { ClientContext } from "../../context/clientContext"
 import { BusinessContext } from '../../context/businessContext'
 import { Spinner } from 'react-bootstrap'
 import Dropdown from 'react-bootstrap/Dropdown'
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import {storage} from "../../../firebase-config"
+import uuid from 'react-uuid';
 
 const First = ({ handler, setEmail, setPassword, setConfirm }) => {
     return <div className="email">
@@ -123,10 +126,13 @@ const Fourth = ({handler, setImage}) => {
         <div className="emailhead">
             Upload a soft copy of your govt. identification
         </div>
-        <input type="text" className="form-control shadow-none"
+        <input type="file" className="form-control shadow-none"
             placeholder="Upload here"
-            onChange={() => {
-                setImage("");
+            id="inputFile"
+            accept="image/*"
+            required = {true}
+            onChange={(event) => {
+                setImage(event.target.files[0]);
             }}
         />
         <div className="d-flex justify-content-center">
@@ -149,12 +155,24 @@ const BusinessSignUp = ({ dismiss, flow }) => {
     const [name, setName] = useState("");
     const [govt, setGovt] = useState("");
     const [occupation, setOccupation] = useState("Occupation");
-    const [image, setImage] = useState("");
+    const [image, setImage] = useState(null);
+    const [imageURL, setImageURL] = useState("");
 
     const [message, setMessage] = useState("");
     const [waiting, setWaiting] = useState(false);
 
     const { setDetails } = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
+
+  const uploadFile = async (uid) => {
+    console.log("uploading file")
+    const storageRef = ref(storage, `${uuid()}`);
+    const snapshot = await uploadBytes(storageRef, image);
+    console.log("uploaded file")
+    // return the url of the uploaded file
+    const downloadURL = await getDownloadURL(snapshot.ref);
+    setImageURL(downloadURL);
+    return downloadURL;
+  };
 
     const signup = async () => {
         setWaiting(true);
@@ -165,6 +183,7 @@ const BusinessSignUp = ({ dismiss, flow }) => {
         } else if (!email.includes("@")) {
             setMessage("Enter a valid email");
         } else {
+            const downloadurl = await uploadFile();
             const payload = {
                 "email": email,
                 "password": password,
@@ -172,13 +191,13 @@ const BusinessSignUp = ({ dismiss, flow }) => {
                 "phone": phone,
                 "govt" : govt,
                 "occupation": occupation,
-                "image" : image,
+                "image" : downloadurl
             }
             var data = await signupapi(payload, flow).then((data) => data).catch(
                 (e) => {
                     setMessage(e);
                     return null;
-                }
+                }   
             );
             console.log(data);
             if (data["uid"] == null || data["uid"] == undefined) {
