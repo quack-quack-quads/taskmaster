@@ -13,10 +13,7 @@ const Hero = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleClick = () => {
-    toast.info("Info Notification !", {
-
-    });
-    return;
+    
     setShow(!show)
   }
   return (

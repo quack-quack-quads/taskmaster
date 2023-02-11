@@ -17,6 +17,7 @@
 
 .chatModal{
     .modal-content{
+        overflow-y: auto;
         position : fixed;
         bottom : 10px;
         right: 10px;

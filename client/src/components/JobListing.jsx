@@ -49,6 +49,7 @@ export default function JobListing(props) {
     const [addressName, setAddressName] = useState("");
     const [loaded, setLoadedAddress] = useState(false);
     const [highlighter, setHighlighter] = useState(-1);
+    const [title, setTitle] = useState("");
 
     // Modal data
     const [show, setShow] = useState(false);
@@ -79,6 +80,12 @@ export default function JobListing(props) {
             }
         }
         else if (curr === 1) {
+            if (title.length === 0) {
+                alert("Title cannot be empty")
+                return;
+            }
+        }
+        else if (curr === 2) {
             if (description.length < 50) {
                 alert("Please Enter at least 50 characters")
                 // toast.error("Please Select a Cateogory!", {
@@ -87,7 +94,7 @@ export default function JobListing(props) {
                 return;
             }
         }
-        else if (curr === 3) {
+        else if (curr === 4) {
             if (addressHighlight === -1) {
                 alert("Please Slect Your address")
                 return;
@@ -130,6 +137,7 @@ export default function JobListing(props) {
             uid: uid,
             job: {
                 from: uid,
+                title: title,
                 address: addresses[addressHighlight],
                 status: "bidOn",
                 startingBid: bid,
@@ -208,6 +216,10 @@ export default function JobListing(props) {
         add.push(obj)
         setAddresses(add)
         setShow(false)
+    }
+    const handleTitleChange = (event) => {
+        setTitle(event.target.value);
+
     }
     const [initialRender, setInitialRender] = useState(true)
     const [initLoad, setInitLoad] = useState(true);
@@ -338,7 +350,7 @@ export default function JobListing(props) {
     const renderForm = () => {
         switch (curr) {
 
-            case 3:
+            case 4:
                 return (
                     <div className="form1">
                         <div className="row">
@@ -372,7 +384,7 @@ export default function JobListing(props) {
                 )
                 break;
 
-            case 2:
+            case 3:
                 return (
                     <div className="form2" >
                         <div className="row">
@@ -402,9 +414,40 @@ export default function JobListing(props) {
 
                     </div>
                 )
-
-
+            
             case 1:
+                return (
+                    <div className="form3" >
+                        <div className="row">
+                            <div className="col d-flex justify-content-center mt-7">
+                                <h1 className="txt">Enter Job Title</h1>
+                            </div>
+
+                        </div>
+                        <div className="row mt-5">
+                            <div className="col d-flex justify-content-center mt-5">
+                                <input className="form-control name-inp" placeholder="Description" onChange={handleTitleChange}>
+                                </input>
+
+                            </div>
+                            {console.log(description.length)}
+                            <p className="invalid-text">{title.length == 0  ? `Job Title cannot be empty.` : ""}</p>
+                        </div>
+                        <div className="row mt-7 mb-5">
+                            <div className="col d-flex justify-content-center">
+                                <button className="btn btn-info btn-lg next-button" onClick={handlePrev} >
+                                    Prev
+                                </button>
+                                <button className="btn btn-info btn-lg next-button next" onClick={handleNext}>
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                )
+
+            case 2:
                 return (
                     <div className="form3" >
                         <div className="row">
@@ -483,7 +526,7 @@ export default function JobListing(props) {
                     </div>
                 )
 
-            case 4:
+            case 5:
                 return (
                     <div className="form6" >
                         <div className="row d-flex justify-content-center roww mt-6">

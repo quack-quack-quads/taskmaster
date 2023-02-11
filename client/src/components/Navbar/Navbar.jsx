@@ -21,14 +21,22 @@ const Navbar = ({ flow }) => {
         setShow(false);
     }
 
+    
+
     const [show, setShow] = useState(false);
     const {uid, name, setUid} = (flow == "client") ? useContext(ClientContext) : useContext(BusinessContext);
 
     var signComp = <></>
     if (flow == "client") {
-        signComp = <ClientSignUp dismiss={dismiss}/>;
+        signComp = <ClientSignUp 
+        dismiss={dismiss}
+        flow = {flow}
+        />;
     }else if(flow == "business"){
-        signComp = <BusinessSignUp dismiss={dismiss}/>
+        signComp = <BusinessSignUp 
+        dismiss={dismiss}
+        flow = {flow}
+        />
     }
 
     const loginComp = <LoginModal
