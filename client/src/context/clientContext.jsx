@@ -1,11 +1,11 @@
 import {useState, useEffect, createContext} from "react";
 
-export const ClientContext = createContext();
+const ClientContext = createContext();
 
-export const ClientProvider = ({
+const ClientProvider = ({
     children
 }) => {
-    const [uid, setUid] = useState(null);
+    const [uid, setUid] = useState("dfkdjf");
     const [name, setname] = useState(null);
     const [email, setEmail] = useState(null);
     const [phone, setPhone] = useState(null);
@@ -38,4 +38,8 @@ export const ClientProvider = ({
             {children}
         </ClientContext.Provider>
     )
+}
+export {
+    ClientContext,
+    ClientProvider
 }
