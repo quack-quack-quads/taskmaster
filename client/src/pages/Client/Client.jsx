@@ -6,7 +6,7 @@ const Client = () => {
   return (
     <ClientProvider>
       <Navbar flow = "client"/>
-      <div>Client</div>
+        <div>Hi</div>
       <ChatWindow/>
     </ClientProvider>
   )

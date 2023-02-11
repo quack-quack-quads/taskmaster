@@ -1,6 +1,6 @@
 //styles
 import "./Navbar.scss"
-import { RiLoginCircleLine } from 'react-icons/ri'
+import { RiLoginCircleLine, RiLogoutCircleLine } from 'react-icons/ri'
 import LoginImg from '../../assets/hands.gif'
 import { BsGoogle, BsTwitter, BsGithub, BsDiscord, BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs'
 
@@ -8,8 +8,10 @@ import { BsGoogle, BsTwitter, BsGithub, BsDiscord, BsArrowLeftShort, BsArrowRigh
 import ActionButton from "../Buttons/ActionButton"
 import { Modal } from 'react-bootstrap'
 
+import { ClientContext } from "../../context/clientContext"
+
 //tools
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import LoginModal from "./LoginModal"
 import ClientSignUp from "./ClientSignUp"
 
@@ -18,7 +20,8 @@ const Navbar = ({ flow }) => {
         setShow(false);
     }
 
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
+    const {uid, name, setUid} = useContext(ClientContext);
 
     var signComp = <></>
     if (flow == "client") {
@@ -47,15 +50,25 @@ const Navbar = ({ flow }) => {
 
     return <div className="Navbar container-fluid">
         <div className="row">
+           { uid == null ?
             <ActionButton
                 className="loginbtn"
                 text={
-                    <span>LOG IN &nbsp;<RiLoginCircleLine size={25} /></span>}
+                    <span>LOG IN &nbsp;<RiLogoutCircleLine size={25} /></span>}
                 handler={() => {
                     setShow(true);
                 }}
                 width="100px"
+            /> :
+            <ActionButton
+                text = {<span>LOG OUT&nbsp;<RiLoginCircleLine size={25}/></span>}
+                handler = {
+                    ()=>{
+                        setUid(null);
+                    }
+                }
             />
+        }
         </div>
 
         <Modal show={show}
