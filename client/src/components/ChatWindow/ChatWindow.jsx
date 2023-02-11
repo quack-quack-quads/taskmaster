@@ -11,6 +11,7 @@ import { ClientContext } from "../../context/clientContext"
 import axios from "axios"
 
 const ChatWindow = ({flow}) => {
+    console.log(uid);
     const [show, setShow] = useState(false)
     const [displayChat, setDisplayChat] = useState(false)
     const [chat, setChat] = useState(null)

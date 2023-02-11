@@ -1,8 +1,8 @@
 import {useState, useEffect, createContext} from "react";
 
-export const BusinessContext = createContext();
+const BusinessContext = createContext("");
 
-export const BusinessProvider = ({
+const BusinessProvider = ({
     children
 }) => {
     const [uid, setUid] = useState(null);
@@ -38,4 +38,9 @@ export const BusinessProvider = ({
             {children}
         </BusinessContext.Provider>
     )
+}
+
+export {
+    BusinessContext,
+    BusinessProvider
 }

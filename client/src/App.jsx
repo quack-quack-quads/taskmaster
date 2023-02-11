@@ -8,12 +8,13 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 //screens
 import { Business, Client } from "./pages/index";
-
+import { ToastContainer } from "react-toastify";
 //components
 // import JobListing from "./components/JobListing";
 function App() {
   return (
     <div className="App">
+      <ToastContainer />
       <Router>
         <Routes>
           {/* <Route path="/client/joblisting" element={<JobListing />} /> */}
@@ -22,6 +23,7 @@ function App() {
           <Route path="/*" element={<Client />} />
         </Routes>
       </Router>
+      
     </div>
   );
 }
