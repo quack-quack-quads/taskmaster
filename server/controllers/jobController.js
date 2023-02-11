@@ -142,11 +142,14 @@ const acceptWorkerJob = async(req,res) => {
     const userId = req.body["userId"];
     const jobId = req.body["jobId"];
     const workerId = req.body["workerId"];
+    const startingBid = req.body["startingBid"];
 
     await get(child(dbRef,`jobs/${userId}/${jobId}`)).then(snapshot => {
         if(snapshot.exists()){
             const job = snapshot.val();
             job["to"] = workerId;
+            job["status"] = "pending";
+            job["startingBid"] = startingBid;
             set(ref(db,`jobs/${userId}/${jobId}`),job).then(()=>{
                 res.send("success");
             }).catch(err => {

@@ -29,7 +29,7 @@ const ChatWindow = ({flow}) => {
                 const filtered = response.data.filter((job) => {
                     return job.to === ""
                 })
-                // console.log(filtered)
+                console.log(filtered)
                 setJobs(filtered) 
             }
             getJobs()

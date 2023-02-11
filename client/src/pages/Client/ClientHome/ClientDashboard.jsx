@@ -9,17 +9,18 @@ import { useContext, useState, useEffect } from 'react';
 
 import Clock from '../../../assets/clock.gif';
 import Auction from '../../../assets/auction.gif';
+import axios from 'axios';
 
-const PendingTaskCard = (title, desc, bid) => {
+const PendingTaskCard = (title, description, startingBid) => {
     return <div className="PendingTaskCard container-fluid">
         <div className="row titlerow text-center">
             {title}
         </div>
         <div className="row descrow text-center">
-            {desc}
+            {description}
         </div>
         <div className="row bidrow text-center">
-            Current bid : {bid}
+            Current Bid : {startingBid}
         </div>
         <div className="row actions d-flex justify-content-center">
             <button className="btn btn-danger btn-sm">
@@ -28,20 +29,20 @@ const PendingTaskCard = (title, desc, bid) => {
             <button className="btn btn-success btn-sm">
                 Mark as done
             </button>
-        </div>
-    </div>
+        </div> 
+    </div> 
 }
 
-const ListingCard = (title, desc, bid) => {
+const ListingCard = (title, description, startingBid) => {
     return <div className="PendingTaskCard container-fluid">
         <div className="row titlerow text-center">
             {title}
         </div>
         <div className="row descrow text-center">
-            {desc}
+            {description}
         </div>
         <div className="row bidrow text-center">
-            Current bid : {bid}
+            Current Bid : {startingBid}
         </div>
         <div className="row actions d-flex justify-content-center">
             <button className="btn btn-danger btn-sm">
@@ -64,27 +65,34 @@ const ClientDashboard = () => {
         } else setLoggedIn(true);
     }, [uid]);
 
-    const [pending, setPending] = useState(
-        [
-            {
-                "title": "Plumbing in Bhaskara",
-                "desc": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi, nulla minima. Maxime explicabo repellat nam corrupti quis consequatur provident architecto enim alias nihil voluptates blanditiis saepe, nesciunt ipsa natus corporis adipisci quam dolore exercitationem temporibus expedita. Cum consectetur incidunt ut.",
-                "bid": "676",
-                "id": "8dijfdkjfkd"
-            }
-        ]
-    )
+    const [jobs, setJobs] = useState([])
 
     const pendingList = []
     const listings = []
-    for (var i = 0; i < pending.length; i++) {
-        pendingList.push(
-            PendingTaskCard(pending[i].title, pending[i].desc, pending[i].bid)
-        )
-        listings.push(
-            ListingCard(pending[i].title, pending[i].desc, pending[i].bid)
-        )
+    for (var i = 0; i < jobs.length; i++) { 
+        if(jobs[i].status === "bidOn"){
+            listings.push(
+                ListingCard(jobs[i].title, jobs[i].description, jobs[i].startingBid)
+            ) 
+        }else if(jobs[i].status === "pending"){
+            pendingList.push(
+                PendingTaskCard(jobs[i].title, jobs[i].description, jobs[i].startingBid)
+            )
+        }
     }
+
+    const getJobs = async () => {
+        const url = import.meta.env.VITE_BASE_URL
+        const response = await axios.post(`${url}/api/jobs/get`, {
+            uid: uid
+        }) 
+        console.log(response.data)
+        setJobs(response.data)
+    }
+
+    useEffect(() => {
+        getJobs()
+    },[])
 
     return <div className="Dash">
         <div className="dummy">Hi</div>

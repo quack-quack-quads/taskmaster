@@ -66,33 +66,36 @@ const ChatCard = (props) => {
     },[])
     
     const handleSendMessge = (message) => {
+        const re = /^[0-9\b]+$/;
+        if (!re.test(toSend)){
+            alert("Please enter a valid amount")
+            return
+        }
         if(socket === null || socket === undefined) return
         
         console.log(props.chat.uid)
-        const toSend = {
+        const payloadData = {
             message,
             from: props.uid,
-            to: props.chat.uid
+            to: props.chat.uid,
+            amount: toSend
         }
-        socket.emit("send-message", toSend, props.chat.uid)
-        console.log(toSend)
-        setMessages((messages) => [...messages, toSend])
+        socket.emit("send-message", payloadData, props.chat.uid)
+        console.log(payloadData)
+        setMessages((messages) => [...messages, payloadData])
         setToSend("")
         scrollToBottom()
         
     }
 
     const handleAccept = async(message) => {
-/*
-    const userId = req.body["userId"];
-    const jobId = req.body["jobId"];
-    const workerId = req.body["workerId"];
-*/
+        console.log("accepting",message)
         const url = import.meta.env.VITE_BASE_URL
         const response = await axios.post(`${url}/api/jobs/acceptWorkerJob`, {
             userId: props.uid,
             jobId: props.chat.uid,
-            workerId: message.from
+            workerId: message.from,
+            startingBid: message.amount
         })
         console.log(response) 
         console.log(props.uid, props.chat.uid, message.from)
