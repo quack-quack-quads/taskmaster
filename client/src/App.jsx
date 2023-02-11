@@ -20,6 +20,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/joblisting" element={<JobListing/>}/>
         </Routes>
       </Router>
     </div>
