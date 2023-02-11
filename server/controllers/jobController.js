@@ -1,3 +1,4 @@
+const { CONSTANTS } = require("@firebase/util");
 const { ref, set, get, push, child} = require("firebase/database");
 const { db } = require("../firebase-config")
 
@@ -33,7 +34,32 @@ const getJobs = async (req, res)=>{
     });
 }
 
+const getJobsByCategory = async (req,res) => {
+    const dbRef = ref(db);
+    await get(child(dbRef,"jobs")).then(snapshot => {   
+        const jobs = snapshot.val();
+        const category = req.body["category"];
+        const jobsByCategory = [];
+        for (const key in jobs) {
+            if(jobs.hasOwnProperty(key)){
+                const job = jobs[key];
+                for(const id in job){
+                    const data = job[id];
+                    if(data["category"]!== null && data["category"] !== undefined && data["category"].includes(category)){
+                        jobsByCategory.push(data);
+                    }
+                }
+            }
+        }
+        res.send(jobsByCategory);   
+    }).catch(err => {
+        let errorMessage = err.message;
+        res.send(errorMessage);
+    })
+}
+
 module.exports = {
     addJob,
-    getJobs
+    getJobs,
+    getJobsByCategory
 }
