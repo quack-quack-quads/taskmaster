@@ -10,7 +10,11 @@ $c9 : #caf0f8;
 
 $primaryColor: #101211;
 $secondaryColor: #47DDAB;
+$textColor: white;
 
-
-$primaryColor: #101211;
-$secondaryColor: #47DDAB;
+@mixin glass-look {
+    background: rgba(117, 114, 114, 0.18);
+    backdrop-filter: blur(7.5px);
+    box-shadow: 0 8px 32px 0 rgba(4, 4, 4, 0.18);
+    border-radius: 20px;
+}
