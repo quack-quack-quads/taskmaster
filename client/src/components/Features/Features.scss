@@ -1,0 +1,26 @@
+@import '../../theme.scss';
+
+.features {
+    padding: 50px;
+    color: $textColor;
+    .line {
+        height: 5px;
+        padding-bottom: 2vw;
+  background: linear-gradient(
+    to bottom,
+    transparent 2px,
+    gray 2px,
+    gray 3px,
+    transparent 3px
+  );
+    }
+    .features-heading {
+        font-size: 4vw;
+        margin-bottom: 1.5vw;
+    }
+    @media (max-width:767px) and (min-width:0px) {
+      .features-heading{
+        font-size: 4vh;
+      }
+  }
+}

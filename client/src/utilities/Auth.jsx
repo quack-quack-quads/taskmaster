@@ -1,15 +1,15 @@
 import axios from "axios"
 
-const baseURL = "http://localhost:5000"
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 const loginapi = async (email, password, flow) => {
-    console.log("called");
+    console.log(baseURL);
     var payload = {
         "email": email,
         "password": password,
     }
     const res = await axios.post(
-        `${baseURL}/api/auth/${flow}/signin`,
+        `${baseURL}/api/${flow}/signin`,
         payload
     ).then((response) => {
         return response.data;

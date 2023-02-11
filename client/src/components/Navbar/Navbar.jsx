@@ -1,7 +1,6 @@
 //styles
 import "./Navbar.scss"
 import { RiLoginCircleLine, RiLogoutCircleLine } from 'react-icons/ri'
-import LoginImg from '../../assets/hands.gif'
 import { BsGoogle, BsTwitter, BsGithub, BsDiscord, BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs'
 
 //components
@@ -9,6 +8,7 @@ import ActionButton from "../Buttons/ActionButton"
 import { Modal } from 'react-bootstrap'
 
 import { ClientContext } from "../../context/clientContext"
+import { BusinessContext } from "../../context/businessContext"
 
 //tools
 import React, { useState, useEffect, useContext } from 'react';
@@ -21,13 +21,15 @@ const Navbar = ({ flow }) => {
     }
 
     const [show, setShow] = useState(false);
-    const {uid, name, setUid} = useContext(ClientContext);
+    const {uid, name, setUid} = (flow == "client") ? useContext(ClientContext) : useContext(BusinessContext);
 
     var signComp = <></>
     if (flow == "client") {
         signComp = <ClientSignUp
             dismiss={dismiss}
         />;
+    }else if(flow == "business"){
+        signComp = <ClientSignUp dismiss={dismiss}/>
     }
 
     const loginComp = <LoginModal
@@ -46,11 +48,9 @@ const Navbar = ({ flow }) => {
 
     const [mode, setMode] = useState(loginComp)
 
-
-
     return <div className="Navbar container-fluid">
         <div className="row">
-           { uid == null ?
+           { (uid == null || uid == undefined) ?
             <ActionButton
                 className="loginbtn"
                 text={
