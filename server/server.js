@@ -5,6 +5,8 @@ const socketio = require("socket.io");
 const http = require('http');
 require('dotenv').config();
 
+const { getChats, putMessage } = require("./db/chatFunctions")
+
 // ! server
 const app = express();
 const server = http.createServer(app)
@@ -24,8 +26,20 @@ const io = socketio(server,{
 });
 
 io.on("connection", socket => {
-    console.log("New client connected");
+    console.log("New client connected", socket.id);
     socket.on("disconnect", () => console.log("Client disconnected"));
+
+    socket.on("join-room", (room) => {
+        console.log("joining room", room);
+        socket.join(room);
+    })
+
+    // now send-message to a specific room
+    socket.on("send-message", (message, room) => {
+        console.log(message, room);
+        putMessage(room, message);
+        socket.broadcast.to(room).emit("receive-message", message);
+    });
 })
 
 // ! routes

@@ -5,9 +5,15 @@ const getChat = async (req, res) => {
     const dbRef = ref(db);
     await get(child(dbRef, `chats/${req.body["jobId"]}`)).then((snapshot) => {
         if (snapshot.exists()) {
-            res.send(snapshot.val());
+            // return array of messages
+            const messages = [];
+            for (const [key, value] of Object.entries(snapshot.val())) {
+                messages.push(value);
+            }
+            console.log(snapshot.val());
+            res.send(messages);
         } else {
-            res.send("No data available");
+            res.send([]);
         }
     }).catch((error) => {
         res.send(error.message);
