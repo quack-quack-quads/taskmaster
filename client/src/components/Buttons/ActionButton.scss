@@ -1,7 +1,8 @@
 @import '../../theme.scss';
 
-.ActionButton{
-    background: rgb(5,61,0);
+.ActionButton,
+.ActionButton:focus,
+.ActionButton:active{
     background: linear-gradient(315deg, $c3 0%, $c5 100%); 
     color : white;
     padding : 10px 25px !important;
@@ -9,10 +10,10 @@
     font-weight: 700;
     border-radius: 15px;
     width: fit-content !important;
+    box-shadow: none;
 }
 
-.ActionButton:hover,
-.ActionButton:active{
+.ActionButton:hover{
     background: white;
     color : $c3;
     border: none !important;
