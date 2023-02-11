@@ -1,15 +1,53 @@
+@import '../../theme.scss';
+.chatcard{
+    font-family: 'Poppins';
+    overflow-y : scroll;
+    // overflow-x: hidden !important;
+    .fixedsection{
+        padding-top : 10px;
+    }
+    .chat__header{
+        right: 20px;
+        position: absolute;
+        font-size: 20px;
+        font-weight: 500;
+        background: linear-gradient(315deg, $c3 0%, $c5 100%);
+        padding : 10px 20px;
+        border-radius: 15px;
+    }
+    .chatcol{
+        overflow-y: scroll !important;
+        margin : 60px 10px;
+    }
+    .form-control{
+        border : 2px solid $c3;
+        border-radius: 20px;
+        margin: 15px 10px;
+        caret-color: $c3;
+        width : 70%;
+        position : absolute;
+        bottom : 10px;
+        left : 10px;
+    }
+    .chat__message{
+        .from{
+            display: inline;
+            margin-left : 20px;
+        }
+    }
+}
 .arrowbutton {
     cursor: pointer;
+    position: absolute;
+    left : 10px;
 }
 .chat__header{
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 4px;
+    text-align: center;
 }
 // now style the messages - one left and one right
 .other_msg{
-    background-color: #f1f0f0;
+    background-color: $c7;
+    color : black;
     border-radius: 10px 10px 10px 0;
     padding: 10px;
     margin: 10px 0; 
@@ -17,7 +55,9 @@
     float: left;
 }
 .self_msg{
-    background-color: #dcf8c6;
+    background-color: $c3;
+    color : white;
+    text-align: start;
     border-radius: 10px 10px 0 10px;
     padding: 10px;
     margin: 10px 0;

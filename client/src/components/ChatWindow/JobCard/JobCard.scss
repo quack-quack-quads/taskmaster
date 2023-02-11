@@ -1,20 +1,20 @@
 @import '../../../theme.scss';
 .JobCard{
     background: linear-gradient(135deg, $c3 0%, $c5 70%);
+    font-family: 'Poppins';
     width: 90%;
     margin: auto;
     height: 120px;
     border : none;
     border-radius: 20px;
     margin-top: 0.6rem;
-    margin-bottom: 0rem;
+    margin-bottom: 0.4rem;
     .card-content{
         height: 100%;
     }
     .btn-light{
         border-radius: 15px;
         font-weight: 500;
-        font-family: 'Poppins';
     }
     .bid{
         font-size: 25px;
@@ -25,5 +25,11 @@
             font-size: 15px;
             color : rgb(34, 33, 33);
         }
+    }
+    .infocol{
+        text-align: right;
+        font-size: 14px;
+        color : white;
+        font-weight: 600;
     }
 }

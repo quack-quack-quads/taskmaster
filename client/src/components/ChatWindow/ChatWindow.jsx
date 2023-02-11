@@ -15,6 +15,7 @@ const ChatWindow = ({flow}) => {
         {
                 name:"job to do-1",
                 from: "uid",
+                bid : "4895",
                 address: "addresses[addressHighlight]",
                 status: "bidOn",
                 startingBid: "120",
@@ -26,6 +27,7 @@ const ChatWindow = ({flow}) => {
             
                 name:"job to do-2",
                 from: "uid",
+                bid : "4895",
                 address: "addresses[addressHighlight]",
                 status: "bidOn",
                 startingBid: "120",
@@ -36,6 +38,7 @@ const ChatWindow = ({flow}) => {
         },{
                 name:"job to do-3",
                 from: "uid",
+                bid : "4895",
                 address: "addresses[addressHighlight]",
                 status: "bidOn",
                 startingBid: "120",
@@ -46,6 +49,7 @@ const ChatWindow = ({flow}) => {
         },{
                 name:"job to do-4",
                 from: "uid",
+                bid : "4895",
                 address: "addresses[addressHighlight]",
                 status: "bidOn",
                 startingBid: "120",
@@ -73,7 +77,8 @@ const ChatWindow = ({flow}) => {
                 <>
                     {
                         jobs.map((job, index) => {
-                            return <JobCard key={index} id={index} handleOpenChat={handleOpenChat} />
+                            return <JobCard key={index} id={index} handleOpenChat={handleOpenChat}
+                            job = {jobs[index]}/>
                         })
                     }
                 </>

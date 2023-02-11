@@ -7,43 +7,43 @@ const ChatCard = (props) => {
         {
             message: "hello",
             from: "uid"
-        },{
+        }, {
             message: "hello",
             from: "uid"
-        },{
+        }, {
             message: "hello",
             from: "own"
-        },{
+        }, {
             message: "hello",
             from: "uid"
-        },{
+        }, {
             message: "hello",
             from: "uid"
-        },{
+        }, {
             message: "hello",
             from: "uid"
-        },{
+        }, {
             message: "hello",
             from: "uid"
-        },{
+        }, {
             message: "hello",
             from: "uid"
-        },{
+        }, {
             message: "hello",
             from: "own"
-        },{
+        }, {
             message: "hello",
             from: "uid"
-        },{
+        }, {
             message: "hello",
             from: "uid"
-        },{
+        }, {
             message: "hello",
             from: "uid"
-        },{
+        }, {
             message: "hello",
             from: "own"
-        },{
+        }, {
             message: "hello",
             from: "uid"
         }
@@ -53,47 +53,68 @@ const ChatCard = (props) => {
     }
 
     useEffect(() => {
-        // scroll to bottom of the messages
-        const chatcard = document.querySelector(".container")
+        const chatcard = document.querySelector(".chatcard")
         chatcard.scrollTop = chatcard.scrollHeight
     })
 
-    const chatMessage = (flow,message) => {
+    const chatMessage = (flow, message) => {
         return (
             <div className={`chat__message ${message.from === "own" ? "self_msg" : "other_msg"}`}>
                 <p className="chat__message--text">{message.message}</p>
+                <div className="row">
+                    <div className="col-6">
+                        {
+                            flow == "client" ?
+                                <button className="btn btn-light">
+                                    Accept
+                                </button> :
+                                <></>
+                        }
+
+                    </div>
+                    <div className="col-6 d-flex justify-content-end"
+                    style={{"fontSize" : "12px"}}
+                    >
+                        <div className="from">
+                            {message.from}
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
 
     return (
-    <div>
-        <div className="container">
-            <div className="row">
-                <div className="col-2">
-                    <BsArrowLeftShort
-                        className="ml-3 arrowbutton"
-                        size={50}
-                        onClick={handleGoBack}
-                    >
-                    </BsArrowLeftShort> 
-                </div>
-                <div className="col-10">
-                    <h2 className="chat__header">{props.chat.name}</h2>
-                </div>
+        <div className="chatcard">
+            <div className="fixedsection">
+                <BsArrowLeftShort
+                    className="arrowbutton"
+                    size={30}
+                    onClick={handleGoBack}
+                >
+                </BsArrowLeftShort>
+                <div className="chat__header">{props.chat.name}</div>
             </div>
-            <hr />
+            <div className="chatcol">
+                {
+                    messages.map((message, index) => {
+                        return chatMessage(props.flow, message)
+                    })
+                }
             </div>
-                <div className="container chatcard">
-                    {
-                        messages.map((message, index) => {
-                            return chatMessage(props.flow, message) 
-                        })
-                    }   
-                <div>
-            </div>
+            {
+                props.flow == "client" ?
+                    <></> :
+                    <div className="messagebar">
+                        <input type="email" className="form-control shadow-none"
+                            placeholder="Enter message"
+                            onChange={(event) => {
+                                setEmailAdd(event.target.value);
+                            }}
+                        />
+                    </div>
+            }
         </div>
-    </div>
     )
 }
 
