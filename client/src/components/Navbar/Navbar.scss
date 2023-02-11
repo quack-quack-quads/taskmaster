@@ -13,7 +13,7 @@
     .modal-body{
         border : none;
         border-radius: 25px;
-        background: linear-gradient(135deg, $mintGreen 0%, $malachite 70%) !important;
+        background: linear-gradient(135deg, $c3 0%, $c5 70%) !important;
         height: fit-content; 
         padding-bottom: 2vh;
     }
@@ -38,10 +38,10 @@
             // font-family: 'Poppins';
         }
         .form-control{
-            border : 2px solid $malachite;
+            border : 2px solid $c3;
             border-radius: 20px;
             margin-bottom: 15px;
-            caret-color: $malachite;
+            caret-color: $c3;
         }
     }
     .socialicon{
