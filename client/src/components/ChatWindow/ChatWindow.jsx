@@ -5,9 +5,12 @@ import ActionButton from "../Buttons/ActionButton"
 import { Modal} from 'react-bootstrap'
 import JobCard from "./JobCard/JobCard"
 import ChatCard from "../ChatCard/ChatCard"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { ClientContext } from "../../context/clientContext"
 
 const ChatWindow = ({flow}) => {
+    const {uid} = useContext(ClientContext);
+    console.log(uid);
     const [show, setShow] = useState(false)
     const [displayChat, setDisplayChat] = useState(false)
     const [chat, setChat] = useState(null)

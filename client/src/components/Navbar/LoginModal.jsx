@@ -2,7 +2,7 @@ import './Navbar.scss'
 import LoginImg from '../../assets/hands.gif'
 import { BsGoogle, BsTwitter, BsGithub, BsDiscord, BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs'
 import ActionButton from "../Buttons/ActionButton"
-import {  useState, useContext } from 'react'
+import {  useState, useContext, useEffect } from 'react'
 import { loginapi } from '../../utilities/Auth'
 import ReactDOM from "react-dom/client";
 
@@ -15,16 +15,20 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
     const [emailAdd, setEmailAdd] = useState("");
     const [password, setPassword] = useState("");
 
-    const {setDetails } = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
+    const {uid,setDetails } = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
 
     const login = async () => {
         setWaiting(true);
         var data = await loginapi(emailAdd, password, flow);
-        console.log(data["uid"]);
         setDetails(data["uid"], data["name"], data['email'], data['phone'], data['starredWorkers'], data['jobList'], data['savedAddresses']);
         setWaiting(false);
+        // console.log("here",uid);
         dismiss();
     }
+
+    useEffect(()=>{
+        console.log("here",uid);
+    },[uid])
 
     return <>
         <BsArrowLeftShort
