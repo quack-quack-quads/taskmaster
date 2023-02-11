@@ -2,21 +2,35 @@ import './Navbar.scss'
 import LoginImg from '../../assets/hands.gif'
 import { BsGoogle, BsTwitter, BsGithub, BsDiscord, BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs'
 import ActionButton from "../Buttons/ActionButton"
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { signupapi } from '../../utilities/Auth'
 
-const First = ({ handler }) => {
+import { ClientContext } from "../../context/clientContext"
+import { BusinessContext } from '../../context/businessContext'
+import { Spinner } from 'react-bootstrap'
+
+const First = ({ handler, setEmail, setPassword, setConfirm}) => {
     return <div className="email">
         <div className="emailhead">
             Sign up with your email
         </div>
         <input type="email" className="form-control shadow-none"
             placeholder="example@example.com"
+            onChange={()=>{
+                setEmail(event.target.value);
+            }}
         />
         <input type="password" className="form-control shadow-none"
             placeholder="Password"
+            onChange={()=>{
+                setPassword(event.target.value);
+            }}
         />
         <input type="password" className="form-control shadow-none"
             placeholder="Confirm password"
+            onChange={()=>{
+                setConfirm(event.target.value);
+            }}
         />
         <div className="d-flex justify-content-center">
             <ActionButton
@@ -27,16 +41,22 @@ const First = ({ handler }) => {
         </div>
     </div>
 }
-const Second = ({ handler }) => {
+const Second = ({ handler, setPhone, setName }) => {
     return <div className="email">
         <div className="emailhead">
             We will need some contact details
         </div>
         <input type="text" className="form-control shadow-none"
             placeholder="Name"
+            onChange={()=>{
+                setName(event.target.value);
+            }}
         />
         <input type="number" className="form-control shadow-none"
             placeholder="Contact Number"
+            onChange={()=>{
+                setPhone(event.target.value);
+            }}
         />
         <div className="d-flex justify-content-center">
             <ActionButton
@@ -48,23 +68,74 @@ const Second = ({ handler }) => {
     </div>
 }
 
-const ClientSignUp = ({ dismiss }) => {
-    const signup = () => {
+const ClientSignUp = ({ dismiss, flow }) => {
+    
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [phone, setPhone] = useState("");
+    const [confirm, setConfirm] = useState("");
+    const [name, setName] = useState("");
+    const [message, setMessage] = useState("");
+    const [waiting, setWaiting] = useState(false);
 
+    const {setDetails } = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
+
+    const signup = async () => {
+        setWaiting(true);
+        if(password != confirm){
+            setMessage("Passwords do not match");
+        }else if(password.length < 6){
+            setMessage("Passwords should be atleast 6 characters long.");
+        }else if(!email.includes("@")){
+            setMessage("Enter a valid email");
+        }else{
+            const payload = {
+                "email" : email,
+                "password" : password,
+                "name" : name,
+                "phone" : phone,
+                "savedAddresses" : [],
+                "starredWorkers" : [],
+                "jobList" : []
+            }
+            var data = await signupapi(payload, flow).then((data)=>data).catch(
+                (e)=>{
+                    setMessage(e);
+                    return null;
+                }
+            );
+            console.log(data);
+            if(data["uid"]==null || data["uid"] == undefined){
+                setWaiting(false);
+                return;
+            }
+            setDetails(data["uid"], data["name"], data['email'], data['phone'], data['starredWorkers'], data['jobList'], data['savedAddresses']);
+        }
+        setWaiting(false);
+        dismiss();
     }
-
-    const firstPage = <First handler={() => {
+    const firstPage = <First 
+    handler={() => {
         setPage("second")
         console.log("no way")
-    }} />
-    const secondPage = <Second handler={signup} />
-
+    }} 
+    setEmail = {setEmail}
+    setPassword = {setPassword}
+    setConfirm = {setConfirm}
+    />
+    const secondPage = <Second 
+    handler={signup} 
+    setPhone = {setPhone}
+    setName = {setName}
+    />
+    
     const [page, setPage] = useState("first")
-
+    
     const pageMap = {
         "first": firstPage,
         "second": secondPage
     }
+    
 
     return <>
         <BsArrowLeftShort
@@ -72,15 +143,15 @@ const ClientSignUp = ({ dismiss }) => {
             size={30}
             onClick={
                 page == "first" ?
-                dismiss :
-                ()=>{
-                    setPage("first");
-                }
+                    dismiss :
+                    () => {
+                        setPage("first");
+                    }
             }
         />
         <div className="graphics d-flex justify-content-center">
             <img src={LoginImg} alt="" className="loginimage"
-                style={{ "height": "140px", "width": "auto", "marginTop": "0", "paddingTop": "0" }}
+                style={{ "height": "140px", "width": "auto", "marginTop": "0", "paddingTop": "0", }}
             />
         </div>
         {pageMap[page]}

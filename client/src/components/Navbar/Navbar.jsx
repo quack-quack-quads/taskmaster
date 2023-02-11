@@ -26,9 +26,15 @@ const Navbar = ({ flow }) => {
 
     var signComp = <></>
     if (flow == "client") {
-        signComp = <ClientSignUp dismiss={dismiss}/>;
+        signComp = <ClientSignUp 
+        dismiss={dismiss}
+        flow = {flow}
+        />;
     }else if(flow == "business"){
-        signComp = <BusinessSignUp dismiss={dismiss}/>
+        signComp = <BusinessSignUp 
+        dismiss={dismiss}
+        flow = {flow}
+        />
     }
 
     const loginComp = <LoginModal

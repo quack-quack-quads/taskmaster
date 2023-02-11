@@ -17,16 +17,14 @@ const createClient = async(uid, data)=>{
 }
 
 const signUp = async (req, res) => {
-    await createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
+    await createUserWithEmailAndPassword(auth, req.body["email"], req.body["password"])
     .then(async(userCredential) => {
         const user = userCredential.user;
         await createClient(user.uid, req.body);
         res.send(user);
     })
     .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        res.send(errorMessage);
+        res.send(error.message);
     });
 }
 
