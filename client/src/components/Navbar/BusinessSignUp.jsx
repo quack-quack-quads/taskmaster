@@ -118,10 +118,25 @@ const Third = ({ handler, setGovt, setOccupation, occupation}) => {
     </div>
 }
 
-const Fourth = () => {
-    return <>
-
-    </>
+const Fourth = ({handler, setImage}) => {
+    return <div className="email">
+        <div className="emailhead">
+            Upload a soft copy of your govt. identification
+        </div>
+        <input type="text" className="form-control shadow-none"
+            placeholder="Upload here"
+            onChange={() => {
+                setImage("");
+            }}
+        />
+        <div className="d-flex justify-content-center">
+            <ActionButton
+                text={<BsArrowRightShort size={25}
+                    onClick={handler}
+                />}
+            />
+        </div>
+    </div>
 }
 
 
@@ -134,6 +149,7 @@ const BusinessSignUp = ({ dismiss, flow }) => {
     const [name, setName] = useState("");
     const [govt, setGovt] = useState("");
     const [occupation, setOccupation] = useState("Occupation");
+    const [image, setImage] = useState("");
 
     const [message, setMessage] = useState("");
     const [waiting, setWaiting] = useState(false);
@@ -154,9 +170,9 @@ const BusinessSignUp = ({ dismiss, flow }) => {
                 "password": password,
                 "name": name,
                 "phone": phone,
-                "savedAddresses": [],
-                "starredWorkers": [],
-                "jobList": []
+                "govt" : govt,
+                "occupation": occupation,
+                "image" : image,
             }
             var data = await signupapi(payload, flow).then((data) => data).catch(
                 (e) => {
@@ -174,6 +190,7 @@ const BusinessSignUp = ({ dismiss, flow }) => {
         setWaiting(false);
         dismiss();
     }
+
     const firstPage = <First
         handler={() => {
             setPage("second")
@@ -203,6 +220,7 @@ const BusinessSignUp = ({ dismiss, flow }) => {
 
     const fourthPage = <Fourth
         handler={signup}
+        setImage = {setImage}
     />
 
     const [page, setPage] = useState("first")

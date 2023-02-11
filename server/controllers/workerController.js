@@ -5,7 +5,8 @@ const { db, auth } = require("../firebase-config")
 const createWorker = async(uid, data)=>{
     const dbRef = ref(db);
     data["password"] = null;
-    data["verified"] = false; // ! admin will verify the worker
+    data["verified"] = false; 
+    // ! admin will verify the worker
     const newClientKey = push(child(dbRef, 'workers')).key;
     // ! add this worker to the pending_approvals list of workers
     await set(ref(db, `pending_approvals/${uid}`), data).catch(err => {
@@ -67,7 +68,6 @@ const updateWorker = async(req,res) => {
     let data = req.body;
     const uid = data["uid"];
     delete data["uid"];
-    const newWorkerKey = push(child(dbRef, 'workers')).key;
     await update(ref(db, `workers/${uid}`), data).catch(
         (error)=>{
             const errorCode = error.code;

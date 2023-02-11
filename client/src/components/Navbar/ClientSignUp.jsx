@@ -95,8 +95,7 @@ const ClientSignUp = ({ dismiss, flow }) => {
                 "name" : name,
                 "phone" : phone,
                 "savedAddresses" : [],
-                "starredWorkers" : [],
-                "jobList" : []
+                "starredWorkers" : []
             }
             var data = await signupapi(payload, flow).then((data)=>data).catch(
                 (e)=>{
