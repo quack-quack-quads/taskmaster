@@ -7,6 +7,7 @@ import { loginapi } from '../../utilities/Auth'
 import ReactDOM from "react-dom/client";
 
 import { ClientContext } from "../../context/clientContext"
+import { BusinessContext } from '../../context/businessContext'
 import { Spinner } from 'react-bootstrap'
 
 const LoginModal = ({ dismiss, redirect, flow }) => {
@@ -14,7 +15,7 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
     const [emailAdd, setEmailAdd] = useState("");
     const [password, setPassword] = useState("");
 
-    const {setDetails } = useContext(ClientContext);
+    const {setDetails } = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
 
     const login = async () => {
         setWaiting(true);

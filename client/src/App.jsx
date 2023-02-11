@@ -7,7 +7,7 @@ import { BsChatDotsFill } from "react-icons/bs"
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 //screens
-import { Business, Client, Home } from "./pages/index";
+import { Business, Client} from "./pages/index";
 
 //components
 
@@ -15,13 +15,11 @@ import { Business, Client, Home } from "./pages/index";
 function App() {
   return (
     <div className="App">
-      
       <Router>
         <Routes>
-          <Route exact path="/" element={<Home />} />
           <Route path="/client" element={<Client />} />
           <Route path="/business" element={<Business />} />
-          <Route path="/*" element={<Home />} />
+          <Route path="/*" element={<Client />} />
         </Routes>
       </Router>
     </div>
