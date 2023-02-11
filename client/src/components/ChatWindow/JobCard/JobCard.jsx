@@ -1,6 +1,9 @@
 import './JobCard.scss'
 
 const JobCard = (props)=>{
+    const handleClick = () => {
+        props.handleOpenChat(props.id)
+    }
     return <div className="JobCard card">
         <div className="card-content row">
             <div className="col-7">
@@ -18,7 +21,7 @@ const JobCard = (props)=>{
                 </div>
             </div>
             <div className="col-5 d-flex justify-content-center align-items-center">
-                <button className="btn btn-sm btn-light">
+                <button className="btn btn-sm btn-light" onClick={handleClick}>
                     Open Chat
                 </button>
             </div>
