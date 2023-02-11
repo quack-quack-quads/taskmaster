@@ -14,6 +14,7 @@ import { BusinessContext } from "../../context/businessContext"
 import React, { useState, useEffect, useContext } from 'react';
 import LoginModal from "./LoginModal"
 import ClientSignUp from "./ClientSignUp"
+import BusinessSignUp from "./BusinessSignUp"
 
 const Navbar = ({ flow }) => {
     const dismiss = () => {
@@ -25,11 +26,9 @@ const Navbar = ({ flow }) => {
 
     var signComp = <></>
     if (flow == "client") {
-        signComp = <ClientSignUp
-            dismiss={dismiss}
-        />;
+        signComp = <ClientSignUp dismiss={dismiss}/>;
     }else if(flow == "business"){
-        signComp = <ClientSignUp dismiss={dismiss}/>
+        signComp = <BusinessSignUp dismiss={dismiss}/>
     }
 
     const loginComp = <LoginModal
