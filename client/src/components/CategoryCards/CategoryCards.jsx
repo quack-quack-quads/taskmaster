@@ -1,44 +1,37 @@
 import CategoryCard from "./CategoryCard";
+import applianceRepairImg from "../../assets/car-repair.png";
+import paintImg from "../../assets/varnish.png";
+import cleaningImg from "../../assets/vaccum-cleaner.png";
+import electricianImg from "../../assets/electrician (1).png";
+import plumbingImg from "../../assets/plumbing (1).png";
+import toolsImg from "../../assets/tool-box.png";
 import "./CategoryCards.scss";
 
 const CategoryCards = (props) => {
   return (
     <div className="cat-cards row">
-      <div className="col-4">
-        <CategoryCard
-          text="Appliance Repair"
-          sceneLink="https://draft.spline.design/3v67hYG2AGS8cOgb/scene.splinecode"
-        />
+      <div className="col-sm-4 col-12">
+        <CategoryCard text="Appliance Repair" img={applianceRepairImg} alt="" />
       </div>
-      <div className="col-4">
-        <CategoryCard
-          text="Painting & Decor"
-          sceneLink="https://draft.spline.design/RsFsUQHZHjw3i6Vk/scene.splinecode"
-        />
+      <div className="line d-block d-sm-none"></div>
+      <div className="col-sm-4 col-12">
+        <CategoryCard text="Painting & Decor" img={paintImg} alt="" />
       </div>
-      <div className="col-4">
-        <CategoryCard
-          text="Cleaning & Pest Control"
-          sceneLink="https://draft.spline.design/nRu5AIDpsPCnd8Qi/scene.splinecode"
-        />
+      <div className="line d-block d-sm-none"></div>
+      <div className="col-sm-4 col-12">
+        <CategoryCard text="Cleaning & Pest Control" img={cleaningImg} alt="" />
       </div>
-      <div className="col-4">
-        <CategoryCard
-          text="Electricians"
-          sceneLink="https://draft.spline.design/QsTZz6oc0Ee8D4uF/scene.splinecode"
-        />
+      <div className="line d-block d-sm-none"></div>
+      <div className="col-sm-4 col-12">
+        <CategoryCard text="Electricians" img={electricianImg} alt="" />
       </div>
-      <div className="col-4">
-        <CategoryCard
-          text="Plumbing"
-          sceneLink="https://draft.spline.design/nx-LSAXa5XquehqC/scene.splinecode"
-        />
+      <div className="line d-block d-sm-none"></div>
+      <div className="col-sm-4 col-12">
+        <CategoryCard text="Plumbing" img={plumbingImg} alt="" />
       </div>
-      <div className="col-4">
-        <CategoryCard
-          text="Custom"
-          sceneLink="https://draft.spline.design/cxOuBMdSr6RXjzRE/scene.splinecode"
-        />
+      <div className="line d-block d-sm-none"></div>
+      <div className="col-sm-4 col-12">
+        <CategoryCard text="Custom" img={toolsImg} alt="" />
       </div>
     </div>
   );
