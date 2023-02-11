@@ -1,33 +1,35 @@
 const { ref, set, get, push, child} = require("firebase/database");
 const { db } = require("../firebase-config")
 
-const getChatById = async (req, res) => {
+const getChat = async (req, res) => {
     const dbRef = ref(db);
-    get(child(dbRef, `chats/${req.body["id"]}`)).then((snapshot) => {
+    get(child(dbRef, `chats/${req.body["jobId"]}`)).then((snapshot) => {
         if (snapshot.exists()) {
-            console.log(snapshot.val());
+            res.send(snapshot.val());
         } else {
-            console.log("No data available");
+            res.send("No data available");
         }
     }).catch((error) => {
-        console.error(error);
+        res.send(error.message);
     });
 }
 
-const putChat = async (req, res) =>{
+const putMessage = async (req, res) =>{
     const dbRef = ref(db);
-    const newChatKey = push(child(dbRef, 'chats')).key;
-    var chatData = req.body;
-    chatData["id"] = newChatKey;
-    set(ref(db, `chats/${req.body["id"]}`), req.body).then(()=>{
-        res.send(`Put chat at id : ${newChatKey}`);
+
+    const jobId = req.body['jobId'];
+    const data = req.body['message'];
+
+    const newChatKey = push(child(dbRef, `chats/${jobId}`)).key;
+    set(ref(db, `chats/${jobId}/${newChatKey}`), data).then(()=>{
+        res.send(newChatKey);
     }).catch((error) =>{
-        res.send("Error putting chat");
+        res.send(error.message);
     })
 }
 
 
 module.exports = {
-    getChatById,
-    putChat
+    getChat,
+    putMessage
 }

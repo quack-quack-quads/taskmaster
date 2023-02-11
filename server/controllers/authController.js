@@ -2,11 +2,26 @@ const { createUserWithEmailAndPassword, signInWithEmailAndPassword } = require("
 const { ref, set, get, push, child} = require("firebase/database");
 const { db, auth } = require("../firebase-config")
 
+
+const createClient = (uid, data)=>{
+    const dbRef = ref(db);
+    data["password"] = null;
+    const newClientKey = push(child(dbRef, 'clients')).key;
+    set(ref(db, `clients/${uid}`), data).catch(
+        (error)=>{
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            res.send(errorMessage);
+        }
+    );
+}
+
 const signUp = async (req, res) => {
     createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
     .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
+        createClient(user.uid, req.body);
+        res.send(user);
     })
     .catch((error) => {
         const errorCode = error.code;
@@ -16,18 +31,33 @@ const signUp = async (req, res) => {
 }
 
 const signIn = async (req, res)=>{
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, req.body.email, req.body.password)
     .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
+        res.send(user);
     })
     .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        res.send(errorMessage);
+    });
+}
+
+const getClient = async (req, res)=>{
+    const dbRef = ref(db);
+    get(child(dbRef, `clients/${req.body["uid"]}`)).then((snapshot) => {
+        if (snapshot.exists()) {
+            res.send(snapshot.val())
+        } else {
+            res.send("No data available");
+        }
+    }).catch((error) => {
+        res.send(error);
     });
 }
 
 module.exports = {
     signUp,
-    signIn
+    signIn,
+    getClient
 }
