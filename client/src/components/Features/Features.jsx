@@ -1,6 +1,8 @@
 import "./Features.scss";
 import Feature from "./Feature";
 import RupeeIm from "../../assets/rupee.png";
+import WorkersIm from "../../assets/workers.png";
+import ClockIm from "../../assets/wall-clock.png";
 
 const Features = () => {
   return (
@@ -20,21 +22,21 @@ const Features = () => {
         </Feature>
         <Feature
           className="align-self-stretch col-12 col-lg-4"
-          static_img={RupeeIm}
+          static_img={WorkersIm}
           img_pos="bot"
-          title="Get fair prices"
+          title="Get access to a wide range of services"
         >
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores,
-          doloremque?
+          Our app hosts a huge variety of workers specialised in various skills
+          to provide a wide array of services
         </Feature>
         <Feature
           className="align-self-stretch col-12 col-lg-4"
-          static_img={RupeeIm}
+          static_img={ClockIm}
           img_pos="top"
-          title="Get fair prices"
+          title="Flexible timings"
         >
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum,
-          eligendi!
+          Schedule a visit as per your convinience by interacting one-to-one
+          with the workers to decide on a suitable time
         </Feature>
       </div>
     </div>
