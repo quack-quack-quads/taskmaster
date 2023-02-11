@@ -7,20 +7,23 @@ import maid from "../assets/maid.png"
 import security from "../assets/security.png"
 import more from "../assets/more.png"
 import home from "../assets/home.png"
-import { useState, useEffect, useLayoutEffect, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef, useContext } from 'react'
 import { BsGoogle, BsTwitter, BsGithub, BsDiscord, BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs'
 import { Modal, Button } from 'react-bootstrap'
 import { gsap } from "gsap"
 import LoginImg from '../assets/address.gif'
 import ActionButton from "./Buttons/ActionButton"
 import { ToastContainer, toast } from 'react-toastify';
+import { ClientContext } from "../context/clientContext"
 
 export default function JobListing() {
 
     //Fetched Data
     const [addresses, setAddresses] = useState([]);
 
+    const {uid, name, setUid} = useContext(ClientContext);
 
+    console.log(uid);
 
     const [name1, setName] = useState("Plumber");
     const [name2, setName2] = useState("Electrician")

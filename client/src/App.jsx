@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Business, Client, Home } from "./pages/index";
 
 //components
-
+import JobListing from "./components/JobListing";
 function App() {
   return (
     <div className="App">
