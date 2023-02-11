@@ -6,16 +6,17 @@ const loginapi = async (email, password, flow) => {
     console.log("called");
     var payload = {
         "email": email,
-        "password": password
+        "password": password,
     }
-    await axios.post(
-        `${baseURL}/api/auth/signin`,
+    const res = await axios.post(
+        `${baseURL}/api/auth/${flow}/signin`,
         payload
     ).then((response) => {
         return response.data;
     }).catch((error) => {
         return error;
     })
+    return res;
 }
 
 export {
