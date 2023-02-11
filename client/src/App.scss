@@ -1,0 +1,8 @@
+@import './theme.scss';
+.App {
+    background-color: $primaryColor;
+    color: white;
+    min-width: 100vw;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}

@@ -1,0 +1,19 @@
+@import '../../theme.scss';
+
+
+.search-icon {
+    background-color: $primaryColor !important;
+    border-right: 0 !important;
+}
+.search-icon-svg {
+    color: $secondaryColor;
+}
+.sb{
+    margin-top: 2.5vh;
+}
+.search-input {
+    background-color: $primaryColor !important;
+    color: white !important;
+    border-left: 0 !important;
+    margin: auto;
+}
