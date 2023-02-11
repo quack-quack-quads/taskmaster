@@ -11,7 +11,6 @@ import { Business, Client} from "./pages/index";
 
 //components
 
-
 function App() {
   return (
     <div className="App">

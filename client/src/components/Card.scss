@@ -45,3 +45,38 @@
     font-family: 'Poppins';
     color: rgb(15, 117, 107);
 }
+
+.img {
+    border: 2px solid black;
+}
+
+.grad1 {
+    background: rgb(240,252,255);
+background: linear-gradient(90deg, rgba(240,252,255,1) 21%, rgba(187,243,255,1) 33%, rgba(176,230,241,1) 65%, rgba(122,233,255,1) 76%);
+}
+.pad {
+    padding: 10%;
+}
+
+.pad:hover {
+    background-color: #ade8f4;
+    cursor: pointer;
+}
+
+.pad:focus {
+    background-color: #ade8f4;
+}
+
+.highlight {
+    background-color: #ade8f4;
+}
+
+.card-image {
+    // height: 70px;
+    // width: 70px;
+}
+
+.transparent {
+    background: transparent;
+    border: none;
+}

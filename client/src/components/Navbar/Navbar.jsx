@@ -62,11 +62,11 @@ const Navbar = ({ flow }) => {
             /> :
             <ActionButton
                 text = {<span>LOG OUT&nbsp;<RiLoginCircleLine size={25}/></span>}
-                // handler = {
-                //     ()=>{
-                //         setUid(null);
-                //     }
-                // }
+                handler = {
+                    ()=>{
+                        setUid(null);
+                    }
+                }
             />
         }
         </div>
