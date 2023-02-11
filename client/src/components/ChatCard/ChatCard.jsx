@@ -1,8 +1,10 @@
 import "./ChatCard.scss"
 import { BsArrowLeftShort } from "react-icons/bs"
 import { useState, useEffect } from "react"
+import { io } from "socket.io-client"
 const ChatCard = (props) => {
     console.log(props)
+    const [socket, setSocket] = useState()
     const [messages, setMessages] = useState([
         {
             message: "hello",
@@ -51,6 +53,28 @@ const ChatCard = (props) => {
     const handleGoBack = () => {
         props.handleCloseChat()
     }
+
+    useEffect(() => {
+        const url = import.meta.env.VITE_BASE_URL   
+        const s = io(url)
+        setSocket(s)
+
+        // ! this is a cleanup function
+        // ! this is called when the component is unmounted
+        // ! prevents user from connecting to multiple sockets
+        return () => {
+            s.disconnect()
+        }
+    },[])
+
+    // ! listen for messages from the server
+    useEffect(() => {
+        if(socket){
+            socket.on("chat-message", (message) => {
+                setMessages([...messages, message])
+            })
+        }
+    })
 
     useEffect(() => {
         // scroll to bottom of the messages

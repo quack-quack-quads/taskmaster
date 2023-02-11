@@ -12,6 +12,7 @@
     "firebase": "^9.17.1",
     "hardhat": "^2.12.6",
     "hardhat-change-network": "^0.0.7",
+    "http": "^0.0.1-security",
     "remove": "^0.1.5",
     "socket.io": "^4.6.0"
   },

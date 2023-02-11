@@ -22,6 +22,7 @@ const ChatWindow = ({flow}) => {
                 category: "category",
                 to: "",
                 settled: "",
+                uid:"-NO-ZRmmTyYKvu_7nLgn",
         },{
             
                 name:"job to do-2",
@@ -32,27 +33,8 @@ const ChatWindow = ({flow}) => {
                 description: "descriptionsgasghajdskglhfkljggfaklhgklhfak;lsjgjk;ldjkl;gjf. ,klgjklsjkl ",
                 category: "category",
                 to: "",
-                settled: "",     
-        },{
-                name:"job to do-3",
-                from: "uid",
-                address: "addresses[addressHighlight]",
-                status: "bidOn",
-                startingBid: "120",
-                description: "descriptionsgasghajdskglhfkljggfaklhgklhfak;lsjgjk;ldjkl;gjf. ,klgjklsjkl ",
-                category: "category",
-                to: "",
                 settled: "",
-        },{
-                name:"job to do-4",
-                from: "uid",
-                address: "addresses[addressHighlight]",
-                status: "bidOn",
-                startingBid: "120",
-                description: "descriptionsgasghajdskglhfkljggfaklhgklhfak;lsjgjk;ldjkl;gjf. ,klgjklsjkl ",
-                category: "category",
-                to: "",
-                settled: "",
+                uid:"-NO-_8l58lpdH9o5UplO"     
         }
     ])
     const handleOpenChat = (id) => {

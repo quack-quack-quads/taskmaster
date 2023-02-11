@@ -174,10 +174,37 @@ const updateAdmin = async(req,res) => {
     })
 }
 
+const getWorkers = async(req,res) => {
+    // get all workers from workers table
+    const dbRef = ref(db);
+    await checkIFAdmin(req.body.uid)
+    .then(async(admin)=>{
+        if(admin !== null){
+            await get(child(dbRef, `workers`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    res.send(snapshot.val());
+                } else {
+                    res.send("No data available");
+                }
+            }).catch((error) => {
+                throw error;
+            });
+        }else{
+            res.send("You are not an admin");
+        }
+    })
+    .catch((error)=>{
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        res.send(errorMessage);
+    })
+}
+
 module.exports = {
     signIn,
     createAdmin,
     getAdmin,
     getAllAdmins,
     approveWorker,
+    getWorkers,
 }
