@@ -179,7 +179,7 @@ const getWorkers = async(req,res) => {
     const dbRef = ref(db);
     await checkIFAdmin(req.body.uid)
     .then(async(admin)=>{
-        if(admin !== null){
+        if(admin !== null && admin !== undefined){
             await get(child(dbRef, `workers`)).then((snapshot) => {
                 if (snapshot.exists()) {
                     res.send(snapshot.val());

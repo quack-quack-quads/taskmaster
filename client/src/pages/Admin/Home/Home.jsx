@@ -25,6 +25,7 @@ const handleWorkerClick = (link) => {
 
 const verify = (type, email, workers, setWorkers, adminId) => {
     var temp = [];
+    console.log(type, email, workers, setWorkers, adminId);
     for (var obj in workers) {
         var new_obj = workers[obj];
         console.log(new_obj.email, email);
@@ -32,30 +33,19 @@ const verify = (type, email, workers, setWorkers, adminId) => {
             if (type === 'approve') {
                 axios.post(`${baseURL}/api/admin/approveWorker`, {
                     uid: adminId,
-                    workerId: new_obj.uid
+                    workerUid: new_obj.uid
                 }).then(async (res) => {
                     console.log(res);
                     new_obj.verified = true;
-                    // console.log(temp);
-
-                    // res.json().then((res1) => {
-                    //     console.log(res1)
-                    // }, (err1) => {
-                    //     console.log(err1)
-                    // })
                 }, (err) => {
                     console.log(err);
                 })
                 continue
             }
-
         }
         temp.push(new_obj);
-
     }
     setWorkers(temp);
-
-
 }
 
 const Feature = (props) => {
@@ -119,43 +109,31 @@ const Home = (props) => {
 
     const data = [1, 2, 3, 5, 8, 13];
 
+    const fetchData = async () => {
+        console.log("fetching data");   
+        const response = await axios.post(`${baseURL}/api/admin/getWorkers`, {
+            uid: adminId
+        })
+        const data = await response.data;
+        console.log(data);
+        // filter data
+        var temp = workers;
+        for (var obj in data) {
+            var new_obj = data[obj]
+            new_obj.uid = obj;
+            if (new_obj.verified === false) {
 
-    useEffect(() => {
-
-        var obj = {
-            method: 'POST',
-            body: {
-                uid: adminId
+                temp.push(new_obj);
             }
         }
-        axios.post(`${baseURL}/api/admin/getWorkers`, {
-            uid: adminId
-        }).then(async (res) => {
-            var temp = workers;
-            for (var obj in res.data) {
+        console.log(temp);
+        setWorkers(temp);
+    }
 
-                var new_obj = res.data[obj]
-                new_obj.uid = obj;
-                if (new_obj.verified === false) {
+    useEffect(() => {
+        fetchData();
+    }, [])
 
-                    temp.push(new_obj);
-                }
-            }
-            // console.log(temp);
-            setWorkers(temp);
-            // res.json().then((res1) => {
-            //     console.log(res1)
-            // }, (err1) => {
-            //     console.log(err1)
-            // })
-        }, (err) => {
-            console.log(err);
-        })
-
-    }, [workers])
-
-
-    console.log(workers);
     return (
 
         <div className="container-fluid admin-body">
