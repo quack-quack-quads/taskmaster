@@ -2,7 +2,7 @@ import "./CategoryCard.scss";
 
 const CategoryCard = (props) => {
   const handleClicker = () => {
-    console.log("clicked!");
+    //console.log("clicked!");
     props.handleCategoryClick(props.type);
   };
   return (

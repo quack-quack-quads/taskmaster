@@ -4,10 +4,10 @@ import { useState } from "react";
 
 const Admin = () => {
     const [show, setShow] = useState(true);
-    console.log(show);
+    //console.log(show);
     return (
         <div>
-            <Home/>
+            <Home />
         </div>
 
 

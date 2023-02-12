@@ -2,12 +2,13 @@ import './BusinessDashboard.scss'
 import Hero from "../../../components/Hero/Hero";
 import CategoryCards from '../../../components/CategoryCards/CategoryCards'
 import Features from '../../../components/Features/Features'
-import axios from "axios";
+
 import { BusinessContext } from '../../../context/BusinessContext'
 import { useContext, useState, useEffect } from 'react';
 
 import Clock from '../../../assets/clock.gif';
 import Auction from '../../../assets/auction.gif';
+import axios from 'axios';
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -59,40 +60,6 @@ const BusinessDashboard = () => {
     const [pendingTask, setPendingTask] = useState([]);
 
     useEffect(() => {
-        if (pendingTask.length === 0) {
-            var obj = {
-                method: 'POST',
-                body: {
-                    uid: uid
-                }
-            }
-            axios.post(`${baseURL}/api/jobs/getJobsWorker`, {
-                uid: uid
-            }).then(async (res) => {
-                var temp = workers;
-                for (var obj in res.data) {
-
-                    var new_obj = res.data[obj]
-                    new_obj.uid = obj;
-                    if (new_obj.verified === false) {
-
-                        temp.push(new_obj);
-                    }
-                }
-                console.log(temp);
-                setPendingTask(temp);
-                // res.json().then((res1) => {
-                //     console.log(res1)
-                // }, (err1) => {
-                //     console.log(err1)
-                // })
-            }, (err) => {
-                console.log(err);
-            })
-        }
-    })
-
-    useEffect(() => {
         console.log(uid);
         if (uid == null || uid == undefined) {
             setBusLog(false);
@@ -110,16 +77,45 @@ const BusinessDashboard = () => {
         ]
     )
 
-    const pendingList = []
-    const listings = []
-    for (var i = 0; i < pending.length; i++) {
-        pendingList.push(
-            PendingTaskCard(pending[i].title, pending[i].desc, pending[i].bid)
-        )
-        listings.push(
-            ListingCard(pending[i].title, pending[i].desc, pending[i].bid)
-        )
-    }
+    useEffect(() => {
+        if (pendingTask.length === 0) {
+            //console.log("business uid", uid)
+            axios.post(`${baseURL}/api/jobs/getJobsWorker`, {
+                uid: uid,
+            }).then(async (res) => {
+                setPendingTask(res);
+                //console.log(res);
+            }, (err) => {
+                //console.log(err);
+            })
+        }
+    }, [])
+
+    useEffect(() => {
+        console.log("business uid", uid)
+    }, [uid])
+
+    const [pendingList, setPendingList] = useState([])
+    const [listings, setListing] = useState([])
+
+    useEffect(() => {
+        var temp1 = [], temp2 = [];
+        for (var i = 0; i < pendingTask.length; i++) {
+            temp1.push(
+                PendingTaskCard(pendingTask[i].title, pendingTask[i].description, pendingTask[i].bid)
+            )
+            temp2.push(
+                ListingCard(pendingTask[i].title, pendingTask[i].description, pendingTask[i].bid)
+            )
+        }
+        setPendingList(temp1)
+        setListing(temp2)
+        //console.log(temp1)
+        //console.log(temp2)
+    }, [pendingTask])
+
+
+    //console.log(listings)
 
     return <div className="Dash">
         <div className="dummy"> </div>
@@ -168,7 +164,9 @@ const BusinessDashboard = () => {
                             </div>
                             <div className="taskcol">
                                 {
-                                    pendingList
+                                    pendingList.map((items) => {
+                                        return (items)
+                                    })
                                 }
                             </div>
                         </div>

@@ -177,10 +177,12 @@ const updateAdmin = async(req,res) => {
 const getWorkers = async(req,res) => {
     // get all workers from workers table
     const dbRef = ref(db);
+    console.log(req.body.uid)
     await checkIFAdmin(req.body.uid)
     .then(async(admin)=>{
         if(admin !== null && admin !== undefined){
             await get(child(dbRef, `workers`)).then((snapshot) => {
+                console.log("Snapshot : ", snapshot)
                 if (snapshot.exists()) {
                     res.send(snapshot.val());
                 } else {

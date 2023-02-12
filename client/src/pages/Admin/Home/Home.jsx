@@ -20,25 +20,25 @@ const handleWorkerClick = (link) => {
     if (link !== null) {
         window.open(link, "_blank");
     }
-    console.log("clicked")
+    //console.log("clicked")
 }
 
 const verify = (type, email, workers, setWorkers, adminId) => {
     var temp = [];
-    console.log(type, email, workers, setWorkers, adminId);
+    //console.log(type, email, workers, setWorkers, adminId);
     for (var obj in workers) {
         var new_obj = workers[obj];
-        console.log(new_obj.email, email);
+        //console.log(new_obj.email, email);
         if (new_obj.email === email) {
             if (type === 'approve') {
                 axios.post(`${baseURL}/api/admin/approveWorker`, {
                     uid: adminId,
                     workerUid: new_obj.uid
                 }).then(async (res) => {
-                    console.log(res);
+                    //console.log(res);
                     new_obj.verified = true;
                 }, (err) => {
-                    console.log(err);
+                    //console.log(err);
                 })
                 continue
             }
@@ -110,12 +110,12 @@ const Home = (props) => {
     const data = [1, 2, 3, 5, 8, 13];
 
     const fetchData = async () => {
-        console.log("fetching data");   
+        //console.log("fetching data");   
         const response = await axios.post(`${baseURL}/api/admin/getWorkers`, {
             uid: adminId
         })
         const data = await response.data;
-        console.log(data);
+        //console.log(data);
         // filter data
         var temp = workers;
         for (var obj in data) {
@@ -126,7 +126,7 @@ const Home = (props) => {
                 temp.push(new_obj);
             }
         }
-        console.log(temp);
+        //console.log(temp);
         setWorkers(temp);
     }
 

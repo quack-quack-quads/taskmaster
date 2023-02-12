@@ -33,8 +33,8 @@ const PendingTaskCard = (title, description, startingBid) => {
             <button className="btn btn-success btn-sm">
                 Mark as done
             </button>
-        </div> 
-    </div> 
+        </div>
+    </div>
 }
 
 const ListingCard = (title, description, startingBid) => {
@@ -73,12 +73,12 @@ const ClientDashboard = () => {
 
     const pendingList = []
     const listings = []
-    for (var i = 0; i < jobs.length; i++) { 
-        if(jobs[i].status === "bidOn"){
+    for (var i = 0; i < jobs.length; i++) {
+        if (jobs[i].status === "bidOn") {
             listings.push(
                 ListingCard(jobs[i].title, jobs[i].description, jobs[i].startingBid)
-            ) 
-        }else if(jobs[i].status === "pending"){
+            )
+        } else if (jobs[i].status === "pending") {
             pendingList.push(
                 PendingTaskCard(jobs[i].title, jobs[i].description, jobs[i].startingBid)
             )
@@ -87,35 +87,35 @@ const ClientDashboard = () => {
     <JobListing show={showListing} setShow={setShowListing} />
 
     const getJobs = async () => {
-        console.log("getting jobs")
+        //console.log("getting jobs")
         const url = import.meta.env.VITE_BASE_URL
         const response = await axios.post(`${url}/api/jobs/get`, {
             uid: uid
-        }) 
-        console.log(response.data)
+        })
+        //console.log(response.data)
         setJobs(response.data)
     }
 
     useEffect(() => {
         getJobs()
-    for (var i = 0; i < jobs.length; i++) { 
-        if(jobs[i].status === "bidOn"){
-            listings.push(
-                ListingCard(jobs[i].title, jobs[i].description, jobs[i].startingBid)
-            ) 
-        }else if(jobs[i].status === "pending"){
-            pendingList.push(
-                PendingTaskCard(jobs[i].title, jobs[i].description, jobs[i].startingBid)
-            )
+        for (var i = 0; i < jobs.length; i++) {
+            if (jobs[i].status === "bidOn") {
+                listings.push(
+                    ListingCard(jobs[i].title, jobs[i].description, jobs[i].startingBid)
+                )
+            } else if (jobs[i].status === "pending") {
+                pendingList.push(
+                    PendingTaskCard(jobs[i].title, jobs[i].description, jobs[i].startingBid)
+                )
+            }
         }
-    }
-    },[])
+    }, [])
 
     return <div className="Dash">
         <div className="dummy"> </div>
         <Modal
             show={showListing}
-            onHide={()=>{
+            onHide={() => {
                 setShowListing(false);
             }}
             backdrop="static"
@@ -124,12 +124,12 @@ const ClientDashboard = () => {
             size="lg"
         >
             <Modal.Title className='modtitle'>
-            <div className="close"
-                    onClick={()=>{
+                <div className="close"
+                    onClick={() => {
                         setShowListing(false);
                     }}
                 >
-                    <FaWindowClose/>
+                    <FaWindowClose />
                 </div>
             </Modal.Title>
             <Modal.Body >
