@@ -24,7 +24,8 @@ const Navbar = ({ flow }) => {
     
 
     const [show, setShow] = useState(false);
-    const {uid, name, setUid} = (flow == "client") ? useContext(ClientContext) : useContext(BusinessContext);
+    const {uid, name, setUid} = useContext(ClientContext);
+    // const {uid, name, setUid} = (flow == "client") ? useContext(ClientContext) : useContext(BusinessContext);
 
     var signComp = <></>
     if (flow == "client") {

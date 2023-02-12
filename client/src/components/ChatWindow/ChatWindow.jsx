@@ -16,7 +16,8 @@ const ChatWindow = ({flow}) => {
     const [chat, setChat] = useState(null)
     const [jobs, setJobs] = useState([])
 
-    const {uid} = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
+    const {uid} = useContext(ClientContext);
+    // const {uid} = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
     useEffect(() => {
         const url = import.meta.env.VITE_BASE_URL
         if(flow === "client"){

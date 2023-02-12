@@ -84,6 +84,7 @@ const ClientDashboard = () => {
             )
         }
     }
+    
     <JobListing show={showListing} setShow={setShowListing} />
 
     const getJobs = async () => {
@@ -136,7 +137,7 @@ const ClientDashboard = () => {
                     <div className="row pt-5">
                         <div className="col-12 col-md-6">
                             <div className="Welcome">
-                                Welcome {uid}
+                                Welcome {name}
                             </div>
                         </div>
                         <div className="col-12 col-md-6 d-flex align-items-center">

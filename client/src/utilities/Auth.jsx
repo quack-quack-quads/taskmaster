@@ -15,7 +15,21 @@ const loginapi = async (email, password, flow) => {
     }).catch((error) => {
         return error;
     })
-    return res;
+    var keyword = 'getClient';
+    if(flow!="client"){
+        keyword = 'getWorker';
+    }
+    const res2 = await axios.post(
+        `${baseURL}/api/${flow}/${keyword}`,
+        res
+    ).then((response) => {
+        return response.data;
+    }).catch((error)=>{
+        return error;
+    })
+    res2["uid"] = res["uid"];
+    console.log("inside auth", res2);
+    return res2;
 }
 
 const signupapi = async (payload, flow) => {
@@ -27,6 +41,21 @@ const signupapi = async (payload, flow) => {
     }).catch((error) => {
         return error;
     })
+    var keyword = 'getClient';
+    if(flow!="client"){
+        keyword = 'getWorker';
+    }
+    const res2 = await axios.post(
+        `${baseURL}/api/${flow}/${keyword}`,
+        res
+    ).then((response) => {
+        return response.data;
+    }).catch((error)=>{
+        return error;
+    })
+    res2["uid"] = res["uid"];
+    console.log("inside auth", res2);
+    return res2;
     return res;
 }
 

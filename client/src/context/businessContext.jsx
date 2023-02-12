@@ -1,39 +1,38 @@
 import {useState, useEffect, createContext} from "react";
 
-const BusinessContext = createContext("");
+const BusinessContext = createContext();
 
 const BusinessProvider = ({
     children
 }) => {
-    const [uid, setUid] = useState(null);
-    const [name, setname] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [phone, setPhone] = useState(null);
-    const [starredWorkers, setStarredWorkers] = useState(null);
-    const [jobList, setJobList] = useState(null);
-    const [savedAddresses, setSavedAddresses] = useState(null);
+    const [buid, bsetUid] = useState(null);
+    const [bname, bsetname] = useState(null);
+    const [bemail, bsetEmail] = useState(null);
+    const [bphone, bsetPhone] = useState(null);
+    const [bstarredWorkers, bsetStarredWorkers] = useState(null);
+    const [bjobList, bsetJobList] = useState(null);
+    const [bsavedAddresses, bsetSavedAddresses] = useState(null);
 
-    const setDetails = (uid_, name_, email_, phone_, starredWorkers_, jobList_, savedAddresses_)=>{
-        setUid(uid_);
-        setname(name_);
-        setEmail(email_);
-        setPhone(phone_);
-        setStarredWorkers(starredWorkers_);
-        setJobList(jobList_);
-        setSavedAddresses(savedAddresses_);
-        console.log("set details");
+    const bsetDetails = (uid_, name_, email_, phone_, starredWorkers_, jobList_, savedAddresses_)=>{
+        bsetUid(uid_);
+        bsetname(name_);
+        bsetEmail(email_);
+        bsetPhone(phone_);
+        bsetStarredWorkers(starredWorkers_);
+        bsetJobList(jobList_);
+        bsetSavedAddresses(savedAddresses_);
     }
     
     return (
         <BusinessContext.Provider value={{
-            uid, setUid,
-            name, setname,
-            email, setEmail,
-            phone, setPhone,
-            starredWorkers, setStarredWorkers,
-            jobList, setJobList,
-            savedAddresses, setSavedAddresses,
-            setDetails
+            buid, bsetUid,
+            bname, bsetname,
+            bemail, bsetEmail,
+            bphone, bsetPhone,
+            bstarredWorkers, bsetStarredWorkers,
+            bjobList, bsetJobList,
+            bsavedAddresses, bsetSavedAddresses,
+            bsetDetails
         }}>
             {children}
         </BusinessContext.Provider>

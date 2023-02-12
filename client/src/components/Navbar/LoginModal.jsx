@@ -15,7 +15,9 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
     const [emailAdd, setEmailAdd] = useState("");
     const [password, setPassword] = useState("");
 
-    const { setDetails } = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
+    // console.log(flow, flow=="client");
+    const { uid, setDetails } = useContext(ClientContext);
+    // const { uid, setDetails } = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
 
     const validateEmail = (email) => {
         return String(email)
@@ -32,7 +34,7 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
         }
         setWaiting(true);
         var data = await loginapi(emailAdd, password, flow);
-        console.log(data);
+        console.log("called", data);
         if (data["uid"] === undefined) {
             alert("Login Failed!");
             dismiss();
@@ -40,7 +42,7 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
         }
         setDetails(data["uid"], data["name"], data['email'], data['phone'], data['starredWorkers'], data['jobList'], data['savedAddresses']);
         setWaiting(false);
-        // console.log("here",uid);
+
         dismiss();
     }
 
@@ -71,7 +73,6 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
                     setEmailAdd(event.target.value);
                 }}
             />
-            {console.log(validateEmail(emailAdd))}
             <p className="invalid-text">{!validateEmail(emailAdd) ? `Enter a valid email address` : ""}</p>
 
             <input type="password" className="form-control shadow-none"

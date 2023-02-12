@@ -3,11 +3,12 @@ import Hero from "../../../components/Hero/Hero";
 import CategoryCards from '../../../components/CategoryCards/CategoryCards'
 import Features from '../../../components/Features/Features'
 
-import { BusinessContext } from '../../../context/BusinessContext'
+import { ClientContext } from '../../../context/clientContext'
 import { useContext, useState, useEffect } from 'react';
 
 import Clock from '../../../assets/clock.gif';
 import Auction from '../../../assets/auction.gif';
+import { Modal } from 'react-bootstrap';
 
 const PendingTaskCard = (title, desc, bid) => {
     return <div className="PendingTaskCard container-fluid">
@@ -52,8 +53,10 @@ const ListingCard = (title, desc, bid) => {
 
 
 const BusinessDashboard = () => {
-    const { uid, name, email, phone } = useContext(BusinessContext);
+    const { uid, name, email, phone } = useContext(ClientContext);
     const [busLog, setBusLog] = useState(false);
+
+    const [search, setSearch] = useState(false);
 
     useEffect(() => {
         console.log(uid);
@@ -86,8 +89,9 @@ const BusinessDashboard = () => {
     
     return <div className="Dash">
         <div className="dummy"> </div>
-        {
-            !(uid == null || uid==undefined) ?
+        {   
+            
+            (!busLog) ?
                 <>
                     <Hero />
                     <CategoryCards />
@@ -98,7 +102,7 @@ const BusinessDashboard = () => {
                     <div className="row pt-5">
                         <div className="col-12 col-md-6">
                             <div className="Welcome">
-                                Welcome {uid}
+                                Welcome {name}
                             </div>
                         </div>
                         <div className="col-12 col-md-6 d-flex align-items-center">
@@ -113,7 +117,7 @@ const BusinessDashboard = () => {
                                         }
                                     }
                                 >
-                                    List Job Now
+                                    Open the Chat Screen Now
                                 </button>
                             </div>
                         </div>
