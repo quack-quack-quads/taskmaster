@@ -15,10 +15,12 @@ const loginapi = async (email, password, flow) => {
     }).catch((error) => {
         return error;
     })
+    console.log(res);
     return res;
 }
 
 const signupapi = async (payload, flow) => {
+    console.log(payload);
     const res = await axios.post(
         `${baseURL}/api/${flow}/signup`,
         payload
@@ -27,6 +29,7 @@ const signupapi = async (payload, flow) => {
     }).catch((error) => {
         return error;
     })
+    console.log(res);
     return res;
 }
 

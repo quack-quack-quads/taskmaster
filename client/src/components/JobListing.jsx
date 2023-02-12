@@ -18,7 +18,7 @@ import { ClientContext } from "../context/clientContext"
 import { postJob, getJob } from "../utilities/Jobs"
 import { useNavigate } from "react-router-dom";
 
-export default function JobListing({show, setShow}) {
+export default function JobListing({ show, setShow }) {
 
     //Fetched Data
     const [addresses, setAddresses] = useState([]);
@@ -49,7 +49,7 @@ export default function JobListing({show, setShow}) {
     const [loaded, setLoadedAddress] = useState(false);
     const [highlighter, setHighlighter] = useState(-1);
     const [title, setTitle] = useState("");
-
+    const [show1, setShow1] = useState(false);
 
     // category selection states
     const [cat, setCat] = useState(null);
@@ -149,12 +149,13 @@ export default function JobListing({show, setShow}) {
         postJob(obj);
         console.log(obj)
 
-        props.setShow(false);
+        setShow(false);
+        console.log(show);
     }
     const handleAddrressClick = (type, count) => {
-
+        // console.log()
         if (type === "Other") {
-            setShow(!show);
+            setShow1(!show1);
         }
         else {
             setAddressHighlight(count);
@@ -183,7 +184,7 @@ export default function JobListing({show, setShow}) {
         }
         else {
             alert("Navigation is not Available!");
-            setShow(false);
+            setShow1(false);
         }
     }
     const handleModalAddressClick = (event) => {
@@ -212,7 +213,7 @@ export default function JobListing({show, setShow}) {
         var add = addresses
         add.push(obj)
         setAddresses(add)
-        setShow(false)
+        setShow1(false)
     }
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -334,7 +335,7 @@ export default function JobListing({show, setShow}) {
 
                     <div className={`col-${window.innerWidth <= 350 ? '12' : '6'}  col-sm-4 col1 d-flex justify-content-center `} onClick={() => { handleAddrressClick(items, count) }}>
                         {console.log(addressHighlight === highlighter)
-                        
+
                         }
                         <Card name={items.name} image={home} para={para} width={'7rem'} height={'10rem'} mtTitle={'2'} class={`transparent`} highlight={addressHighlight === highlighter ? "highlight" : ""} />
                     </div>
@@ -411,7 +412,7 @@ export default function JobListing({show, setShow}) {
 
                     </div>
                 )
-            
+
             case 1:
                 return (
                     <div className="form3" >
@@ -428,7 +429,7 @@ export default function JobListing({show, setShow}) {
 
                             </div>
                             {console.log(description.length)}
-                            <p className="invalid-text">{title.length == 0  ? `Job Title cannot be empty.` : ""}</p>
+                            <p className="invalid-text">{title.length == 0 ? `Job Title cannot be empty.` : ""}</p>
                         </div>
                         <div className="row mt-7 mb-5">
                             <div className="col d-flex justify-content-center">
@@ -555,7 +556,7 @@ export default function JobListing({show, setShow}) {
 
         <div className="body " ref={f1}>
 
-            <Modal show={show}
+            <Modal show={show1}
                 className="loginModal"
             >
                 <Modal.Body>
@@ -564,7 +565,7 @@ export default function JobListing({show, setShow}) {
                         size={30}
                         onClick={
                             () => {
-                                setShow(false)
+                                setShow1(false)
                             }
                         }
                     />

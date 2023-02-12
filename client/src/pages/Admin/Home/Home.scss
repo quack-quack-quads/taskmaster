@@ -9,24 +9,27 @@ $HEADER_SECONDARY: yellow;
     border-radius: 20px;
 }
 .admin-body {
-    height: 100vh;
-    width: 100vw;
-    padding: 4%;
+    height: 100vh !important;
+    width: 100vw !important;
+    padding: 4% !important;
+    overflow-y: scroll !important;
 
     p {
-        font-family: 'Poppins';
-        color: white;
+        font-family: 'Poppins' !important;
+        color: white !important;
     }
+    
     .card-title {
-        color: White;
-        font-weight: bolder;
+        color: White !important;
+        font-weight: bolder !important;
     }
     .card-body {
-        font-weight: light;
+        font-family: "Poppins";
+        font-weight: light !important;
     }
     .btn {
-    border: 2px solid white;
-    width: 100%;
+    border: 2px solid white !important;
+    width: 100% !important;
 }
 
 }
@@ -60,6 +63,19 @@ $HEADER_SECONDARY: yellow;
     
 }
 
+.admin-card2 {
+    // width: 45vw;
+    width: 100%;
+    // border: 2px solid green;
+   
+}
+.card2 {
+    // border: 2px solid green;
+    // .card-inner {
+    //     width: 35vw !important;
+    // }
+}
+
 .admin-card:hover {
     cursor: pointer;
 }
@@ -71,7 +87,7 @@ $HEADER_SECONDARY: yellow;
     padding: 1%;
         h4{
             font-family: "Poppins";
-            color: $TEXT_COLOR;
+            color: $TEXT_COLOR !important;
             font-size: 1rem;
             padding: 1%;
         }
@@ -97,6 +113,10 @@ $HEADER_SECONDARY: yellow;
 .open-worker:hover {
     cursor: pointer;
     // background-color: #14262a;
+}
+
+.card1 {
+    width: 100%;
 }
 
 

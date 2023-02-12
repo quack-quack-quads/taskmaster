@@ -6,6 +6,9 @@ import Modal from 'react-bootstrap/Modal';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BsFillArrowUpRightCircleFill } from "react-icons/bs";
+import graph from "../../../assets/graph.gif"
+
+// import { Chart } from 'react-charts'
 // const cards = () => {
 //     return (
 
@@ -20,7 +23,7 @@ const handleWorkerClick = (link) => {
     console.log("clicked")
 }
 
-const verify = (type, email, workers, setWorkers,adminId) => {
+const verify = (type, email, workers, setWorkers, adminId) => {
     var temp = [];
     for (var obj in workers) {
         var new_obj = workers[obj];
@@ -29,12 +32,12 @@ const verify = (type, email, workers, setWorkers,adminId) => {
             if (type === 'approve') {
                 axios.post(`${baseURL}/api/admin/approveWorker`, {
                     uid: adminId,
-                    workerId : new_obj.uid
+                    workerId: new_obj.uid
                 }).then(async (res) => {
                     console.log(res);
                     new_obj.verified = true;
                     // console.log(temp);
-                    
+
                     // res.json().then((res1) => {
                     //     console.log(res1)
                     // }, (err1) => {
@@ -101,8 +104,8 @@ const PendingWorker = (props) => {
                 <h4 className="mode">{props.govt}</h4>
             </div>
             <div className="d-flex flex-row justify-content-center align-items-center flex-fill">
-                <button type="button" class="btn btn-outline-info aprove rounded-pill" onClick={() => verify('approve', props.email, props.workers, props.setWorkers,props.adminId)}><h4>Approve</h4></button>
-                <button type="button" class="btn btn-outline-info reject rounded-pill" onClick={() => verify('reject', props.email, props.workers, props.setWorkers,props.adminId)}><h4>Reject</h4></button>
+                <button type="button" class="btn btn-outline-info aprove rounded-pill" onClick={() => verify('approve', props.email, props.workers, props.setWorkers, props.adminId)}><h4>Approve</h4></button>
+                <button type="button" class="btn btn-outline-info reject rounded-pill" onClick={() => verify('reject', props.email, props.workers, props.setWorkers, props.adminId)}><h4>Reject</h4></button>
             </div>
         </Card>
     )
@@ -114,40 +117,41 @@ const Home = (props) => {
     const [workers, setWorkers] = useState([]);
     const [show, setShow] = useState(false);
 
+    const data = [1, 2, 3, 5, 8, 13];
 
 
     useEffect(() => {
-         
-            var obj = {
-                method: 'POST',
-                body: {
-                    uid: adminId
+
+        var obj = {
+            method: 'POST',
+            body: {
+                uid: adminId
+            }
+        }
+        axios.post(`${baseURL}/api/admin/getWorkers`, {
+            uid: adminId
+        }).then(async (res) => {
+            var temp = workers;
+            for (var obj in res.data) {
+
+                var new_obj = res.data[obj]
+                new_obj.uid = obj;
+                if (new_obj.verified === false) {
+
+                    temp.push(new_obj);
                 }
             }
-            axios.post(`${baseURL}/api/admin/getWorkers`, {
-                uid: adminId
-            }).then(async (res) => {
-                var temp = workers;
-                for (var obj in res.data) {
+            // console.log(temp);
+            setWorkers(temp);
+            // res.json().then((res1) => {
+            //     console.log(res1)
+            // }, (err1) => {
+            //     console.log(err1)
+            // })
+        }, (err) => {
+            console.log(err);
+        })
 
-                    var new_obj = res.data[obj]
-                    new_obj.uid = obj;
-                    if (new_obj.verified === false) {
-
-                        temp.push(new_obj);
-                    }
-                }
-                // console.log(temp);
-                setWorkers(temp);
-                // res.json().then((res1) => {
-                //     console.log(res1)
-                // }, (err1) => {
-                //     console.log(err1)
-                // })
-            }, (err) => {
-                console.log(err);
-            })
-        
     }, [workers])
 
 
@@ -172,7 +176,7 @@ const Home = (props) => {
                     {workers.map((items) => {
                         return (
                             <PendingWorker name={items.name} email={items.email} verified={"Un-Verified"} image={items.image !== undefined ? items.image : null} govt={items.govt !== undefined ? items.govt : null}
-                                workers={workers} setWorkers={setWorkers} adminId = {adminId}/>
+                                workers={workers} setWorkers={setWorkers} adminId={adminId} />
                         )
 
                     })}
@@ -184,31 +188,80 @@ const Home = (props) => {
                 </div>
             </div>
             <div className="row mt-5">
-                <div className="col-4 d-flex justify-content-center">
+                <div className="col col-sm-6 col-xs-12 col-md-4 d-flex justify-content-center">
                     <div className="admin-card" onClick={() => setShow(!show)}>
                         <Feature
                             className="card1"
-                            static_img={<MdPendingActions />}
-                            icon={<MdPendingActions />}
+                            // static_img={<MdPendingActions />}
+                            // icon={<MdPendingActions />}
                             img_pos="top"
                             title="Approve Workers"
 
                         >
                             <div className="col d-flex ">
-                                <p className="txt card1-text">List and approve all pending workers </p>
+                                <p className="txt card1-text">Approve Pending workers </p>
                             </div>
 
                         </Feature>
                     </div>
                 </div>
-                <div className="col d-flex justify-content-center">
+                <div className="col col-sm-6 col-xs-12 col-md-4 d-flex justify-content-center">
                     <div className="admin-card2">
+                        <Feature
+                            className="card1"
+                            // static_img={<MdPendingActions />}
 
+                            img_pos="top"
+                            title="Active Users"
+
+                        >
+                            <div className="col  d-flex ">
+                                <p className="txt card1-text">Current Active Users </p>
+                            </div>
+
+                        </Feature>
                     </div>
                 </div>
-                <div className="col d-flex justify-content-center">
+                <div className="col col-sm-6 col-xs-12 col-md-4 d-flex justify-content-center">
                     <div className="admin-card3">
+                        <Feature
+                            className="card1"
+                            // static_img={<MdPendingActions />}
 
+                            img_pos="top"
+                            title="Every  Users"
+
+                        >
+                            <div className="col  d-flex ">
+                                <p className="txt card1-text">List All Users </p>
+                            </div>
+
+                        </Feature>
+                    </div>
+                </div>
+            </div>
+            <div className="row mt-5">
+                <div className="col-4">
+                    <img src={graph}></img>
+                </div>
+                <div className="col-4">
+
+                </div>
+                <div className="col-4">
+                    <div className="admin-card3">
+                        <Feature
+                            className="card1"
+                            // static_img={<MdPendingActions />}
+
+                            img_pos="top"
+                            title="Every  Users"
+
+                        >
+                            <div className="col  d-flex ">
+                                <p className="txt card1-text">List All Users </p>
+                            </div>
+
+                        </Feature>
                     </div>
                 </div>
             </div>
