@@ -12,9 +12,9 @@ module.exports = async({getNamedAccounts, deployments}) => {
     const {deployer} = await getNamedAccounts();
 
     let tokenUris = [
-        'ipfs://QmZVusy75ueem2C7dwcv2htVziDFuXZ2rmp3qn7mrpbQxF',
-        'ipfs://QmeBgDNBktQ4kBSEtcxuc8Dg4PVVJAcGpVPBKnLpDP1sDQ',
-        'ipfs://QmWcwZud5HxJD1u2SuVuVijDHUPBbxBBkje46YW3o6QWiB'
+        'ipfs://QmVHqZRsprS43jqXzQxBY515J7XK9HdhEWyK4rvrMSkurU',
+        'ipfs://QmXRpgnpZRZeMv86eqy8r2SXbXVhULLK5KWJgpZB5cfdEi',
+        'ipfs://QmfNHNoDzfNXDhJVHsPPCfjrRuMYKB268nh7TC7JB8g9hB'
     ];
 
     // upload images to pinata if not already uploaded
@@ -38,9 +38,9 @@ module.exports = async({getNamedAccounts, deployments}) => {
     saveImageUris(tokenUris)
 
     // verify contracts on etherscan if not on development chain
-    if(!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY){
-        await verify(jobPlatform.address, args)
-    }
+    // if(!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY){
+    // }
+    await verify(jobPlatform.address, args)
     log("-----------------------------------------------------------------")
 }
 

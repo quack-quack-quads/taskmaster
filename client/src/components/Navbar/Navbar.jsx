@@ -21,8 +21,6 @@ const Navbar = ({ flow }) => {
         setShow(false);
     }
 
-    
-
     const [show, setShow] = useState(false);
     const {uid, name, setUid} = useContext(ClientContext);
     // const {uid, name, setUid} = (flow == "client") ? useContext(ClientContext) : useContext(BusinessContext);

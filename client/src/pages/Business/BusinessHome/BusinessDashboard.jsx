@@ -2,7 +2,7 @@ import './BusinessDashboard.scss'
 import Hero from "../../../components/Hero/Hero";
 import CategoryCards from '../../../components/CategoryCards/CategoryCards'
 import Features from '../../../components/Features/Features'
-
+ 
 import { ClientContext } from '../../../context/clientContext'
 import { BusinessContext } from '../../../context/businessContext'
 import { useContext, useState, useEffect } from 'react';
@@ -61,6 +61,8 @@ const ListingCard = (title, description, startingBid) => {
 
 
 const BusinessDashboard = () => {
+
+
     const { uid, name, email, phone } = useContext(ClientContext);
     const [busLog, setBusLog] = useState(false);
 
@@ -69,6 +71,7 @@ const BusinessDashboard = () => {
 
 
     const [pending, setPending] = useState([])
+
 
     useEffect(() => {
         // console.log(pendingTask)

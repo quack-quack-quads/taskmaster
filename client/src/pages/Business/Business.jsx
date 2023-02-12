@@ -7,7 +7,7 @@ const Business = () => {
   return (
     <ClientProvider>
       <Navbar flow = "business"/>
-      <BusinessHome />
+      <BusinessHome flow="business"/>
       <ChatWindow flow = "business"/>
     </ClientProvider>
   )

@@ -3666,7 +3666,7 @@ minimalistic-crypto-utils@^1.0.1:
 
 moralis-v1@^1.12.0:
   version "1.12.0"
-  resolved "https://registry.npmjs.org/moralis-v1/-/moralis-v1-1.12.0.tgz"
+  resolved "https://registry.yarnpkg.com/moralis-v1/-/moralis-v1-1.12.0.tgz#a27f3849146771f2e5de19ed0c2d23a1f117a0c0"
   integrity sha512-TjJsYDm1lRX1/Trzj5TixreL55LBQYgIlzwDuCBdVpZ60saI6Bpv4x2qEldVRHRMedyJ2OpUnwDJtTgKKjJf/A==
   dependencies:
     "@babel/runtime" "7.16.7"
@@ -3683,7 +3683,7 @@ moralis-v1@^1.12.0:
 
 moralis@^2.14.1:
   version "2.14.1"
-  resolved "https://registry.npmjs.org/moralis/-/moralis-2.14.1.tgz"
+  resolved "https://registry.yarnpkg.com/moralis/-/moralis-2.14.1.tgz#6caa55eae9a9725508391abebf794c3f9da926e4"
   integrity sha512-a7jGv9dIskpVqL9hxnNOUBermVoUxaNZddLBPkuxQ/LLk+a3mUOI09YQnBz3ppCesrHXS4s50di7AKFRLFkbyg==
   dependencies:
     "@moralisweb3/api-utils" "^2.14.1"
@@ -4027,7 +4027,7 @@ react-merge-refs@^1.1.0:
 
 react-moralis@^1.4.2:
   version "1.4.2"
-  resolved "https://registry.npmjs.org/react-moralis/-/react-moralis-1.4.2.tgz"
+  resolved "https://registry.yarnpkg.com/react-moralis/-/react-moralis-1.4.2.tgz#745cd5fba311071ecb23267966f35784862f585b"
   integrity sha512-M6R9+AO4r/ZmJEMbv2IySnp1+8fRvzu1osehAWYqQgN8cPsHWGuDpnmNSd8Q+DegZ/sjiBkfWjuEXFRwrHYorQ==
   dependencies:
     fast-deep-equal "^3.1.3"
