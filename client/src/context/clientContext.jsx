@@ -1,4 +1,4 @@
-import {useState, useEffect, createContext} from "react";
+import { useState, useEffect, createContext } from "react";
 
 const ClientContext = createContext();
 
@@ -13,7 +13,7 @@ const ClientProvider = ({
     const [jobList, setJobList] = useState(null);
     const [savedAddresses, setSavedAddresses] = useState(null);
 
-    const setDetails = (uid_, name_, email_, phone_, starredWorkers_, jobList_, savedAddresses_)=>{
+    const setDetails = (uid_, name_, email_, phone_, starredWorkers_, jobList_, savedAddresses_) => {
         setUid(uid_);
         setname(name_);
         setEmail(email_);
@@ -21,9 +21,9 @@ const ClientProvider = ({
         setStarredWorkers(starredWorkers_);
         setJobList(jobList_);
         setSavedAddresses(savedAddresses_);
-        console.log("set details");
+        //console.log("set details");
     }
-    
+
     return (
         <ClientContext.Provider value={{
             uid, setUid,

@@ -165,6 +165,7 @@ const acceptWorkerJob = async(req,res) => {
 const getJobsWorker = async (req, res)=>{
     const dbRef = ref(db);
     const workerUid = req.body["uid"];
+    console.log(workerUid)
     const jobs = [];
     await get(child(dbRef, `jobs`)).then((snapshot) => {
         for(const clientId in snapshot.val()){

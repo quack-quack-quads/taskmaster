@@ -118,7 +118,7 @@ const ClientSignUp = ({ dismiss, flow }) => {
                     return null;
                 }
             );
-            console.log(data);
+            //console.log(data);
             if (data["uid"] == null || data["uid"] == undefined) {
                 alert("Failed to sign you up!")
                 setWaiting(false);
@@ -132,7 +132,7 @@ const ClientSignUp = ({ dismiss, flow }) => {
     const firstPage = <First
         handler={() => {
             setPage("second")
-            console.log("no way")
+            //console.log("no way")
         }}
         setEmail={setEmail}
         setPassword={setPassword}

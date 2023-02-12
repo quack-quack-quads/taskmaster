@@ -147,13 +147,13 @@ export default function JobListing({ show, setShow }) {
 
         }
         postJob(obj);
-        console.log(obj)
+        //console.log(obj)
 
         setShow(false);
-        console.log(show);
+        //console.log(show);
     }
     const handleAddrressClick = (type, count) => {
-        // console.log()
+        // //console.log()
         if (type === "Other") {
             setShow1(!show1);
         }
@@ -334,7 +334,7 @@ export default function JobListing({ show, setShow }) {
                 return (
 
                     <div className={`col-${window.innerWidth <= 350 ? '12' : '6'}  col-sm-4 col1 d-flex justify-content-center `} onClick={() => { handleAddrressClick(items, count) }}>
-                        {console.log(addressHighlight === highlighter)
+                        {//console.log(addressHighlight === highlighter)
 
                         }
                         <Card name={items.name} image={home} para={para} width={'7rem'} height={'10rem'} mtTitle={'2'} class={`transparent`} highlight={addressHighlight === highlighter ? "highlight" : ""} />
@@ -396,7 +396,7 @@ export default function JobListing({ show, setShow }) {
                                 <input className="form-control name-inp" placeholder="Starting Bid" onChange={handleBidChange} value={bid}>
                                 </input>
                             </div>
-                            {console.log(bid)}
+
                             <p className="invalid-text">{/\D/.test(bid) ? `Enter only numbers.` : ""}</p>
                         </div>
                         <div className="row mt-7 mb-5">
@@ -428,7 +428,6 @@ export default function JobListing({ show, setShow }) {
                                 </input>
 
                             </div>
-                            {console.log(description.length)}
                             <p className="invalid-text">{title.length == 0 ? `Job Title cannot be empty.` : ""}</p>
                         </div>
                         <div className="row mt-7 mb-5">
@@ -460,7 +459,6 @@ export default function JobListing({ show, setShow }) {
                                 </input>
 
                             </div>
-                            {console.log(description.length)}
                             <p className="invalid-text">{description.length < 50 ? `${50 - description.length} more caraacter required.` : ""}</p>
                         </div>
                         <div className="row mt-7 mb-5">

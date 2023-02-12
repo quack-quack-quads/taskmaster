@@ -10,7 +10,7 @@ import { BusinessContext } from '../../context/businessContext'
 import { Spinner } from 'react-bootstrap'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
-import {storage} from "../../../firebase-config"
+import { storage } from "../../../firebase-config"
 import uuid from 'react-uuid';
 
 const First = ({ handler, setEmail, setPassword, setConfirm }) => {
@@ -72,9 +72,9 @@ const Second = ({ handler, setPhone, setName }) => {
     </div>
 }
 
-const Third = ({ handler, setGovt, setOccupation, occupation}) => {
+const Third = ({ handler, setGovt, setOccupation, occupation }) => {
     const [val, setVal] = useState("Occupation")
-    
+
     return <div className="email">
         <div className="emailhead">
             We need the following for verification
@@ -94,19 +94,19 @@ const Third = ({ handler, setGovt, setOccupation, occupation}) => {
 
             <Dropdown.Menu>
                 <Dropdown.Item
-                    onClick={()=>{setOccupation("Electrician")}}
+                    onClick={() => { setOccupation("Electrician") }}
                 >Electrician</Dropdown.Item>
                 <Dropdown.Item
-                    onClick={()=>{setOccupation("Plumber")}}
+                    onClick={() => { setOccupation("Plumber") }}
                 >Plumber</Dropdown.Item>
                 <Dropdown.Item
-                    onClick={()=>{setOccupation("Maid")}}
+                    onClick={() => { setOccupation("Maid") }}
                 >Maid</Dropdown.Item>
                 <Dropdown.Item
-                    onClick={()=>{setOccupation("Janitor")}}
+                    onClick={() => { setOccupation("Janitor") }}
                 >Janitor</Dropdown.Item>
                 <Dropdown.Item
-                    onClick={()=>{setOccupation("Security")}}
+                    onClick={() => { setOccupation("Security") }}
                 >Security</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
@@ -121,7 +121,7 @@ const Third = ({ handler, setGovt, setOccupation, occupation}) => {
     </div>
 }
 
-const Fourth = ({handler, setImage}) => {
+const Fourth = ({ handler, setImage }) => {
     return <div className="email">
         <div className="emailhead">
             Upload a soft copy of your govt. identification
@@ -130,7 +130,7 @@ const Fourth = ({handler, setImage}) => {
             placeholder="Upload here"
             id="inputFile"
             accept="image/*"
-            required = {true}
+            required={true}
             onChange={(event) => {
                 setImage(event.target.files[0]);
             }}
@@ -163,16 +163,16 @@ const BusinessSignUp = ({ dismiss, flow }) => {
 
     const { setDetails } = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
 
-  const uploadFile = async (uid) => {
-    console.log("uploading file")
-    const storageRef = ref(storage, `${uuid()}`);
-    const snapshot = await uploadBytes(storageRef, image);
-    console.log("uploaded file")
-    // return the url of the uploaded file
-    const downloadURL = await getDownloadURL(snapshot.ref);
-    setImageURL(downloadURL);
-    return downloadURL;
-  };
+    const uploadFile = async (uid) => {
+        //console.log("uploading file")
+        const storageRef = ref(storage, `${uuid()}`);
+        const snapshot = await uploadBytes(storageRef, image);
+        //console.log("uploaded file")
+        // return the url of the uploaded file
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        setImageURL(downloadURL);
+        return downloadURL;
+    };
 
     const signup = async () => {
         setWaiting(true);
@@ -189,17 +189,17 @@ const BusinessSignUp = ({ dismiss, flow }) => {
                 "password": password,
                 "name": name,
                 "phone": phone,
-                "govt" : govt,
+                "govt": govt,
                 "occupation": occupation,
-                "image" : downloadurl
+                "image": downloadurl
             }
             var data = await signupapi(payload, flow).then((data) => data).catch(
                 (e) => {
                     setMessage(e);
                     return null;
-                }   
+                }
             );
-            console.log(data);
+            //console.log(data);
             if (data["uid"] == null || data["uid"] == undefined) {
                 setWaiting(false);
                 return;
@@ -234,12 +234,12 @@ const BusinessSignUp = ({ dismiss, flow }) => {
         }
         setGovt={setGovt}
         setOccupation={setOccupation}
-        occupation = {occupation}
+        occupation={occupation}
     />
 
     const fourthPage = <Fourth
         handler={signup}
-        setImage = {setImage}
+        setImage={setImage}
     />
 
     const [page, setPage] = useState("first")
