@@ -15,6 +15,11 @@ const loginapi = async (email, password, flow) => {
     }).catch((error) => {
         return error;
     })
+    if(flow == "admin"){
+        return res;
+    }
+
+    
     var keyword = 'getClient';
     if(flow!="client"){
         keyword = 'getWorker';

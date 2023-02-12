@@ -1,16 +1,17 @@
 import Navbar from "../../components/Navbar/Navbar";
-import Home from './Home/Home'
+import Temp from './Home/Temp'
 import { useState } from "react";
+import { ClientProvider } from "../../context/clientContext"
 
 const Admin = () => {
     const [show, setShow] = useState(true);
     console.log(show);
     return (
-        <div>
-            <Home/>
-        </div>
-
-
+        <ClientProvider>
+            <div>
+                <Temp/>
+            </div>
+        </ClientProvider>
     )
 }
 
