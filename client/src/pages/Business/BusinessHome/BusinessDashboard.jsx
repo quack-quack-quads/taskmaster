@@ -3,7 +3,7 @@ import Hero from "../../../components/Hero/Hero";
 import CategoryCards from '../../../components/CategoryCards/CategoryCards'
 import Features from '../../../components/Features/Features'
 
-import { BusinessContext } from '../../../context/BusinessContext'
+import { BusinessContext } from '../../../context/businessContext'
 import { useContext, useState, useEffect } from 'react';
 
 import Clock from '../../../assets/clock.gif';
@@ -12,16 +12,20 @@ import axios from 'axios';
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
-const PendingTaskCard = (title, desc, bid) => {
+const PendingTaskCard = (title, description, startingBid) => {
+    console.log(title, description, startingBid);
     return <div className="PendingTaskCard container-fluid">
         <div className="row titlerow text-center">
             {title}
         </div>
         <div className="row descrow text-center">
-            {desc}
+            <div className='col'>
+                <h1>{description}</h1>
+            </div>
+
         </div>
         <div className="row bidrow text-center">
-            Current bid : {bid}
+            Current startingBid : {startingBid}
         </div>
         <div className="row actions d-flex justify-content-center">
             <button className="btn btn-danger btn-sm">
@@ -34,16 +38,16 @@ const PendingTaskCard = (title, desc, bid) => {
     </div>
 }
 
-const ListingCard = (title, desc, bid) => {
+const ListingCard = (title, description, startingBid) => {
     return <div className="PendingTaskCard container-fluid">
-        <div className="row titlerow text-center">
+        <div className="row titlerow text-center des" >
             {title}
         </div>
-        <div className="row descrow text-center">
-            {desc}
+        <div className="row descrow text-center des">
+            {description}
         </div>
-        <div className="row bidrow text-center">
-            Current bid : {bid}
+        <div className="row bidrow text-center des">
+            Current startingBid : {startingBid}
         </div>
         <div className="row actions d-flex justify-content-center">
             <button className="btn btn-danger btn-sm">
@@ -59,41 +63,34 @@ const BusinessDashboard = () => {
     const [busLog, setBusLog] = useState(false);
     const [pendingTask, setPendingTask] = useState([]);
 
-    useEffect(() => {
-        console.log(uid);
-        if (uid == null || uid == undefined) {
-            setBusLog(false);
-        } else setBusLog(true);
-    }, [uid]);
 
-    const [pending, setPending] = useState(
-        [
-            {
-                "title": "Plumbing in Bhaskara",
-                "desc": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi, nulla minima. Maxime explicabo repellat nam corrupti quis consequatur provident architecto enim alias nihil voluptates blanditiis saepe, nesciunt ipsa natus corporis adipisci quam dolore exercitationem temporibus expedita. Cum consectetur incidunt ut.",
-                "bid": "676",
-                "id": "8dijfdkjfkd"
-            }
-        ]
-    )
+    const [pending, setPending] = useState([])
 
     useEffect(() => {
+        // console.log(pendingTask)
         if (pendingTask.length === 0) {
-            //console.log("business uid", uid)
+            // console.log(uid)
             axios.post(`${baseURL}/api/jobs/getJobsWorker`, {
                 uid: uid,
-            }).then(async (res) => {
-                setPendingTask(res);
-                //console.log(res);
+            }).then((res) => {
+                // console.log(res.data)
+                setPendingTask(res.data);
+                // console.log(res.data);
             }, (err) => {
                 //console.log(err);
             })
         }
-    }, [])
+    })
 
-    useEffect(() => {
-        console.log("business uid", uid)
-    }, [uid])
+    // useEffect(() => {
+    //     if (uid == null || uid == undefined) {
+    //         setBusLog(false);
+    //     } else {
+    //         console.log("madi uid", uid);
+    //         // getJobs();
+    //     }
+    // }, [uid]);
+
 
     const [pendingList, setPendingList] = useState([])
     const [listings, setListing] = useState([])
@@ -101,11 +98,16 @@ const BusinessDashboard = () => {
     useEffect(() => {
         var temp1 = [], temp2 = [];
         for (var i = 0; i < pendingTask.length; i++) {
+            var ob = {
+                title: pendingTask[i].title,
+                desc: pendingTask[i].description,
+                bid: pendingTask[i].startingBid
+            }
             temp1.push(
-                PendingTaskCard(pendingTask[i].title, pendingTask[i].description, pendingTask[i].bid)
+                ob
             )
             temp2.push(
-                ListingCard(pendingTask[i].title, pendingTask[i].description, pendingTask[i].bid)
+                ListingCard(pendingTask[i].title, pendingTask[i].description, pendingTask[i].startingBid)
             )
         }
         setPendingList(temp1)
@@ -118,9 +120,11 @@ const BusinessDashboard = () => {
     //console.log(listings)
 
     return <div className="Dash">
+        {console.log(uid)}
         <div className="dummy"> </div>
         {
-            !(uid == null || uid == undefined) ?
+
+            (uid === null || uid == undefined) ?
                 <>
                     <Hero />
                     <CategoryCards />
@@ -165,8 +169,29 @@ const BusinessDashboard = () => {
                             <div className="taskcol">
                                 {
                                     pendingList.map((items) => {
-                                        return (items)
-                                    })
+                                        return <div className="PendingTaskCard container-fluid">
+                                            <div className="row titlerow text-center">
+                                                {items.title}
+                                            </div>
+                                            <div className="row descrow text-center">
+                                                <div className='col'>
+                                                    <h1 className='des'>{items.desc}</h1>
+                                                </div>
+
+                                            </div>
+                                            <div className="row bidrow text-center">
+                                                <p className='des'>Current startingBid : {items.bid}</p>
+                                            </div>
+                                            <div className="row actions d-flex justify-content-center">
+                                                <button className="btn btn-danger btn-sm">
+                                                    Delete
+                                                </button>
+                                                <button className="btn btn-success btn-sm">
+                                                    Mark as done
+                                                </button>
+                                            </div>
+                                        </div>
+                                })
                                 }
                             </div>
                         </div>
