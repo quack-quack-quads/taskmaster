@@ -2,12 +2,14 @@ import './BusinessDashboard.scss'
 import Hero from "../../../components/Hero/Hero";
 import CategoryCards from '../../../components/CategoryCards/CategoryCards'
 import Features from '../../../components/Features/Features'
-
+import axios from "axios";
 import { BusinessContext } from '../../../context/BusinessContext'
 import { useContext, useState, useEffect } from 'react';
 
 import Clock from '../../../assets/clock.gif';
 import Auction from '../../../assets/auction.gif';
+
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 const PendingTaskCard = (title, desc, bid) => {
     return <div className="PendingTaskCard container-fluid">
@@ -54,6 +56,41 @@ const ListingCard = (title, desc, bid) => {
 const BusinessDashboard = () => {
     const { uid, name, email, phone } = useContext(BusinessContext);
     const [busLog, setBusLog] = useState(false);
+    const [pendingTask, setPendingTask] = useState([]);
+
+    useEffect(() => {
+        if (pendingTask.length === 0) {
+            var obj = {
+                method: 'POST',
+                body: {
+                    uid: uid
+                }
+            }
+            axios.post(`${baseURL}/api/jobs/getJobsWorker`, {
+                uid: uid
+            }).then(async (res) => {
+                var temp = workers;
+                for (var obj in res.data) {
+
+                    var new_obj = res.data[obj]
+                    new_obj.uid = obj;
+                    if (new_obj.verified === false) {
+
+                        temp.push(new_obj);
+                    }
+                }
+                console.log(temp);
+                setPendingTask(temp);
+                // res.json().then((res1) => {
+                //     console.log(res1)
+                // }, (err1) => {
+                //     console.log(err1)
+                // })
+            }, (err) => {
+                console.log(err);
+            })
+        }
+    })
 
     useEffect(() => {
         console.log(uid);
@@ -83,11 +120,11 @@ const BusinessDashboard = () => {
             ListingCard(pending[i].title, pending[i].desc, pending[i].bid)
         )
     }
-    
+
     return <div className="Dash">
         <div className="dummy"> </div>
         {
-            !(uid == null || uid==undefined) ?
+            !(uid == null || uid == undefined) ?
                 <>
                     <Hero />
                     <CategoryCards />
