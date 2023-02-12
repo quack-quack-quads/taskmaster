@@ -75,5 +75,5 @@ module.exports = {
     signUp,
     signIn,
     getClient,
-    updateClient
+    updateClient,
 }

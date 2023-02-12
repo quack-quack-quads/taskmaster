@@ -87,6 +87,7 @@ const ClientDashboard = () => {
     <JobListing show={showListing} setShow={setShowListing} />
 
     const getJobs = async () => {
+        console.log("getting jobs")
         const url = import.meta.env.VITE_BASE_URL
         const response = await axios.post(`${url}/api/jobs/get`, {
             uid: uid
@@ -97,6 +98,17 @@ const ClientDashboard = () => {
 
     useEffect(() => {
         getJobs()
+    for (var i = 0; i < jobs.length; i++) { 
+        if(jobs[i].status === "bidOn"){
+            listings.push(
+                ListingCard(jobs[i].title, jobs[i].description, jobs[i].startingBid)
+            ) 
+        }else if(jobs[i].status === "pending"){
+            pendingList.push(
+                PendingTaskCard(jobs[i].title, jobs[i].description, jobs[i].startingBid)
+            )
+        }
+    }
     },[])
 
     return <div className="Dash">
