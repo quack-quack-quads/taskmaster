@@ -1,4 +1,4 @@
-import {useState, useEffect, createContext} from "react";
+import { useState, useEffect, createContext } from "react";
 
 const BusinessContext = createContext();
 
@@ -22,7 +22,7 @@ const BusinessProvider = ({
         bsetJobList(jobList_);
         bsetSavedAddresses(savedAddresses_);
     }
-    
+
     return (
         <BusinessContext.Provider value={{
             buid, bsetUid,

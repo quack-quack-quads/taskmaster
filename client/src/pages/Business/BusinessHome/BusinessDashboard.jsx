@@ -8,6 +8,9 @@ import { useContext, useState, useEffect } from 'react';
 
 import Clock from '../../../assets/clock.gif';
 import Auction from '../../../assets/auction.gif';
+import axios from 'axios';
+
+const baseURL = import.meta.env.VITE_BASE_URL;
 import { Modal } from 'react-bootstrap';
 
 const PendingTaskCard = (title, desc, bid) => {
@@ -57,6 +60,7 @@ const BusinessDashboard = () => {
     const [busLog, setBusLog] = useState(false);
 
     const [search, setSearch] = useState(false);
+    const [pendingTask, setPendingTask] = useState([]);
 
     useEffect(() => {
         console.log(uid);
@@ -76,17 +80,46 @@ const BusinessDashboard = () => {
         ]
     )
 
-    const pendingList = []
-    const listings = []
-    for (var i = 0; i < pending.length; i++) {
-        pendingList.push(
-            PendingTaskCard(pending[i].title, pending[i].desc, pending[i].bid)
-        )
-        listings.push(
-            ListingCard(pending[i].title, pending[i].desc, pending[i].bid)
-        )
-    }
-    
+    useEffect(() => {
+        if (pendingTask.length === 0) {
+            //console.log("business uid", uid)
+            axios.post(`${baseURL}/api/jobs/getJobsWorker`, {
+                uid: uid,
+            }).then(async (res) => {
+                setPendingTask(res);
+                //console.log(res);
+            }, (err) => {
+                //console.log(err);
+            })
+        }
+    }, [])
+
+    useEffect(() => {
+        console.log("business uid", uid)
+    }, [uid])
+
+    const [pendingList, setPendingList] = useState([])
+    const [listings, setListing] = useState([])
+
+    useEffect(() => {
+        var temp1 = [], temp2 = [];
+        for (var i = 0; i < pendingTask.length; i++) {
+            temp1.push(
+                PendingTaskCard(pendingTask[i].title, pendingTask[i].description, pendingTask[i].bid)
+            )
+            temp2.push(
+                ListingCard(pendingTask[i].title, pendingTask[i].description, pendingTask[i].bid)
+            )
+        }
+        setPendingList(temp1)
+        setListing(temp2)
+        //console.log(temp1)
+        //console.log(temp2)
+    }, [pendingTask])
+
+
+    //console.log(listings)
+
     return <div className="Dash">
         <div className="dummy"> </div>
         {   
@@ -135,7 +168,9 @@ const BusinessDashboard = () => {
                             </div>
                             <div className="taskcol">
                                 {
-                                    pendingList
+                                    pendingList.map((items) => {
+                                        return (items)
+                                    })
                                 }
                             </div>
                         </div>

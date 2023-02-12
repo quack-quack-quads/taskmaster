@@ -162,11 +162,29 @@ const acceptWorkerJob = async(req,res) => {
     })
 }
 
+const getJobsWorker = async (req, res)=>{
+    const dbRef = ref(db);
+    const workerUid = req.body["uid"];
+    console.log(workerUid)
+    const jobs = [];
+    await get(child(dbRef, `jobs`)).then((snapshot) => {
+        for(const clientId in snapshot.val()){
+            for(const jobId in snapshot.val()[clientId]){
+                if(snapshot.val()[clientId][jobId]["to"] === workerUid){
+                    jobs.push(snapshot.val()[clientId][jobId]);
+                }
+            }
+        }
+    })
+    res.send(jobs);
+}
+
 module.exports = {
     addJob,
     getJobs,
     getJobsByCategory,
     getJobsByDistance,
     getAllJobs,
-    acceptWorkerJob
+    acceptWorkerJob,
+    getJobsWorker
 }

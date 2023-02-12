@@ -38,6 +38,7 @@ const loginapi = async (email, password, flow) => {
 }
 
 const signupapi = async (payload, flow) => {
+    //console.log(payload);
     const res = await axios.post(
         `${baseURL}/api/${flow}/signup`,
         payload

@@ -16,6 +16,6 @@ router.route("/getAdmins")
 router.route("/approveWorker")
     .post(approveWorker)
 router.route("/getWorkers")
-    .get(getWorkers)
+    .post(getWorkers)
 
 module.exports = router;

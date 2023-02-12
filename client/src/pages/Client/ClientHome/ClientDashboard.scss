@@ -3,6 +3,7 @@
 .ClientDashboard{
     height: fit-content;
     .Welcome{
+        padding: 20px;
         width: 90%;
         height: 40vh;
         margin: auto;
@@ -14,6 +15,11 @@
         align-items: center;
         font-weight: 600;
         color : rgb(251, 251, 251);
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        word-break: break-word;
+        // overflow-x: scroll;
+        
     }
     .listheading{
         font-size: 25px;

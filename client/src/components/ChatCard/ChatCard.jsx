@@ -13,9 +13,9 @@ const ChatCard = (props) => {
     const [toSend, setToSend] = useState("")
 
     useEffect(() => {
-        const url = import.meta.env.VITE_BASE_URL   
-        console.log(props.chat.uid) 
-        const getMessages = async() => {
+        const url = import.meta.env.VITE_BASE_URL
+        //console.log(props.chat.uid) 
+        const getMessages = async () => {
             const response = await axios.post(`${url}/api/chat/get`, {
                 jobId: props.chat.uid
             })
@@ -35,14 +35,14 @@ const ChatCard = (props) => {
         return () => {
             s.disconnect()
         }
-    },[])
+    }, [])
 
     // ! listen for messages from the server
     useEffect(() => {
-        if(socket === null || socket === undefined) return
-        console.log("socket is set to receive message")
+        if (socket === null || socket === undefined) return
+        //console.log("socket is set to receive message")
         const handler = (message) => {
-            console.log("got a message")
+            //console.log("got a message")
             setMessages((messages) => [...messages, message])
         }
         // ! set up the event listener for changes and handler is our callback function
@@ -52,9 +52,9 @@ const ChatCard = (props) => {
         return () => {
             socket.off("receive-message", handler)
         }
-    
-    },[socket])
-    
+
+    }, [socket])
+
     const scrollToBottom = () => {
         const chatcard = document.querySelector(".chatcard")
         chatcard.scrollTop = chatcard.scrollHeight
@@ -63,17 +63,17 @@ const ChatCard = (props) => {
     useEffect(() => {
         // scroll to bottom of the messages
         scrollToBottom()
-    },[])
-    
+    }, [])
+
     const handleSendMessge = (message) => {
         const re = /^[0-9\b]+$/;
-        if (!re.test(toSend)){
+        if (!re.test(toSend)) {
             alert("Please enter a valid amount")
             return
         }
-        if(socket === null || socket === undefined) return
-        
-        console.log(props.chat.uid)
+        if (socket === null || socket === undefined) return
+
+        //console.log(props.chat.uid)
         const payloadData = {
             message,
             from: props.uid,
@@ -81,15 +81,15 @@ const ChatCard = (props) => {
             amount: toSend
         }
         socket.emit("send-message", payloadData, props.chat.uid)
-        console.log(payloadData)
+        //console.log(payloadData)
         setMessages((messages) => [...messages, payloadData])
         setToSend("")
         scrollToBottom()
-        
+
     }
 
-    const handleAccept = async(message) => {
-        console.log("accepting",message)
+    const handleAccept = async (message) => {
+        //console.log("accepting",message)
         const url = import.meta.env.VITE_BASE_URL
         const response = await axios.post(`${url}/api/jobs/acceptWorkerJob`, {
             userId: props.uid,
@@ -97,8 +97,8 @@ const ChatCard = (props) => {
             workerId: message.from,
             startingBid: message.amount
         })
-        console.log(response) 
-        console.log(props.uid, props.chat.uid, message.from)
+        //console.log(response) 
+        //console.log(props.uid, props.chat.uid, message.from)
     }
 
     const chatMessage = (flow, message, index) => {
@@ -119,13 +119,13 @@ const ChatCard = (props) => {
 
                     </div>
                     <div className="col-6 d-flex justify-content-end"
-                    style={{"fontSize" : "12px"}}
+                        style={{ "fontSize": "12px" }}
                     >
                         {
-                            flow == "client" ? "" : 
-                            <div className="from">
-                                {message.from}
-                            </div>
+                            flow == "client" ? "" :
+                                <div className="from">
+                                    {message.from}
+                                </div>
                         }
                     </div>
                 </div>

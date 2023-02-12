@@ -2,7 +2,7 @@ import './Navbar.scss'
 import LoginImg from '../../assets/hands.gif'
 import { BsGoogle, BsTwitter, BsGithub, BsDiscord, BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs'
 import ActionButton from "../Buttons/ActionButton"
-import {  useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { loginapi } from '../../utilities/Auth'
 import ReactDOM from "react-dom/client";
 
@@ -35,6 +35,7 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
         setWaiting(true);
         var data = await loginapi(emailAdd, password, flow);
         console.log("called", data);
+        //console.log(data);
         if (data["uid"] === undefined) {
             alert("Login Failed!");
             dismiss();
@@ -43,6 +44,7 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
         setDetails(data["uid"], data["name"], data['email'], data['phone'], data['starredWorkers'], data['jobList'], data['savedAddresses']);
         setWaiting(false);
 
+        // //console.log("here",uid);
         dismiss();
     }
 

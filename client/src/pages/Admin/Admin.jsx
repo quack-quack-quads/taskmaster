@@ -5,7 +5,7 @@ import { ClientProvider } from "../../context/clientContext"
 
 const Admin = () => {
     const [show, setShow] = useState(true);
-    console.log(show);
+    //console.log(show);
     return (
         <ClientProvider>
             <div>
