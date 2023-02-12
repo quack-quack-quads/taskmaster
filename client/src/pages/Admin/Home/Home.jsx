@@ -24,14 +24,14 @@ import Features from '../../../components/Features/Features'
 const baseURL = import.meta.env.VITE_BASE_URL;
 const handleWorkerClick = (link) => {
     if (link !== null) {
-        window.open(link, "_blank");
+        window.open(link, "_blank"); 
     }
     //console.log("clicked")
 }
 
 const verify = (type, email, workers, setWorkers,  adminId) => {
     var temp = [];
-    //console.log(type, email, workers, setWorkers, adminId);
+    // console.log(type, email, workers, setWorkers, adminId);
     for (var obj in workers) {
         var new_obj = workers[obj];
         //console.log(new_obj.email, email);
@@ -45,7 +45,7 @@ const verify = (type, email, workers, setWorkers,  adminId) => {
                 }, (err) => {
                     //console.log(err);
                 })
-                continue
+                break;
             }
         }
         temp.push(new_obj);
@@ -108,7 +108,7 @@ const PendingWorker = (props) => {
 
 const Home = (props) => {
 
-    const [adminId, setadminId] = useState("lraSnpwLHlM2dvyqBmCoVuWGSCy2")
+    // const [adminId, setadminId] = useState("lraSnpwLHlM2dvyqBmCoVuWGSCy2")
     const [workers, setWorkers] = useState([]);
     const [show, setShow] = useState(false)
 
@@ -119,7 +119,7 @@ const Home = (props) => {
     const fetchData = async () => {
         console.log("fetching data");   
         const response = await axios.post(`${baseURL}/api/admin/getWorkers`, {
-            uid: adminId
+            uid: uid
         })
         const data = await response.data;
         //console.log(data);
@@ -152,11 +152,11 @@ const Home = (props) => {
         var obj = {
             method: 'POST',
             body: {
-                uid: adminId
+                uid: uid
             }
         }
         axios.post(`${baseURL}/api/admin/getWorkers`, {
-            uid: adminId
+            uid: uid
         }).then(async (res) => {
             var temp = workers;
             for (var obj in res.data) {
@@ -213,7 +213,7 @@ const Home = (props) => {
                         {workers.map((items) => {
                             return (
                                 <PendingWorker name={items.name} email={items.email} verified={"Un-Verified"} image={items.image !== undefined ? items.image : null} govt={items.govt !== undefined ? items.govt : null}
-                                    workers={workers} setWorkers={setWorkers} adminId={adminId} />
+                                    workers={workers} setWorkers={setWorkers} adminId={uid} />
                             )
 
                         })}
