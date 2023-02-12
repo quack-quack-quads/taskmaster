@@ -36,7 +36,7 @@ io.on("connection", socket => {
 
     // now send-message to a specific room
     socket.on("send-message", (message, room) => {
-        console.log(message, room);
+        console.log("socket",message, room);
         putMessage(room, message);
         socket.broadcast.to(room).emit("receive-message", message);
     });

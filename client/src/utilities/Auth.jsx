@@ -7,6 +7,7 @@ const loginapi = async (email, password, flow) => {
         "email": email,
         "password": password,
     }
+    console.log(flow,payload)
     const res = await axios.post(
         `${baseURL}/api/${flow}/signin`,
         payload

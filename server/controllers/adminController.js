@@ -177,7 +177,7 @@ const updateAdmin = async(req,res) => {
 const getWorkers = async(req,res) => {
     // get all workers from workers table
     const dbRef = ref(db);
-    console.log(req.body.uid)
+    console.log("admin",req.body.uid)
     await checkIFAdmin(req.body.uid)
     .then(async(admin)=>{
         if(admin !== null && admin !== undefined){

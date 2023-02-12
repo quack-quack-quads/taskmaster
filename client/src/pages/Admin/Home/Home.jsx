@@ -34,7 +34,7 @@ const verify = (type, email, workers, setWorkers,  adminId) => {
     // console.log(type, email, workers, setWorkers, adminId);
     for (var obj in workers) {
         var new_obj = workers[obj];
-        //console.log(new_obj.email, email);
+        // console.log(new_obj.email, email);
         if (new_obj.email === email) {
             if (type === 'approve') {
                 axios.post(`${baseURL}/api/admin/approveWorker`, {
@@ -45,7 +45,7 @@ const verify = (type, email, workers, setWorkers,  adminId) => {
                 }, (err) => {
                     //console.log(err);
                 })
-                break;
+                continue;
             }
         }
         temp.push(new_obj);

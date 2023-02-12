@@ -161,7 +161,8 @@ const BusinessSignUp = ({ dismiss, flow }) => {
     const [message, setMessage] = useState("");
     const [waiting, setWaiting] = useState(false);
 
-    const { setDetails } = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
+    // const { setDetails } = flow == "client" ? useContext(ClientContext) : useContext(BusinessContext);
+    const {setDetails} = useContext(ClientContext);
 
     const uploadFile = async (uid) => {
         //console.log("uploading file")

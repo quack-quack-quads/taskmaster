@@ -34,7 +34,7 @@ const LoginModal = ({ dismiss, redirect, flow }) => {
         }
         setWaiting(true);
         var data = await loginapi(emailAdd, password, flow);
-        console.log("called", data);
+        console.log("called", data);    
         //console.log(data);
         if (data["uid"] === undefined) {
             alert("Login Failed!");

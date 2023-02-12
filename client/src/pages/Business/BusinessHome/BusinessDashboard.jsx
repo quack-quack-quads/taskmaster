@@ -72,6 +72,7 @@ const BusinessDashboard = () => {
 
     useEffect(() => {
         // console.log(pendingTask)
+        console.log("calling useEffect")
         if (pendingTask.length === 0) {
             // console.log(uid)
             axios.post(`${baseURL}/api/jobs/getJobsWorker`, {
@@ -84,7 +85,7 @@ const BusinessDashboard = () => {
                 //console.log(err);
             })
         }
-    })
+    },[])
 
     // useEffect(() => {
     //     if (uid == null || uid == undefined) {
@@ -124,7 +125,7 @@ const BusinessDashboard = () => {
     //console.log(listings)
 
     return <div className="Dash">
-        {console.log(uid)}
+        {/* {console.log(uid)} */}
         <div className="dummy"> </div>
         {
 

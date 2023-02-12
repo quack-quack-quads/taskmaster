@@ -29,6 +29,7 @@ const signUp = async (req, res) => {
 }
 
 const signIn = async (req, res)=>{
+    console.log("reqbodysignin",req.body);
     await signInWithEmailAndPassword(auth, req.body.email, req.body.password)
     .then((userCredential) => {
         const user = userCredential.user;

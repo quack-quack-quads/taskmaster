@@ -10,7 +10,7 @@ const getChat = async (req, res) => {
             for (const [key, value] of Object.entries(snapshot.val())) {
                 messages.push(value);
             }
-            console.log(snapshot.val());
+            console.log("snapvalchat",snapshot.val());
             res.send(messages);
         } else {
             res.send([]);
